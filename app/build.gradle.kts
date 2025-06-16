@@ -56,4 +56,11 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    //icons
+    implementation ("androidx.compose.material:material-icons-extended:1.4.0")
+
+    //Glide
+    implementation ("com.github.bumptech.glide:compose:1.0.0-beta01")
+
 }
