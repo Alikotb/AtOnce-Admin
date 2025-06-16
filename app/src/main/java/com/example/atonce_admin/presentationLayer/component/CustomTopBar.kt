@@ -1,0 +1,64 @@
+package com.example.atonce_admin.presentationLayer.component
+
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.example.atonce_admin.presentationLayer.theme.MediumFont
+
+@Composable
+fun CustomTopBar(
+    title: String,
+    leadingIcon: ImageVector? = null,
+    onLeadingClick: (() -> Unit)? = null,
+    trailingIcon: ImageVector? = null,
+    onTrailingClick: (() -> Unit)? = null
+) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(56.dp)
+    ) {
+        // Title centered
+        Text(
+            text = title,
+            fontSize = 18.sp,
+            fontFamily = MediumFont,
+            modifier = Modifier.align(Alignment.Center)
+        )
+
+        // Optional leading icon
+        if (leadingIcon != null && onLeadingClick != null) {
+            IconButton(
+                onClick = onLeadingClick,
+                modifier = Modifier.align(Alignment.CenterStart)
+            ) {
+                Icon(
+                    imageVector = leadingIcon,
+                    contentDescription = "Leading Icon"
+                )
+            }
+        }
+
+        // Optional trailing icon
+        if (trailingIcon != null && onTrailingClick != null) {
+            IconButton(
+                onClick = onTrailingClick,
+                modifier = Modifier.align(Alignment.CenterEnd)
+            ) {
+                Icon(
+                    imageVector = trailingIcon,
+                    contentDescription = "Trailing Icon"
+                )
+            }
+        }
+    }
+}

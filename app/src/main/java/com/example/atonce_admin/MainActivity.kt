@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.atonce_admin.presentationLayer.home.HomeScreen
 import com.example.atonce_admin.presentationLayer.login.LoginScreen
 import com.example.atonce_admin.presentationLayer.profile.ProfileScreen
 import com.example.atonce_admin.presentationLayer.theme.backgroundColor
@@ -50,7 +51,7 @@ class MainActivity : ComponentActivity() {
                     .padding(innerPadding)
                     .background(backgroundColor)
             ){
-               ProfileScreen()
+               HomeScreen()
 
             }
 
