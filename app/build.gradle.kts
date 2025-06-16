@@ -63,4 +63,8 @@ dependencies {
     //Glide
     implementation ("com.github.bumptech.glide:compose:1.0.0-beta01")
 
+    //QrGenerator
+    implementation("io.github.g0dkar:qrcode-kotlin-android:3.2.0")
+
+
 }

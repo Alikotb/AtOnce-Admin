@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import com.example.atonce_admin.presentationLayer.profile.components.AccountCard
 import com.example.atonce_admin.presentationLayer.profile.components.ProfileListItem
 import com.example.atonce_admin.presentationLayer.profile.components.ProfileTopBar
+import com.example.atonce_admin.presentationLayer.profile.components.QRCodeView
 import com.example.atonce_admin.presentationLayer.theme.PrimaryColor
 
 @Composable
@@ -36,6 +37,11 @@ fun ProfileScreen(
 
 
         Spacer(modifier = modifier.height(16.dp))
+
+        QRCodeView(
+            data = "Abdo8886",
+        )
+        Spacer(modifier = modifier.height(32.dp))
 
 
         Column (
