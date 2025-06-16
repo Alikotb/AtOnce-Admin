@@ -8,6 +8,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.filled.ArrowForward
+import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -18,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
-import com.example.atonce_admin.presentationLayer.theme.backgroundColor
+import com.example.atonce_admin.presentationLayer.theme.PrimaryColor
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
@@ -53,15 +54,13 @@ fun AccountCard(
 
             Column(modifier = Modifier.weight(1f)) {
                 Text(text = name, fontSize = 16.sp, color = Color.Black)
-                Text(text = subtitle, fontSize = 14.sp, color = Color(0xFF009688))
+
+                Spacer(modifier = Modifier.height(4.dp))
+
+                Text(text = subtitle, fontSize = 14.sp, color = PrimaryColor)
             }
 
-            Icon(
-                modifier = Modifier.background(color = Color.DarkGray, shape = RoundedCornerShape(size = 8.dp)).padding(4.dp),
-                imageVector = Icons.AutoMirrored.Default.ArrowForward,
-                contentDescription = "Arrow",
-                tint = Color.White
-            )
+
         }
     }
 }

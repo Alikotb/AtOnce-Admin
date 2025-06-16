@@ -30,7 +30,7 @@ fun ProfileScreen(
 
         AccountCard(
             name = "Abdelrahman Kamel",
-            subtitle = "See Account Details"
+            subtitle = "01013652874"
         ){
 
         }

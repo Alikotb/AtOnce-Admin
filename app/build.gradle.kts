@@ -66,5 +66,9 @@ dependencies {
     //QrGenerator
     implementation("io.github.g0dkar:qrcode-kotlin-android:3.2.0")
 
+    //system ui controller
+    implementation("com.google.accompanist:accompanist-systemuicontroller:0.30.1")
+
+
 
 }
