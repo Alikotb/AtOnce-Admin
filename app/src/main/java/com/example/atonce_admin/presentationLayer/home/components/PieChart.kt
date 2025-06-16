@@ -17,6 +17,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.atonce_admin.presentationLayer.theme.BoldFont
+import com.example.atonce_admin.presentationLayer.theme.RegularFont
+import com.example.atonce_admin.presentationLayer.theme.SemiBoldFont
 
 @Composable
 fun PieChartCard(
@@ -36,7 +38,7 @@ fun PieChartCard(
         Text(
             text = title,
             fontSize = 18.sp,
-            fontFamily = BoldFont,
+            fontFamily = SemiBoldFont,
             modifier = Modifier.padding(start = 8.dp, bottom = 8.dp)
         )
 
@@ -54,7 +56,6 @@ fun PieChartCard(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
                     .padding(8.dp)
-                    .height(200.dp)
             ) {
                 Canvas(
                     modifier = Modifier.size(140.dp)
@@ -71,7 +72,7 @@ fun PieChartCard(
                     }
                 }
 
-                Spacer(modifier = Modifier.width(16.dp))
+                Spacer(modifier = Modifier.width(8.dp))
 
                 Column(
                     verticalArrangement = Arrangement.spacedBy(8.dp)
@@ -87,7 +88,7 @@ fun PieChartCard(
                                     )
                             )
                             Spacer(modifier = Modifier.width(8.dp))
-                            Text("${item.first}  ${item.second}")
+                            Text("${item.first}  ${item.second}" , fontFamily = RegularFont)
                         }
                     }
                 }
