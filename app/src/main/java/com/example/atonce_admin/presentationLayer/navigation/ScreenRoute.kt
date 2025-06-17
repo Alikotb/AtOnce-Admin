@@ -16,4 +16,7 @@ sealed class ScreenRoute {
     @Serializable
     object ProfileScreen : ScreenRoute()
 
+    @Serializable
+    object StateOrders : ScreenRoute()
+
 }

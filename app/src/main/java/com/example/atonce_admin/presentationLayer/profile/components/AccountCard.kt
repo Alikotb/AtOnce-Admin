@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.sp
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.example.atonce_admin.presentationLayer.theme.PrimaryColor
+import com.example.atonce_admin.presentationLayer.theme.RegularFont
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
@@ -53,11 +54,11 @@ fun AccountCard(
             Spacer(modifier = Modifier.width(12.dp))
 
             Column(modifier = Modifier.weight(1f)) {
-                Text(text = name, fontSize = 16.sp, color = Color.Black)
+                Text(text = name, fontSize = 16.sp, color = Color.Black , fontFamily = RegularFont)
 
                 Spacer(modifier = Modifier.height(4.dp))
 
-                Text(text = subtitle, fontSize = 14.sp, color = PrimaryColor)
+                Text(text = subtitle, fontSize = 14.sp, color = PrimaryColor, fontFamily = RegularFont)
             }
 
 
