@@ -1,8 +1,12 @@
 package com.example.atonce_admin.presentation.home
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -10,15 +14,21 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalNavigationDrawer
+import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.atonce_admin.presentation.component.CustomTopBar
 import com.example.atonce_admin.presentation.home.components.CustomSection
+import com.example.atonce_admin.presentation.home.components.DrawerContent
 import com.example.atonce_admin.presentation.home.components.OrdersSection
 import com.example.atonce_admin.presentation.home.components.PieChartCard
+import kotlinx.coroutines.launch
 
 @Composable
 fun HomeScreen(
@@ -86,5 +96,50 @@ fun HomeScreen(
             Spacer(Modifier.height(160.dp))
 
         }
+    }
+}
+
+@Composable
+fun HomeWithDrawerScreen(
+    onProfileClicked: () -> Unit,
+    onCustomerClicked: () -> Unit,
+    onOrdersClicked: () -> Unit,
+    onSeeMoreClick: () -> Unit,
+    onLogout: () -> Unit,
+    onItemClicked: (String) -> Unit
+) {
+    val drawerState = rememberDrawerState(DrawerValue.Closed)
+    val scope = rememberCoroutineScope()
+
+    ModalNavigationDrawer(
+        drawerState = drawerState,
+        drawerContent = {
+            Box(
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .fillMaxWidth(0.8f)
+                    .background(MaterialTheme.colorScheme.surface)
+            ) {
+                DrawerContent(
+                    onItemClick = { title -> onItemClicked(title)},
+                    onLogout = onLogout,
+                    onProfileClicked = {
+                        onProfileClicked()
+                        scope.launch { drawerState.close() }
+                    },
+                    onCustomerClicked = {
+                        onCustomerClicked()
+                        scope.launch { drawerState.close() }
+                    }
+                )
+            }
+        }
+    ) {
+        HomeScreen(
+            onDrawerClicked = { scope.launch { drawerState.open() } },
+            onProfileClicked = onProfileClicked,
+            onOrdersClicked = onOrdersClicked,
+            onSeeMoreClick = onSeeMoreClick
+        )
     }
 }

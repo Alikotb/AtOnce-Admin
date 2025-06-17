@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.atonce_admin.presentation.orders.OrdersScreen
 import com.example.atonce_admin.presentation.home.HomeScreen
+import com.example.atonce_admin.presentation.home.HomeWithDrawerScreen
 import com.example.atonce_admin.presentation.login.LoginScreen
 import com.example.atonce_admin.presentation.profile.ProfileScreen
 import com.example.atonce_admin.presentation.stateOrders.StateOrders
@@ -27,10 +28,7 @@ fun SetUpNavHost(
             }
         }
         composable<ScreenRoute.HomeScreen> {
-            HomeScreen(
-                onDrawerClicked = {
-                    navController.navigate(ScreenRoute.UsersScreen)
-                },
+            HomeWithDrawerScreen(
                 onProfileClicked = {
                     navController.navigate(ScreenRoute.ProfileScreen)
                 },
@@ -38,6 +36,13 @@ fun SetUpNavHost(
                     navController.navigate(ScreenRoute.OrdersScreen)
                 },
                 onSeeMoreClick = {
+                    navController.navigate(ScreenRoute.StateOrders)
+                },
+                onLogout = {
+                },
+                onCustomerClicked = {
+                    navController.navigate(ScreenRoute.UsersScreen)
+                }, onItemClicked = {
                     navController.navigate(ScreenRoute.StateOrders)
                 }
             )
