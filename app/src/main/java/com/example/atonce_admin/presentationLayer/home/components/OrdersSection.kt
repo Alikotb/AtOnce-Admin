@@ -21,6 +21,7 @@ import com.example.atonce_admin.presentationLayer.theme.RegularFont
 @Composable
 fun OrdersSection(
     orders: List<Triple<String, Int, String>>,
+    onItemClick: () -> Unit = {},
     onSeeMoreClick: () -> Unit
 ) {
     val containerColor = MaterialTheme.colorScheme.surface
@@ -63,7 +64,8 @@ fun OrdersSection(
                 OrderRowItem(
                     companyName = order.first,
                     newOrdersCount = order.second,
-                    price = order.third
+                    price = order.third,
+                    onItemClick = onItemClick
                 )
             }
         }

@@ -10,7 +10,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Divider
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -20,11 +19,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.example.atonce_admin.presentationLayer.component.CustomSearchBar
 import com.example.atonce_admin.presentationLayer.component.CustomTopBar
 import com.example.atonce_admin.presentationLayer.component.OrderRowItem
-import com.example.atonce_admin.presentationLayer.theme.SemiBoldFont
 
 
 @Preview(showBackground = true)
@@ -42,6 +39,8 @@ fun StateOrders(
     ),
     title : String = "New Orders",
     onBackClicked: () -> Unit = {},
+    onItemClick: () -> Unit = {
+    }
 
 ){
 
@@ -71,7 +70,8 @@ fun StateOrders(
                 OrderRowItem(
                     companyName = it.first,
                     newOrdersCount = it.second,
-                    price = it.third
+                    price = it.third,
+                    onItemClick = onItemClick
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Divider(color = Color.LightGray.copy(alpha = 0.6f)

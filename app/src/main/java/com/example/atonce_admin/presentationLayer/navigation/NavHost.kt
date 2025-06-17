@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.atonce_admin.presentationLayer.Orders.OrdersScreen
 import com.example.atonce_admin.presentationLayer.home.HomeScreen
 import com.example.atonce_admin.presentationLayer.login.LoginScreen
 import com.example.atonce_admin.presentationLayer.profile.ProfileScreen
@@ -32,6 +33,9 @@ fun SetUpNavHost(
                 onProfileClicked = {
                     navController.navigate(ScreenRoute.ProfileScreen)
                 },
+                onOrdersClicked = {
+                    navController.navigate(ScreenRoute.OrdersScreen)
+                },
                 onSeeMoreClick = {
                     navController.navigate(ScreenRoute.StateOrders)
                 }
@@ -47,9 +51,21 @@ fun SetUpNavHost(
             StateOrders(
                 onBackClicked = {
                     navController.navigateUp()
+                },
+                onItemClick = {
+                    navController.navigate(ScreenRoute.OrdersScreen)
                 }
             )
         }
+
+        composable<ScreenRoute.OrdersScreen> {
+            OrdersScreen(
+                onBackClicked = {
+                    navController.navigateUp()
+                }
+            )
+        }
+
 
     }
 }

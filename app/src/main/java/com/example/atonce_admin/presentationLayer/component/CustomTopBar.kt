@@ -1,8 +1,6 @@
 package com.example.atonce_admin.presentationLayer.component
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -10,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.atonce_admin.presentationLayer.theme.MediumFont
@@ -22,40 +21,40 @@ fun CustomTopBar(
     trailingIcon: ImageVector? = null,
     onTrailingClick: (() -> Unit)? = null
 ) {
-    Box(
+    Row(
         modifier = Modifier
             .fillMaxWidth()
-            .height(56.dp)
+            .height(56.dp),
+        verticalAlignment = Alignment.CenterVertically
     ) {
-        Text(
-            text = title,
-            fontSize = 18.sp,
-            fontFamily = MediumFont,
-            modifier = Modifier.align(Alignment.Center)
-        )
-
         if (leadingIcon != null && onLeadingClick != null) {
-            IconButton(
-                onClick = onLeadingClick,
-                modifier = Modifier.align(Alignment.CenterStart)
-            ) {
-                Icon(
-                    imageVector = leadingIcon,
-                    contentDescription = "Leading Icon"
-                )
+            IconButton(onClick = onLeadingClick) {
+                Icon(imageVector = leadingIcon, contentDescription = "Leading Icon")
             }
+        } else {
+            Spacer(modifier = Modifier.width(16.dp))
+        }
+
+        Box(
+            modifier = Modifier
+                .weight(1f),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                text = title,
+                fontSize = 18.sp,
+                fontFamily = MediumFont,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
         }
 
         if (trailingIcon != null && onTrailingClick != null) {
-            IconButton(
-                onClick = onTrailingClick,
-                modifier = Modifier.align(Alignment.CenterEnd)
-            ) {
-                Icon(
-                    imageVector = trailingIcon,
-                    contentDescription = "Trailing Icon"
-                )
+            IconButton(onClick = onTrailingClick) {
+                Icon(imageVector = trailingIcon, contentDescription = "Trailing Icon")
             }
+        } else {
+            Spacer(modifier = Modifier.width(16.dp))
         }
     }
 }

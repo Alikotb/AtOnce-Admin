@@ -26,6 +26,7 @@ import com.example.atonce_admin.presentationLayer.home.components.PieChartCard
 fun HomeScreen(
     onDrawerClicked: () -> Unit,
     onProfileClicked: () -> Unit,
+    onOrdersClicked: () -> Unit,
     onSeeMoreClick: () -> Unit
 ) {
 
@@ -64,7 +65,7 @@ fun HomeScreen(
                 Triple("Hamada Pharma Company", 3, "199 EGP")
             )
 
-            OrdersSection(orders = orders, onSeeMoreClick = onSeeMoreClick)
+            OrdersSection(orders = orders, onSeeMoreClick = onSeeMoreClick , onItemClick = onOrdersClicked )
 
             CustomSection(
                 header = "Revenue",

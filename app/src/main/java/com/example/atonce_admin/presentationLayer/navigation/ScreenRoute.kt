@@ -19,4 +19,7 @@ sealed class ScreenRoute {
     @Serializable
     object StateOrders : ScreenRoute()
 
+    @Serializable
+    object OrdersScreen : ScreenRoute()
+
 }
