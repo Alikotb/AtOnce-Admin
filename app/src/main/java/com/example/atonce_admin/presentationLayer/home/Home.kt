@@ -13,7 +13,10 @@ import com.example.atonce_admin.presentationLayer.component.CustomTopBar
 import com.example.atonce_admin.presentationLayer.home.components.PieChartCard
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(
+    onDrawerClicked: () -> Unit,
+    onProfileClicked: () -> Unit
+) {
 
     Column(
         modifier = Modifier
@@ -23,9 +26,9 @@ fun HomeScreen() {
         CustomTopBar(
             title = "Control Panel",
             leadingIcon = Icons.Default.Menu,
-            onLeadingClick = { /* open drawer */ },
+            onLeadingClick = onDrawerClicked,
             trailingIcon = Icons.Default.Person,
-            onTrailingClick = { /* open profile */ }
+            onTrailingClick = onProfileClicked
         )
 
         PieChartCard(

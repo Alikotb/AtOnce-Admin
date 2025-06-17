@@ -22,9 +22,10 @@ import com.example.atonce_admin.presentationLayer.theme.PrimaryColor
 @Composable
 fun ProfileScreen(
     modifier: Modifier = Modifier
+    ,onBackClicked: () -> Unit
 ) {
     Column(modifier = modifier.fillMaxSize()) {
-        ProfileTopBar(title = "Profile")
+        ProfileTopBar(title = "Profile" , onBackClick = onBackClicked)
 
         Spacer(modifier = modifier.height(8.dp))
 
@@ -34,7 +35,6 @@ fun ProfileScreen(
         ){
 
         }
-
 
         Spacer(modifier = modifier.height(16.dp))
 

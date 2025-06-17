@@ -12,8 +12,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.rememberNavController
 import com.example.atonce_admin.presentationLayer.home.HomeScreen
 import com.example.atonce_admin.presentationLayer.login.LoginScreen
+import com.example.atonce_admin.presentationLayer.navigation.SetUpNavHost
 import com.example.atonce_admin.presentationLayer.profile.ProfileScreen
 import com.example.atonce_admin.presentationLayer.theme.backgroundColor
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
@@ -33,11 +35,13 @@ class MainActivity : ComponentActivity() {
     @Composable
     fun MainActivityPreview() {
 
+        val navController = rememberNavController()
+
         val systemUiController = rememberSystemUiController()
         SideEffect {
             systemUiController.setStatusBarColor(
                 color = backgroundColor,
-                darkIcons = true // or false based on your background
+                darkIcons = true
             )
         }
 
@@ -51,8 +55,7 @@ class MainActivity : ComponentActivity() {
                     .padding(innerPadding)
                     .background(backgroundColor)
             ){
-               HomeScreen()
-
+                SetUpNavHost(navController)
             }
 
 
