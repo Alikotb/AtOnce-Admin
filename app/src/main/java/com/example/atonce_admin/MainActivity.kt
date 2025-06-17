@@ -14,8 +14,8 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.luminance
 import androidx.navigation.compose.rememberNavController
-import com.example.atonce_admin.presentationLayer.navigation.SetUpNavHost
-import com.example.atonce_admin.presentationLayer.theme.AtOnceAdminTheme
+import com.example.atonce_admin.presentation.navigation.SetUpNavHost
+import com.example.atonce_admin.presentation.theme.AtOnceAdminTheme
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 class MainActivity : ComponentActivity() {
