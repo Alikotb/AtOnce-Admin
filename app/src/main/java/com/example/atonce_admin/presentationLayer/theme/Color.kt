@@ -15,3 +15,14 @@ val backgroundColor = Color.White
 val PrimaryColor = Color(0xFF179C92)
 val TextFieldColor = Color(0xFFF2F2F2)
 val TextFieldHintColor = Color.LightGray
+
+
+// Light Theme
+val LightBackground = Color.White
+val LightTextField = Color(0xFFF2F2F2)
+val LightTextHint = Color.LightGray
+
+// Dark Theme
+val DarkBackground = Color(0xFF121212)
+val DarkTextField = Color(0xFF1E1E1E)
+val DarkTextHint = Color(0xFF888888)

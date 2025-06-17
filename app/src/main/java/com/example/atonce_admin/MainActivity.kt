@@ -7,60 +7,53 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.graphics.luminance
 import androidx.navigation.compose.rememberNavController
-import com.example.atonce_admin.presentationLayer.home.HomeScreen
-import com.example.atonce_admin.presentationLayer.login.LoginScreen
 import com.example.atonce_admin.presentationLayer.navigation.SetUpNavHost
-import com.example.atonce_admin.presentationLayer.profile.ProfileScreen
-import com.example.atonce_admin.presentationLayer.theme.backgroundColor
+import com.example.atonce_admin.presentationLayer.theme.AtOnceAdminTheme
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            MainActivityPreview()
-        }
-    }
-
-
-    @Preview(showBackground = true)
-    @Composable
-    fun MainActivityPreview() {
-
-        val navController = rememberNavController()
-
-        val systemUiController = rememberSystemUiController()
-        SideEffect {
-            systemUiController.setStatusBarColor(
-                color = backgroundColor,
-                darkIcons = true
-            )
-        }
-
-        Scaffold(
-            modifier = Modifier.background(backgroundColor)
-        )
-        {
-            innerPadding ->
-            Box(
-                modifier = Modifier
-                    .padding(innerPadding)
-                    .background(backgroundColor)
-            ){
-                SetUpNavHost(navController)
+            AtOnceAdminTheme {
+                MainScreen()
             }
-
-
         }
     }
-
 }
 
+@Composable
+fun MainScreen() {
+    val navController = rememberNavController()
+    val systemUiController = rememberSystemUiController()
+
+    val background = MaterialTheme.colorScheme.background
+    val darkIcons = MaterialTheme.colorScheme.background.luminance() > 0.5f
+
+    SideEffect {
+        systemUiController.setStatusBarColor(
+            color = background,
+            darkIcons = darkIcons
+        )
+    }
+
+    Scaffold(
+        modifier = Modifier.background(background)
+    ) { innerPadding ->
+        Box(
+            modifier = Modifier
+                .padding(innerPadding)
+                .background(background)
+        ) {
+            SetUpNavHost(navController)
+        }
+    }
+}

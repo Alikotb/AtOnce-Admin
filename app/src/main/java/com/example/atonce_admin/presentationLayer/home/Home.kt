@@ -12,6 +12,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
@@ -20,7 +21,6 @@ import com.example.atonce_admin.presentationLayer.component.CustomTopBar
 import com.example.atonce_admin.presentationLayer.home.components.CustomSection
 import com.example.atonce_admin.presentationLayer.home.components.OrdersSection
 import com.example.atonce_admin.presentationLayer.home.components.PieChartCard
-import com.example.atonce_admin.presentationLayer.theme.backgroundColor
 
 @Composable
 fun HomeScreen(
@@ -28,6 +28,8 @@ fun HomeScreen(
     onProfileClicked: () -> Unit,
     onSeeMoreClick: () -> Unit
 ) {
+
+    val background = MaterialTheme.colorScheme.background
 
     Column(
         modifier = Modifier
@@ -53,7 +55,7 @@ fun HomeScreen(
                 header = "Customers Count",
                 value = "12",
                 textAlign = TextAlign.Center,
-                bgColor = backgroundColor
+                bgColor = background
             )
 
             val orders = listOf(
@@ -68,7 +70,7 @@ fun HomeScreen(
                 header = "Revenue",
                 value = "10,000 EGP",
                 textAlign = TextAlign.Center,
-                bgColor = backgroundColor
+                bgColor = background
             )
 
 

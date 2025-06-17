@@ -2,13 +2,11 @@ package com.example.atonce_admin.presentationLayer.home.components
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -16,9 +14,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.atonce_admin.presentationLayer.theme.BoldFont
-import com.example.atonce_admin.presentationLayer.theme.RegularFont
-import com.example.atonce_admin.presentationLayer.theme.SemiBoldFont
+import com.example.atonce_admin.presentationLayer.theme.*
 
 @Composable
 fun PieChartCard(
@@ -34,6 +30,14 @@ fun PieChartCard(
         .fillMaxWidth()
         .padding(16.dp)
 ) {
+    val isDark = isSystemInDarkTheme()
+    val elevation = 4.dp
+    val cardColor = if (!isDark) {
+        Color.White
+    } else {
+        MaterialTheme.colorScheme.surfaceColorAtElevation(elevation)
+    }
+
     Column(modifier = modifier) {
         Text(
             text = title,
@@ -44,11 +48,11 @@ fun PieChartCard(
 
         Card(
             shape = RoundedCornerShape(8.dp),
-            colors = CardDefaults.cardColors(containerColor = Color.White),
-            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+            colors = CardDefaults.cardColors(containerColor = cardColor),
+            elevation = CardDefaults.cardElevation(defaultElevation = elevation),
             modifier = Modifier.fillMaxWidth()
         ) {
-            val total = data.sumOf { it.second }
+            val total = data.sumOf { it.second }.takeIf { it > 0 } ?: 1
             val proportions = data.map { it.second.toFloat() / total }
             val sweepAngles = proportions.map { it * 360f }
 
@@ -72,7 +76,7 @@ fun PieChartCard(
                     }
                 }
 
-                Spacer(modifier = Modifier.width(8.dp))
+                Spacer(modifier = Modifier.width(16.dp))
 
                 Column(
                     verticalArrangement = Arrangement.spacedBy(8.dp)
@@ -88,7 +92,11 @@ fun PieChartCard(
                                     )
                             )
                             Spacer(modifier = Modifier.width(8.dp))
-                            Text("${item.first}  ${item.second}" , fontFamily = RegularFont)
+                            Text(
+                                text = "${item.first}: ${item.second}",
+                                fontFamily = RegularFont,
+                                style = MaterialTheme.typography.bodyMedium
+                            )
                         }
                     }
                 }
@@ -100,11 +108,13 @@ fun PieChartCard(
 @Preview(showBackground = true)
 @Composable
 fun PieChartCardPreview() {
-    val sampleData = listOf(
-        "New Orders" to 120,
-        "Delivered" to 30,
-        "Canceled" to 150,
-        "Returned" to 10
-    )
-    PieChartCard(title = "Orders Summary", data = sampleData)
+    AtOnceAdminTheme {
+        val sampleData = listOf(
+            "New Orders" to 120,
+            "Delivered" to 30,
+            "Canceled" to 150,
+            "Returned" to 10
+        )
+        PieChartCard(title = "Orders Summary", data = sampleData)
+    }
 }

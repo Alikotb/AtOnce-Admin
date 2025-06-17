@@ -33,7 +33,6 @@ fun CustomTextField(
             label,
             fontSize = 14.sp,
             fontFamily = MediumFont,
-            color = Color.Black,
             modifier = Modifier.padding(bottom = 4.dp)
         )
 
