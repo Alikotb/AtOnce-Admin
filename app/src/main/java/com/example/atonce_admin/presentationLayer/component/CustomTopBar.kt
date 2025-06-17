@@ -27,7 +27,6 @@ fun CustomTopBar(
             .fillMaxWidth()
             .height(56.dp)
     ) {
-        // Title centered
         Text(
             text = title,
             fontSize = 18.sp,
@@ -35,7 +34,6 @@ fun CustomTopBar(
             modifier = Modifier.align(Alignment.Center)
         )
 
-        // Optional leading icon
         if (leadingIcon != null && onLeadingClick != null) {
             IconButton(
                 onClick = onLeadingClick,
@@ -48,7 +46,6 @@ fun CustomTopBar(
             }
         }
 
-        // Optional trailing icon
         if (trailingIcon != null && onTrailingClick != null) {
             IconButton(
                 onClick = onTrailingClick,

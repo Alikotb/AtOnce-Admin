@@ -33,10 +33,7 @@ fun HomeScreen(
         modifier = Modifier
             .fillMaxSize()
             .padding(horizontal = 8.dp)
-            .verticalScroll(rememberScrollState())
-
-    ){
-
+    ) {
 
         CustomTopBar(
             title = "Control Panel",
@@ -46,40 +43,47 @@ fun HomeScreen(
             onTrailingClick = onProfileClicked
         )
 
-        CustomSection(
-            header = "Customers Count",
-            value = "12",
-            textAlign = TextAlign.Center,
-            bgColor = backgroundColor
-        )
-
-        val orders = listOf(
-            Triple("Hamada Pharma Company", 3, "199 EGP"),
-            Triple("Hamada Pharma Company", 3, "199 EGP"),
-            Triple("Hamada Pharma Company", 3, "199 EGP")
-        )
-
-        OrdersSection(orders = orders, onSeeMoreClick = onSeeMoreClick)
-
-        CustomSection(
-            header = "Revenue",
-            value = "10,000 EGP",
-            textAlign = TextAlign.Center,
-            bgColor = backgroundColor
-        )
+        Column(
+            modifier = Modifier
+                .verticalScroll(rememberScrollState())
+        ) {
 
 
-        PieChartCard(
-            title = "Order Status OverView",
-            data = listOf(
-                "New Orders" to 120,
-                "Delivered" to 30,
-                "Canceled" to 150,
-                "Returned" to 10
+            CustomSection(
+                header = "Customers Count",
+                value = "12",
+                textAlign = TextAlign.Center,
+                bgColor = backgroundColor
             )
-        )
 
-        Spacer(Modifier.height(160.dp))
+            val orders = listOf(
+                Triple("Hamada Pharma Company", 3, "199 EGP"),
+                Triple("Hamada Pharma Company", 3, "199 EGP"),
+                Triple("Hamada Pharma Company", 3, "199 EGP")
+            )
 
+            OrdersSection(orders = orders, onSeeMoreClick = onSeeMoreClick)
+
+            CustomSection(
+                header = "Revenue",
+                value = "10,000 EGP",
+                textAlign = TextAlign.Center,
+                bgColor = backgroundColor
+            )
+
+
+            PieChartCard(
+                title = "Order Status OverView",
+                data = listOf(
+                    "New Orders" to 120,
+                    "Delivered" to 30,
+                    "Canceled" to 150,
+                    "Returned" to 10
+                )
+            )
+
+            Spacer(Modifier.height(160.dp))
+
+        }
     }
 }
