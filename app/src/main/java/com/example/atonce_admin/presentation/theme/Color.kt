@@ -13,6 +13,7 @@ val Pink40 = Color(0xFF7D5260)
 
 val backgroundColor = Color.White
 val PrimaryColor = Color(0xFF179C92)
+val GreenColor = Color(0xFF00B259)
 val TextFieldColor = Color(0xFFF2F2F2)
 val TextFieldHintColor = Color.LightGray
 

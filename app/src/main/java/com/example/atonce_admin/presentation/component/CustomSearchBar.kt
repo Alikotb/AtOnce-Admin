@@ -25,7 +25,7 @@ fun CustomSearchBar(
         .fillMaxWidth()
         .padding(horizontal = 8.dp)
         .height(40.dp)
-        .clip(RoundedCornerShape(50.dp))
+        .clip(RoundedCornerShape(8.dp))
         .background(Color(0xFFF0F0F0))
 ) {
     BasicTextField(

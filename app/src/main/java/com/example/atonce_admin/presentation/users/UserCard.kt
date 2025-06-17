@@ -1,4 +1,4 @@
-package com.example.atonce_admin.presentation.orders.Component
+package com.example.atonce_admin.presentation.users
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -7,9 +7,15 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.LocationOn
+import androidx.compose.material.icons.filled.MedicalServices
+import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.surfaceColorAtElevation
@@ -21,23 +27,22 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.atonce_admin.presentation.theme.BoldFont
+import com.example.atonce_admin.presentation.theme.GreenColor
 import com.example.atonce_admin.presentation.theme.MediumFont
 import com.example.atonce_admin.presentation.theme.PrimaryColor
 import com.example.atonce_admin.presentation.theme.RegularFont
 
 @Composable
-fun OrderCard(
-    state: String = "Cancelled",
-    stateColor: Color = Color.Red,
-    date: String = "June 12, 2025 - 15:36 PM",
-    orderNumber: String = "#ORD-12345",
+fun UserCard(
+    state: String = "Active",
+    stateColor: Color = GreenColor,
     user: String = "Luis Antonio Valencia",
     pharmacy: String = "Manchester Pharmacy",
     address: String = "123 Main Street, City, Country",
-    price: String = "630.00 EGP",
+    phone: String = "0123456789",
 
 
-) {
+    ) {
 
     val isDark = isSystemInDarkTheme()
     val elevation = 4.dp
@@ -52,7 +57,7 @@ fun OrderCard(
         ,elevation = CardDefaults.cardElevation(defaultElevation = elevation),
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp)
+            .padding(horizontal = 8.dp, vertical = 8.dp)
 
     ){
         Column(
@@ -61,54 +66,82 @@ fun OrderCard(
         ){
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ){
+
+                Text(text = user ,
+                    fontSize = 14.sp ,
+                    fontFamily = BoldFont
+                )
                 Text(
                     text = state,
                     color = Color.White,
-                    fontSize = 12.sp,
+                    fontSize = 10.sp,
                     modifier = Modifier
                         .background(
                             color = stateColor,
-                            shape = RoundedCornerShape(4.dp)
+                            shape = RoundedCornerShape(50.dp)
                         )
-                        .padding(4.dp),
+                        .padding(horizontal = 8.dp),
                     fontFamily = MediumFont
                 )
-                Text(text = orderNumber ,
-                    fontSize = 14.sp ,
-                    color = PrimaryColor,
-                    fontFamily = BoldFont
-                )
             }
-            Text(text = date
-                ,fontSize = 12.sp
-            ,fontFamily = MediumFont
-                ,color = Color.Gray
-            )
-            Text(text = user, fontSize = 12.sp , fontFamily = RegularFont)
-            Text(text = pharmacy, fontSize = 12.sp ,
-                color = PrimaryColor,fontFamily = MediumFont)
+
             Row(
-                modifier = Modifier.fillMaxWidth()
-                ,horizontalArrangement = Arrangement.SpaceBetween,
+                horizontalArrangement = Arrangement.spacedBy(4.dp),
                 verticalAlignment = Alignment.CenterVertically
             ){
-                Text(text = address , fontSize = 12.sp , fontFamily = RegularFont)
-                Text(text = price ,
-                    fontSize = 14.sp ,
-                    color = PrimaryColor,
-                    fontFamily = BoldFont
+                Icon(
+                    imageVector = Icons.Default.Phone,
+                    contentDescription = null,
+                    tint = PrimaryColor,
+                    modifier = Modifier.size(16.dp)
+
+                )
+                Text(
+                    text = phone, fontSize = 12.sp,
+                    fontFamily = MediumFont
                 )
             }
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(4.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ){
+                Icon(
+                    imageVector = Icons.Default.MedicalServices,
+                    contentDescription = null,
+                    modifier = Modifier.size(16.dp),
+                    tint = PrimaryColor
+
+                )
+                Text(text = pharmacy, fontSize = 12.sp ,fontFamily = RegularFont)
+
+            }
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(4.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ){
+                Icon(
+                    imageVector = Icons.Default.LocationOn,
+                    contentDescription = null,
+                    tint = PrimaryColor,
+                    modifier = Modifier.size(16.dp)
+
+                )
+                Text(text = address
+                    ,fontSize = 12.sp
+                    ,fontFamily = RegularFont
+                )
+
+            }
+
         }
     }
 }
 
-
-@Preview(showBackground = true)
+@Preview
 @Composable
-fun OrderCardPreview() {
-    OrderCard()
+fun UserCardPreview() {
+    UserCard()
 }

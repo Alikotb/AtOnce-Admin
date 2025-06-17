@@ -9,11 +9,17 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.example.atonce_admin.presentation.theme.MediumFont
+import com.example.atonce_admin.presentation.theme.PrimaryColor
+import com.example.atonce_admin.presentation.theme.RegularFont
+import com.example.atonce_admin.presentation.theme.SemiBoldFont
 
 @Composable
 fun OrderRowItem(
@@ -28,22 +34,29 @@ fun OrderRowItem(
             .fillMaxWidth()
             .padding(vertical = 8.dp, horizontal = 12.dp)
             .clickable { onItemClick() },
-        horizontalArrangement = Arrangement.SpaceBetween
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.Bottom
     ) {
-        Column {
+        Column(
+            verticalArrangement = Arrangement.spacedBy(2.dp)
+        ){
             Text(
                 text = companyName,
-                style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Medium)
+                fontFamily = MediumFont,
+                fontSize = 14.sp
             )
             Text(
                 text = "$newOrdersCount New orders",
-                style = MaterialTheme.typography.bodySmall.copy(color = Color(0xFF009688))
+                color = PrimaryColor,
+                fontFamily = RegularFont,
+                fontSize = 12.sp
             )
         }
 
         Text(
             text = price,
-            style = MaterialTheme.typography.bodyMedium
+            fontFamily = MediumFont,
+            fontSize = 14.sp
         )
     }
 }

@@ -9,6 +9,7 @@ import com.example.atonce_admin.presentation.home.HomeScreen
 import com.example.atonce_admin.presentation.login.LoginScreen
 import com.example.atonce_admin.presentation.profile.ProfileScreen
 import com.example.atonce_admin.presentation.stateOrders.StateOrders
+import com.example.atonce_admin.presentation.users.UsersScreen
 
 
 @Composable
@@ -28,7 +29,7 @@ fun SetUpNavHost(
         composable<ScreenRoute.HomeScreen> {
             HomeScreen(
                 onDrawerClicked = {
-
+                    navController.navigate(ScreenRoute.UsersScreen)
                 },
                 onProfileClicked = {
                     navController.navigate(ScreenRoute.ProfileScreen)
@@ -65,7 +66,12 @@ fun SetUpNavHost(
                 }
             )
         }
-
-
+        composable<ScreenRoute.UsersScreen> {
+            UsersScreen(
+                onBackClicked = {
+                    navController.navigateUp()
+                }
+            )
+        }
     }
 }
