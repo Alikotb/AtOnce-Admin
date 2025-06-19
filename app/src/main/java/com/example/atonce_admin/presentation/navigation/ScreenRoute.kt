@@ -1,5 +1,6 @@
 package com.example.atonce_admin.presentation.navigation
 
+import com.example.atonce_admin.presentation.enums.OrderStatesEnum
 import kotlinx.serialization.Serializable
 
 
@@ -17,10 +18,10 @@ sealed class ScreenRoute {
     object ProfileScreen : ScreenRoute()
 
     @Serializable
-    object StateOrders : ScreenRoute()
+    data class StateOrdersScreen(val type : String) : ScreenRoute()
 
     @Serializable
-    object OrdersScreen : ScreenRoute()
+    data class OrdersScreen(val type : String) : ScreenRoute()
 
     @Serializable
     object UsersScreen : ScreenRoute()

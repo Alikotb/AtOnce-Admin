@@ -14,6 +14,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.outlined.AccountCircle
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalNavigationDrawer
@@ -24,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.atonce_admin.presentation.component.CustomTopBar
+import com.example.atonce_admin.presentation.enums.OrderStatesEnum
 import com.example.atonce_admin.presentation.home.components.CustomSection
 import com.example.atonce_admin.presentation.home.components.DrawerContent
 import com.example.atonce_admin.presentation.home.components.OrdersSection
@@ -50,7 +52,7 @@ fun HomeScreen(
             title = "Control Panel",
             leadingIcon = Icons.Default.Menu,
             onLeadingClick = onDrawerClicked,
-            trailingIcon = Icons.Default.Person,
+            trailingIcon = Icons.Outlined.AccountCircle,
             onTrailingClick = onProfileClicked
         )
 
@@ -106,7 +108,7 @@ fun HomeWithDrawerScreen(
     onOrdersClicked: () -> Unit,
     onSeeMoreClick: () -> Unit,
     onLogout: () -> Unit,
-    onItemClicked: (String) -> Unit
+    onItemClicked: (OrderStatesEnum) -> Unit
 ) {
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
@@ -121,8 +123,15 @@ fun HomeWithDrawerScreen(
                     .background(MaterialTheme.colorScheme.surface)
             ) {
                 DrawerContent(
-                    onItemClick = { title -> onItemClicked(title)},
-                    onLogout = onLogout,
+                    onItemClick = {
+                        title -> onItemClicked(title)
+                        scope.launch { drawerState.close() }
+
+                    },
+                    onLogout = {
+                        onLogout()
+                        scope.launch { drawerState.close() }
+                    },
                     onProfileClicked = {
                         onProfileClicked()
                         scope.launch { drawerState.close() }

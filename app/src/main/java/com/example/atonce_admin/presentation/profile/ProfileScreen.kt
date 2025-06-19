@@ -21,7 +21,8 @@ import com.example.atonce_admin.presentation.theme.PrimaryColor
 
 @Composable
 fun ProfileScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onLogout: () -> Unit
     ,onBackClicked: () -> Unit
 ) {
     Column(modifier = modifier.fillMaxSize()) {
@@ -63,7 +64,7 @@ fun ProfileScreen(
                 title = "Logout",
                 iconColor = Color.Red,
                 textColor = Color.Red
-            ) { /* logout */ }
+            ) { onLogout() }
         }
 
 

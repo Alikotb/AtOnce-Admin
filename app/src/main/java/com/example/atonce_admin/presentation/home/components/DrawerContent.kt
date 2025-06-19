@@ -34,6 +34,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
+import com.example.atonce_admin.presentation.enums.OrderStatesEnum
 import com.example.atonce_admin.presentation.theme.MediumFont
 import com.example.atonce_admin.presentation.theme.RegularFont
 
@@ -42,14 +43,14 @@ import com.example.atonce_admin.presentation.theme.RegularFont
 fun DrawerContent(
     onProfileClicked: () -> Unit,
     onCustomerClicked: () -> Unit,
-    onItemClick: (String) -> Unit,
+    onItemClick: (OrderStatesEnum) -> Unit,
     onLogout: () -> Unit
 ) {
     val items = listOf(
-        Pair("New Orders", Icons.Outlined.NewReleases),
-        Pair("Delivered Orders", Icons.Outlined.LocalShipping),
-        Pair("Cancelled Orders", Icons.Outlined.Cancel),
-        Pair("Returned Orderes", Icons.Outlined.AssignmentReturned)
+        Pair(OrderStatesEnum.ORDERED, Icons.Outlined.NewReleases),
+        Pair(OrderStatesEnum.DELIVERED, Icons.Outlined.LocalShipping),
+        Pair(OrderStatesEnum.CANCELED, Icons.Outlined.Cancel),
+        Pair(OrderStatesEnum.RETURNED, Icons.Outlined.AssignmentReturned)
     )
 
     val screenHeight = LocalConfiguration.current.screenHeightDp.dp
@@ -87,7 +88,8 @@ fun DrawerContent(
 
         Divider(
             color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.12f),
-            thickness = 1.dp
+            thickness = 1.dp,
+            modifier = Modifier.padding(vertical = 8.dp)
         )
 
         DrawerItem(
@@ -96,11 +98,11 @@ fun DrawerContent(
             onClick = onCustomerClicked
         )
 
-        items.forEach { (title, icon) ->
+        items.forEach { (type, icon) ->
             DrawerItem(
                 icon = icon,
-                title = title,
-                onClick = { onItemClick(title) }
+                title = type.value,
+                onClick = { onItemClick(type) }
             )
         }
 
@@ -108,7 +110,8 @@ fun DrawerContent(
 
         Divider(
             color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.12f),
-            thickness = 1.dp
+            thickness = 1.dp,
+            modifier = Modifier.padding(vertical = 8.dp)
         )
 
 

@@ -74,7 +74,7 @@ fun OrderCard(
                             shape = RoundedCornerShape(4.dp)
                         )
                         .padding(4.dp),
-                    fontFamily = MediumFont
+                    fontFamily = BoldFont
                 )
                 Text(text = orderNumber ,
                     fontSize = 14.sp ,

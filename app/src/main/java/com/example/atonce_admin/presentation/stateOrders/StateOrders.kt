@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import com.example.atonce_admin.presentation.component.CustomSearchBar
 import com.example.atonce_admin.presentation.component.CustomTopBar
 import com.example.atonce_admin.presentation.component.OrderRowItem
+import com.example.atonce_admin.presentation.enums.OrderStatesEnum
 
 
 @Preview(showBackground = true)
@@ -37,9 +38,9 @@ fun StateOrders(
         Triple("Hamada Pharma Company", 3, "199 EGP"),
         Triple("Hamada Pharma Company", 3, "199 EGP")
     ),
-    title : String = "New Orders",
+    type : OrderStatesEnum = OrderStatesEnum.ORDERED,
     onBackClicked: () -> Unit = {},
-    onItemClick: () -> Unit = {
+    onItemClick: (OrderStatesEnum) -> Unit = {
     }
 
 ){
@@ -50,7 +51,7 @@ fun StateOrders(
         modifier = Modifier.padding(16.dp).fillMaxSize()
     ){
         CustomTopBar(
-            title = title,
+            title = type.title,
             leadingIcon = Icons.AutoMirrored.Default.ArrowBack,
             onLeadingClick = onBackClicked,
         )
@@ -71,7 +72,9 @@ fun StateOrders(
                     companyName = it.first,
                     newOrdersCount = it.second,
                     price = it.third,
-                    onItemClick = onItemClick
+                    onItemClick = {
+                        onItemClick(type)
+                    }
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Divider(color = Color.LightGray.copy(alpha = 0.6f)

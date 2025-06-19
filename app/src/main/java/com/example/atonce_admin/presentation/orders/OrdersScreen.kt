@@ -12,9 +12,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.atonce_admin.presentation.orders.Component.OrderCard
 import com.example.atonce_admin.presentation.component.CustomTopBar
+import com.example.atonce_admin.presentation.enums.OrderStatesEnum
 
 @Composable
 fun OrdersScreen(
+    type : OrderStatesEnum = OrderStatesEnum.ORDERED,
     title: String = "Hamada Pharma",
     onBackClicked: () -> Unit = {}
 ){
@@ -30,8 +32,8 @@ fun OrdersScreen(
         LazyColumn {
             items(5) {
                 OrderCard(
-                    state = "New",
-                    stateColor = Color.Blue
+                    state = type.value,
+                    stateColor = type.color
                 )
             }
         }
