@@ -31,7 +31,7 @@ fun OrdersScreen(
         LazyColumn {
             items(5) {
                 OrderCard(
-                    state = type.value,
+                    state = type.getLocalizedValue(),
                     stateColor = type.color
                 )
             }

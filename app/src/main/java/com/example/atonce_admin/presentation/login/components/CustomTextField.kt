@@ -44,7 +44,6 @@ fun CustomTextField(
             ) },
             onValueChange = onValueChange,
             singleLine = true,
-            textStyle = LocalTextStyle.current.copy(fontSize = 16.sp),
             visualTransformation = if (isPassword && !passwordVisible)
                 PasswordVisualTransformation()
             else
@@ -76,7 +75,9 @@ fun CustomTextField(
                 focusedContainerColor = Color(0xFFF5F5F5),
                 unfocusedContainerColor = TextFieldColor,
                 disabledContainerColor = Color(0xFFF5F5F5),
-                errorContainerColor = Color(0xFFF5F5F5)
+                errorContainerColor = Color(0xFFF5F5F5),
+                focusedTextColor = Color.Black,
+                unfocusedTextColor = Color.Black
             )
         )
     }

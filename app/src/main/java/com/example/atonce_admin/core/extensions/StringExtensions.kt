@@ -17,6 +17,12 @@ fun String.convertNumbersToArabic(): String {
 }
 
 fun String.replaceEGPWithArabicCurrency(): String {
-    return this.replace("EGP", "ج.م")
+    return if (Locale.getDefault().language == "ar"){
+        this.replace("EGP", "ج.م")
+    }
+    else{
+         this
+    }
+
 }
 
