@@ -14,10 +14,10 @@ import androidx.compose.ui.text.input.*
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.atonce_admin.presentation.theme.MediumFont
-import com.example.atonce_admin.presentation.theme.PrimaryColor
-import com.example.atonce_admin.presentation.theme.RegularFont
-import com.example.atonce_admin.presentation.theme.TextFieldColor
+import com.example.atonce_admin.presentation.common.theme.MediumFont
+import com.example.atonce_admin.presentation.common.theme.PrimaryColor
+import com.example.atonce_admin.presentation.common.theme.RegularFont
+import com.example.atonce_admin.presentation.common.theme.TextFieldColor
 
 @Composable
 fun CustomTextField(

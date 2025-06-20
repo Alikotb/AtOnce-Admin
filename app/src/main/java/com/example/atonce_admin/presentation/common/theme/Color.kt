@@ -1,4 +1,4 @@
-package com.example.atonce_admin.presentation.theme
+package com.example.atonce_admin.presentation.common.theme
 
 import androidx.compose.ui.graphics.Color
 

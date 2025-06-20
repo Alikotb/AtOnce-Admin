@@ -12,11 +12,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.atonce_admin.presentation.component.OrderRowItem
-import com.example.atonce_admin.presentation.theme.MediumFont
-import com.example.atonce_admin.presentation.theme.RegularFont
+import com.example.atonce_admin.R
+import com.example.atonce_admin.core.enums.OrderStatesEnum
+import com.example.atonce_admin.presentation.common.component.OrderRowItem
+import com.example.atonce_admin.presentation.common.theme.MediumFont
+import com.example.atonce_admin.presentation.common.theme.RegularFont
 
 @Composable
 fun OrdersSection(
@@ -37,12 +40,12 @@ fun OrdersSection(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = "New Orders",
+                text = OrderStatesEnum.ORDERED.getLocalizedTitle(),
                 fontSize = 18.sp,
                 fontFamily = MediumFont
             )
             Text(
-                text = "See more",
+                text = stringResource(R.string.see_more),
                 color = seeMoreColor,
                 modifier = Modifier.clickable { onSeeMoreClick() },
                 fontSize = 14.sp,

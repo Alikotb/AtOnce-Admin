@@ -19,10 +19,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.atonce_admin.presentation.component.CustomSearchBar
-import com.example.atonce_admin.presentation.component.CustomTopBar
-import com.example.atonce_admin.presentation.component.OrderRowItem
-import com.example.atonce_admin.presentation.enums.OrderStatesEnum
+import com.example.atonce_admin.presentation.common.component.CustomSearchBar
+import com.example.atonce_admin.presentation.common.component.CustomTopBar
+import com.example.atonce_admin.presentation.common.component.OrderRowItem
+import com.example.atonce_admin.core.enums.OrderStatesEnum
 
 
 @Preview(showBackground = true)
@@ -51,7 +51,7 @@ fun StateOrders(
         modifier = Modifier.padding(16.dp).fillMaxSize()
     ){
         CustomTopBar(
-            title = type.title,
+            title = type.getLocalizedTitle(),
             leadingIcon = Icons.AutoMirrored.Default.ArrowBack,
             onLeadingClick = onBackClicked,
         )

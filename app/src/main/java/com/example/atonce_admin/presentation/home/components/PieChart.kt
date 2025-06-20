@@ -14,7 +14,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.atonce_admin.presentation.theme.*
+import com.example.atonce_admin.core.extensions.convertNumbersToArabic
+import com.example.atonce_admin.presentation.common.theme.AtOnceAdminTheme
+import com.example.atonce_admin.presentation.common.theme.RegularFont
+import com.example.atonce_admin.presentation.common.theme.SemiBoldFont
 
 @Composable
 fun PieChartCard(
@@ -93,7 +96,7 @@ fun PieChartCard(
                             )
                             Spacer(modifier = Modifier.width(8.dp))
                             Text(
-                                text = "${item.first}: ${item.second}",
+                                text = "${item.first} ${item.second}".convertNumbersToArabic(),
                                 fontFamily = RegularFont,
                                 style = MaterialTheme.typography.bodyMedium
                             )

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AtOnce-Admin</string>
+    <string name="login">تسجيل الدخول</string>
+    <string name="password">الرقم السرى</string>
+    <string name="email">البريد الالكترونى</string>
+    <string name="to_continue_login_now">قم بتسجيل الدخول للاستمرار</string>
+    <string name="welcome_back">مرحبا بك !</string>
+    <string name="control_panel">لوحة التحكم</string>
+    <string name="customers_count">عدد العملاء</string>
+    <string name="revenue">اجمالى الارباح</string>
+    <string name="order_status_overview">احصائيات الطلبات</string>
+    <string name="profile">الملف الشخصى</string>
+    <string name="customers">العملاء</string>
+    <string name="logout">تسجيل الخروج</string>
+    <string name="see_more">المزيد</string>
+    <string name="orders_count">عدد الطلبات %1$s</string>
+    <string name="contact_us">تواصل معنا</string>
+    <string name="about_us">من نحن</string>
+    <string name="search">قم بالبحث ...</string>
+</resources>

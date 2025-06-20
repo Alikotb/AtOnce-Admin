@@ -13,7 +13,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.outlined.AccountCircle
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.MaterialTheme
@@ -22,10 +21,14 @@ import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.example.atonce_admin.presentation.component.CustomTopBar
-import com.example.atonce_admin.presentation.enums.OrderStatesEnum
+import com.example.atonce_admin.R
+import com.example.atonce_admin.presentation.common.component.CustomTopBar
+import com.example.atonce_admin.core.enums.OrderStatesEnum
+import com.example.atonce_admin.core.extensions.convertNumbersToArabic
+import com.example.atonce_admin.core.extensions.replaceEGPWithArabicCurrency
 import com.example.atonce_admin.presentation.home.components.CustomSection
 import com.example.atonce_admin.presentation.home.components.DrawerContent
 import com.example.atonce_admin.presentation.home.components.OrdersSection
@@ -49,7 +52,7 @@ fun HomeScreen(
     ) {
 
         CustomTopBar(
-            title = "Control Panel",
+            title = stringResource(R.string.control_panel),
             leadingIcon = Icons.Default.Menu,
             onLeadingClick = onDrawerClicked,
             trailingIcon = Icons.Outlined.AccountCircle,
@@ -63,35 +66,35 @@ fun HomeScreen(
 
 
             CustomSection(
-                header = "Customers Count",
-                value = "12",
+                header = stringResource(R.string.customers_count),
+                value = "12".convertNumbersToArabic(),
                 textAlign = TextAlign.Center,
                 bgColor = background
             )
 
             val orders = listOf(
-                Triple("Hamada Pharma Company", 3, "199 EGP"),
-                Triple("Hamada Pharma Company", 3, "199 EGP"),
-                Triple("Hamada Pharma Company", 3, "199 EGP")
+                Triple("Hamada Pharma Company", 3, "199 EGP".convertNumbersToArabic().replaceEGPWithArabicCurrency()),
+                Triple("Hamada Pharma Company", 3, "199 EGP".convertNumbersToArabic().replaceEGPWithArabicCurrency()),
+                Triple("Hamada Pharma Company", 3, "199 EGP".convertNumbersToArabic().replaceEGPWithArabicCurrency())
             )
 
             OrdersSection(orders = orders, onSeeMoreClick = onSeeMoreClick , onItemClick = onOrdersClicked )
 
             CustomSection(
-                header = "Revenue",
-                value = "10,000 EGP",
+                header = stringResource(R.string.revenue),
+                value = "10,000 EGP".convertNumbersToArabic().replaceEGPWithArabicCurrency(),
                 textAlign = TextAlign.Center,
                 bgColor = background
             )
 
 
             PieChartCard(
-                title = "Order Status OverView",
+                title = stringResource(R.string.order_status_overview),
                 data = listOf(
-                    "New Orders" to 120,
-                    "Delivered" to 30,
-                    "Canceled" to 150,
-                    "Returned" to 10
+                    OrderStatesEnum.ORDERED.getLocalizedTitle() to 120,
+                    OrderStatesEnum.DELIVERED.getLocalizedTitle() to 30,
+                    OrderStatesEnum.CANCELED.getLocalizedTitle() to 150,
+                    OrderStatesEnum.RETURNED.getLocalizedTitle() to 10
                 )
             )
 

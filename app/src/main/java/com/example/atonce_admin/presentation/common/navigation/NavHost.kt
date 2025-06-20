@@ -1,12 +1,12 @@
-package com.example.atonce_admin.presentation.navigation
+package com.example.atonce_admin.presentation.common.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.atonce_admin.presentation.enums.OrderStatesEnum
+import com.example.atonce_admin.core.enums.OrderStatesEnum
+import com.example.atonce_admin.presentation.blogger.BloggerScreen
 import com.example.atonce_admin.presentation.orders.OrdersScreen
-import com.example.atonce_admin.presentation.home.HomeScreen
 import com.example.atonce_admin.presentation.home.HomeWithDrawerScreen
 import com.example.atonce_admin.presentation.login.LoginScreen
 import com.example.atonce_admin.presentation.profile.ProfileScreen
@@ -64,7 +64,12 @@ fun SetUpNavHost(
                     popUpTo(0) { inclusive = true }
                     launchSingleTop = true
                 }
-            }){
+            },
+                onContactClicked = {
+                    title , url ->
+                    navController.navigate(ScreenRoute.BloggerScreen(title , url))
+                }
+            ){
                 navController.navigateUp()
             }
         }
@@ -97,6 +102,17 @@ fun SetUpNavHost(
         }
         composable<ScreenRoute.UsersScreen> {
             UsersScreen(
+                onBackClicked = {
+                    navController.navigateUp()
+                }
+            )
+        }
+        composable<ScreenRoute.BloggerScreen> {
+            val title = it.arguments?.getString("title")
+            val url = it.arguments?.getString("url")
+            BloggerScreen(
+                title = title ?: "",
+                url = url ?: "",
                 onBackClicked = {
                     navController.navigateUp()
                 }

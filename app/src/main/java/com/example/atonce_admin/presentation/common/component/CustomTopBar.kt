@@ -1,4 +1,4 @@
-package com.example.atonce_admin.presentation.component
+package com.example.atonce_admin.presentation.common.component
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Icon
@@ -11,7 +11,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.atonce_admin.presentation.theme.MediumFont
+import com.example.atonce_admin.presentation.common.theme.MediumFont
 
 @Composable
 fun CustomTopBar(

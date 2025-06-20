@@ -1,4 +1,4 @@
-package com.example.atonce_admin.presentation.users
+package com.example.atonce_admin.presentation.users.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -26,16 +26,17 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.atonce_admin.presentation.theme.BoldFont
-import com.example.atonce_admin.presentation.theme.GreenColor
-import com.example.atonce_admin.presentation.theme.MediumFont
-import com.example.atonce_admin.presentation.theme.PrimaryColor
-import com.example.atonce_admin.presentation.theme.RegularFont
+import com.example.atonce_admin.core.enums.CustomerStateEnum
+import com.example.atonce_admin.core.extensions.convertNumbersToArabic
+import com.example.atonce_admin.presentation.common.theme.BoldFont
+import com.example.atonce_admin.presentation.common.theme.GreenColor
+import com.example.atonce_admin.presentation.common.theme.MediumFont
+import com.example.atonce_admin.presentation.common.theme.PrimaryColor
+import com.example.atonce_admin.presentation.common.theme.RegularFont
 
 @Composable
 fun UserCard(
-    state: String = "Active",
-    stateColor: Color = GreenColor,
+    state: CustomerStateEnum = CustomerStateEnum.ACTIVE,
     user: String = "Luis Antonio Valencia",
     pharmacy: String = "Manchester Pharmacy",
     address: String = "123 Main Street, City, Country",
@@ -75,12 +76,12 @@ fun UserCard(
                     fontFamily = BoldFont
                 )
                 Text(
-                    text = state,
+                    text = state.getLocalizedValue(),
                     color = Color.White,
                     fontSize = 10.sp,
                     modifier = Modifier
                         .background(
-                            color = stateColor,
+                            color = state.color,
                             shape = RoundedCornerShape(50.dp)
                         )
                         .padding(horizontal = 8.dp),
@@ -100,7 +101,7 @@ fun UserCard(
 
                 )
                 Text(
-                    text = phone, fontSize = 12.sp,
+                    text = phone.convertNumbersToArabic(), fontSize = 12.sp,
                     fontFamily = MediumFont
                 )
             }

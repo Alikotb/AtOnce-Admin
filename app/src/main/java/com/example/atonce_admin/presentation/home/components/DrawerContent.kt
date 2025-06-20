@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Logout
-import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.outlined.AccountCircle
 import androidx.compose.material.icons.outlined.AssignmentReturned
 import androidx.compose.material.icons.outlined.Cancel
@@ -30,13 +29,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
-import com.example.atonce_admin.presentation.enums.OrderStatesEnum
-import com.example.atonce_admin.presentation.theme.MediumFont
-import com.example.atonce_admin.presentation.theme.RegularFont
+import com.example.atonce_admin.R
+import com.example.atonce_admin.core.enums.OrderStatesEnum
+import com.example.atonce_admin.core.extensions.convertNumbersToArabic
+import com.example.atonce_admin.presentation.common.theme.MediumFont
+import com.example.atonce_admin.presentation.common.theme.RegularFont
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
@@ -76,13 +78,13 @@ fun DrawerContent(
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text("Hamada Hamada", color = Color.White , fontSize = 16.sp , fontFamily = MediumFont)
-                Text("01012369852", color = Color.White, fontSize = 14.sp , fontFamily = RegularFont)
+                Text("01012369852".convertNumbersToArabic(), color = Color.White, fontSize = 14.sp , fontFamily = RegularFont)
             }
         }
 
         DrawerItem(
             icon = Icons.Outlined.AccountCircle,
-            title = "Profile",
+            title = stringResource(R.string.profile),
             onClick = onProfileClicked
         )
 
@@ -94,14 +96,14 @@ fun DrawerContent(
 
         DrawerItem(
             icon = Icons.Outlined.People,
-            title = "Customers",
+            title = stringResource(R.string.customers),
             onClick = onCustomerClicked
         )
 
         items.forEach { (type, icon) ->
             DrawerItem(
                 icon = icon,
-                title = type.value,
+                title = type.getLocalizedTitle(),
                 onClick = { onItemClick(type) }
             )
         }
@@ -117,7 +119,7 @@ fun DrawerContent(
 
         DrawerItem(
             icon = Icons.AutoMirrored.Default.Logout,
-            title = "Logout",
+            title = stringResource(R.string.logout),
             iconColor = Color.Red,
             onClick = onLogout
         )

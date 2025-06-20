@@ -10,8 +10,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.atonce_admin.presentation.theme.*
 import androidx.compose.foundation.isSystemInDarkTheme
+import com.example.atonce_admin.presentation.common.theme.AtOnceAdminTheme
+import com.example.atonce_admin.presentation.common.theme.BoldFont
+import com.example.atonce_admin.presentation.common.theme.MediumFont
+import com.example.atonce_admin.presentation.common.theme.PrimaryColor
+import com.example.atonce_admin.presentation.common.theme.backgroundColor
 
 @Composable
 fun CustomSection(
