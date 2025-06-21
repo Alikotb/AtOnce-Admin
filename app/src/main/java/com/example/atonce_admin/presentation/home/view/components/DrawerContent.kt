@@ -1,4 +1,4 @@
-package com.example.atonce_admin.presentation.home.components
+package com.example.atonce_admin.presentation.home.view.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

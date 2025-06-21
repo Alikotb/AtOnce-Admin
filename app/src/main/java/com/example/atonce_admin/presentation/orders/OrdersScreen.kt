@@ -3,6 +3,7 @@ package com.example.atonce_admin.presentation.orders
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.runtime.Composable
@@ -12,11 +13,12 @@ import androidx.compose.ui.unit.dp
 import com.example.atonce_admin.presentation.orders.Component.OrderCard
 import com.example.atonce_admin.presentation.common.component.CustomTopBar
 import com.example.atonce_admin.core.enums.OrderStatesEnum
+import com.example.atonce_admin.domain.entity.OrderEntity
 
 @Composable
 fun OrdersScreen(
-    type : OrderStatesEnum = OrderStatesEnum.ORDERED,
-    title: String = "Hamada Pharma",
+    orders : List<OrderEntity>,
+    title: String ,
     onBackClicked: () -> Unit = {}
 ){
 
@@ -29,19 +31,11 @@ fun OrdersScreen(
             onLeadingClick = onBackClicked
         )
         LazyColumn {
-            items(5) {
+            items(orders){
                 OrderCard(
-                    state = type.getLocalizedValue(),
-                    stateColor = type.color
+                    order = it
                 )
             }
         }
     }
-}
-
-
-@Preview(showBackground = true)
-@Composable
-fun OrdersScreenPreview() {
-    OrdersScreen()
 }

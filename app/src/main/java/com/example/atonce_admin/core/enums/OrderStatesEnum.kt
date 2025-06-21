@@ -32,4 +32,18 @@ enum class OrderStatesEnum(
         return if (Locale.getDefault().language == "ar") arValue else value
     }
 
+    companion object {
+        fun fromName(name: String): OrderStatesEnum {
+            return when (name) {
+                "Ordered" -> ORDERED
+                "Processing" -> PROCESSING
+                "Shipped" -> SHIPPED
+                "Delivered" -> DELIVERED
+                "Cancelled" -> CANCELED
+                "Returned" -> RETURNED
+                else -> ORDERED
+            }
+        }
+    }
+
 }

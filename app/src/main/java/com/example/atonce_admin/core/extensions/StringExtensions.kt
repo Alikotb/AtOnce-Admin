@@ -1,6 +1,8 @@
 package com.example.atonce_admin.core.extensions
 
+import java.text.SimpleDateFormat
 import java.util.Locale
+import java.util.TimeZone
 
 fun String.convertNumbersToArabic(): String {
     return if (Locale.getDefault().language == "ar") {
@@ -25,4 +27,27 @@ fun String.replaceEGPWithArabicCurrency(): String {
     }
 
 }
+
+
+fun String.toLocalizedDateTime(): String {
+    return try {
+        val isoFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSSSX", Locale.US)
+        isoFormat.timeZone = TimeZone.getTimeZone("UTC")
+        val date = isoFormat.parse(this)
+
+        val currentLocale = Locale.getDefault().language
+
+        val pattern = if (currentLocale == "ar") {
+            "dd MMM yyyy - hh:mm a"
+        } else {
+            "MMM dd, yyyy - hh:mm a"
+        }
+
+        val formatter = SimpleDateFormat(pattern, Locale(currentLocale))
+        formatter.format(date!!)
+    } catch (e: Exception) {
+        this
+    }
+}
+
 

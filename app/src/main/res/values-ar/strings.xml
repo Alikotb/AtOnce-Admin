@@ -18,4 +18,6 @@
     <string name="contact_us">تواصل معنا</string>
     <string name="about_us">من نحن</string>
     <string name="search">قم بالبحث ...</string>
+    <string name="no_results_found">\"لا توجد نتائج مطابقة\"</string>
+    <string name="ord">رقم الطلب : %1$s</string>
 </resources>
