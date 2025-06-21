@@ -64,12 +64,12 @@ fun OrdersSection(
                 if (index > 0) {
                     Divider(color = dividerColor)
                 }
-                WarehouseRowItem(
+                /*WarehouseRowItem(
                     companyName = order.first,
                     newOrdersCount = order.second,
                     price = order.third,
                     onItemClick = onItemClick
-                )
+                )*/
             }
         }
     }

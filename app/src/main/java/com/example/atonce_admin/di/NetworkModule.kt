@@ -19,7 +19,10 @@ val networkModule = module {
 
     single {
         get<Retrofit>().create(AuthService::class.java)
+    }
+    single {
         get<Retrofit>().create(RepresentativeService::class.java)
     }
+
 
 }

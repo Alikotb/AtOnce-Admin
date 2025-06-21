@@ -17,12 +17,11 @@ class StatusOrderViewModel(
 
     private val currentItems = mutableListOf<WarehouseEntity>()
 
-    private val pageSize = 20
+    private val pageSize = 10
     private var currentPage = 1
     var isLastPage = false
         private set
     private var isLoading = false
-
 
     fun loadNextPage(representativeId : Int, status : Int) {
         if (isLoading || isLastPage) return

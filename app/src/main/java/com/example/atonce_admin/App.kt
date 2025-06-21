@@ -16,6 +16,7 @@ class App : Application() {
         startKoin {
             androidContext(this@App)
             modules(
+                modules =
                 listOf(
                     networkModule,
                     remoteDataSourceModule,

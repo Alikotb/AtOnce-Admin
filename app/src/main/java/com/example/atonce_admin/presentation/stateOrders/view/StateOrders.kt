@@ -30,20 +30,23 @@ import com.example.atonce_admin.data.Response
 import com.example.atonce_admin.presentation.common.component.CustomSearchBar
 import com.example.atonce_admin.presentation.common.component.CustomTopBar
 import com.example.atonce_admin.presentation.common.component.WarehouseRowItem
+import org.koin.androidx.compose.koinViewModel
 
 
 @Composable
 fun StateOrders(
-    viewModel: StatusOrderViewModel,
+    viewModel: StatusOrderViewModel = koinViewModel(),
     type : OrderStatesEnum = OrderStatesEnum.ORDERED,
     onBackClicked: () -> Unit = {},
-    onItemClick: (OrderStatesEnum) -> Unit = {
-    }
-
+    onItemClick: (OrderStatesEnum) -> Unit = {}
 ){
     val id = 1
 
     var searchText by remember { mutableStateOf("") }
+
+    LaunchedEffect(Unit) {
+        viewModel.loadNextPage(id, type.id)
+    }
 
     val state by viewModel.ordersState.collectAsStateWithLifecycle()
 
@@ -83,8 +86,12 @@ fun StateOrders(
         Spacer(modifier = Modifier.height(16.dp))
 
         when(state){
-            is Response.Error -> LoadingView()
-            Response.Loading -> ErrorView(message = "Something went wrong") {}
+            is Response.Error -> {
+                ErrorView(message = (state as Response.Error).message){
+                    viewModel.loadNextPage(id, type.id)
+                }
+            }
+            is Response.Loading -> LoadingView()
             is Response.Success -> {
                 val warehouses = (state as Response.Success).data
                 LazyColumn(state = listState){

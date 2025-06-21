@@ -4,7 +4,7 @@ import com.example.atonce_admin.domain.usecase.GetOrdersByStatusUseCase
 import org.koin.dsl.module
 
 val useCaseModule = module {
-    single {
+    factory {
         GetOrdersByStatusUseCase(get())
     }
 }
