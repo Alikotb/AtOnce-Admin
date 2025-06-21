@@ -21,6 +21,7 @@ import com.example.atonce_admin.R
 import com.example.atonce_admin.core.enums.OrderStatesEnum
 import com.example.atonce_admin.domain.entity.OrderEntity
 import com.example.atonce_admin.domain.entity.WarehouseEntity
+import com.example.atonce_admin.presentation.common.component.EmptySearchResultView
 import com.example.atonce_admin.presentation.common.component.WarehouseRowItem
 import com.example.atonce_admin.presentation.common.component.WarehouseRowShimmerItem
 import com.example.atonce_admin.presentation.common.theme.MediumFont
@@ -52,13 +53,15 @@ fun WareHousesSection(
                 fontSize = 18.sp,
                 fontFamily = MediumFont
             )
-            Text(
-                text = stringResource(R.string.see_more),
-                color = seeMoreColor,
-                modifier = Modifier.clickable { onSeeMoreClick() },
-                fontSize = 14.sp,
-                fontFamily = RegularFont
-            )
+            if (!warehouses.isEmpty()){
+                Text(
+                    text = stringResource(R.string.see_more),
+                    color = seeMoreColor,
+                    modifier = Modifier.clickable { onSeeMoreClick() },
+                    fontSize = 14.sp,
+                    fontFamily = RegularFont
+                )
+            }
         }
 
         Column(
@@ -68,17 +71,25 @@ fun WareHousesSection(
                 .background(containerColor)
                 .border(1.dp, borderColor, RoundedCornerShape(12.dp))
         ) {
-            warehouses.forEachIndexed { index, order ->
-                if (index > 0) {
-                    Divider(color = dividerColor)
-                }
-                WarehouseRowItem(
-                    warehouse = order,
-                    onItemClick = {
-                        orders , warehouseName ->
-                        onItemClick(orders , warehouseName)
-                    }
+
+            if (warehouses.isEmpty()){
+                EmptySearchResultView(
+                    text = stringResource(R.string.currently_there_are_no_orders)
                 )
+            }
+            else{
+                warehouses.forEachIndexed { index, order ->
+                    if (index > 0) {
+                        Divider(color = dividerColor)
+                    }
+                    WarehouseRowItem(
+                        warehouse = order,
+                        onItemClick = {
+                                orders , warehouseName ->
+                            onItemClick(orders , warehouseName)
+                        }
+                    )
+                }
             }
         }
     }
@@ -108,7 +119,7 @@ fun WareHousesSectionShimmer() {
                     .height(20.dp)
                     .placeholder(
                         visible = true,
-                        color =  shimmerColor,
+                        color = shimmerColor,
                         highlight = PlaceholderHighlight.shimmer()
                     )
             )
@@ -120,7 +131,7 @@ fun WareHousesSectionShimmer() {
                     .height(14.dp)
                     .placeholder(
                         visible = true,
-                        color =  shimmerColor,
+                        color = shimmerColor,
                         highlight = PlaceholderHighlight.shimmer()
                     )
             )

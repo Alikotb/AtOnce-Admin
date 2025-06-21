@@ -12,7 +12,9 @@ import com.example.atonce_admin.R
 import com.example.atonce_admin.presentation.common.theme.MediumFont
 
 @Composable
-fun EmptySearchResultView() {
+fun EmptySearchResultView(
+    text: String = stringResource(R.string.no_results_found)
+) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -20,7 +22,7 @@ fun EmptySearchResultView() {
         contentAlignment = Alignment.Center
     ) {
         Text(
-            text = stringResource(R.string.no_results_found),
+            text = text,
             fontFamily = MediumFont,
             fontSize = 16.sp
         )

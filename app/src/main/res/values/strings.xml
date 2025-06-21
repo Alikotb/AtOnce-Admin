@@ -19,4 +19,5 @@
     <string name="search">Search...</string>
     <string name="no_results_found">No results found</string>
     <string name="ord">ORD#%1$s</string>
+    <string name="currently_there_are_no_orders">Currently there are no orders</string>
 </resources>
