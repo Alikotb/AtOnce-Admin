@@ -1,5 +1,7 @@
 package com.example.atonce_admin.data.remote
 
+import com.example.atonce_admin.data.remote.dto.LoginRequest
+import com.example.atonce_admin.data.remote.dto.LoginResponse
 import com.example.atonce_admin.data.remote.dto.OrderStatusResponse
 import com.example.atonce_admin.data.remote.dto.StatsResponse
 import com.example.atonce_admin.data.remote.service.AuthService
@@ -29,6 +31,12 @@ class RemoteDataSourceImpl(
             representativeService.getOrdersByStatus(representativeId, pageNumber, pageSize, status)
         )
     }
+    override suspend fun login(loginRequest: LoginRequest): Flow<LoginResponse>{
+        return flowOf(
+            authService.login(loginRequest = loginRequest)
+        )
+    }
+
 
 
 }
