@@ -10,6 +10,6 @@ val viewModelModule = module {
         StatusOrderViewModel(get())
     }
     viewModel {
-        LoginViewModel(get())
+        LoginViewModel(get(),get())
     }
 }

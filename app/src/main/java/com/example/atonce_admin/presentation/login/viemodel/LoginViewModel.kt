@@ -3,12 +3,14 @@ package com.example.atonce_admin.presentation.login.viemodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.atonce_admin.data.remote.dto.LoginRequest
+import com.example.atonce_admin.domain.mapper.toEntity
 import com.example.atonce_admin.domain.usecase.GetLoginResponseUseCase
+import com.example.atonce_admin.domain.usecase.SetUserDataUseCase
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 
-class LoginViewModel(private val getLoginResponseUseCase: GetLoginResponseUseCase) : ViewModel() {
+class LoginViewModel(private val getLoginResponseUseCase: GetLoginResponseUseCase,private val setUserDataUseCase: SetUserDataUseCase) : ViewModel() {
     private val _uiState = MutableSharedFlow<String>()
     val uiState:MutableSharedFlow<String> = _uiState
     fun login(email: String, password: String) {
@@ -22,6 +24,7 @@ class LoginViewModel(private val getLoginResponseUseCase: GetLoginResponseUseCas
             }.collect { result->
                 if (!result.message.isNullOrEmpty()) {
                     _uiState.emit(result.message)
+                    setUserDataUseCase(result.toEntity())
                 } else {
                     if(result.errors?.Password.isNullOrEmpty()){
                         _uiState.emit( result.errors?.Email?.first()!!)
