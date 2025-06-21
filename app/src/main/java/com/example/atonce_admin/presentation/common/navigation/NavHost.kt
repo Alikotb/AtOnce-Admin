@@ -8,7 +8,7 @@ import com.example.atonce_admin.core.enums.OrderStatesEnum
 import com.example.atonce_admin.domain.entity.OrderEntity
 import com.example.atonce_admin.presentation.blogger.BloggerScreen
 import com.example.atonce_admin.presentation.orders.OrdersScreen
-import com.example.atonce_admin.presentation.home.HomeWithDrawerScreen
+import com.example.atonce_admin.presentation.home.view.HomeWithDrawerScreen
 import com.example.atonce_admin.presentation.login.LoginScreen
 import com.example.atonce_admin.presentation.profile.ProfileScreen
 import com.example.atonce_admin.presentation.stateOrders.view.StateOrders
@@ -38,11 +38,11 @@ fun SetUpNavHost(
                 onProfileClicked = {
                     navController.navigate(ScreenRoute.ProfileScreen)
                 },
-                onOrdersClicked = {
-
+                onOrdersClicked = { orders, title ->
                     navController.navigate(
                         ScreenRoute.OrdersScreen(
-                            Gson().toJson(""),""
+                            Gson().toJson(orders),
+                            title
                         )
                     )
                 },
@@ -107,7 +107,7 @@ fun SetUpNavHost(
         composable<ScreenRoute.OrdersScreen> {
             val orders = it.arguments?.getString("orders")
             val ordersList = Gson().fromJson(orders, Array<OrderEntity>::class.java).toList()
-            val title = it.arguments?.getString("title")?: ""
+            val title = it.arguments?.getString("title") ?: ""
             OrdersScreen(
                 orders = ordersList,
                 title = title,

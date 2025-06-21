@@ -1,4 +1,4 @@
-package com.example.atonce_admin.presentation.home.components
+package com.example.atonce_admin.presentation.home.view.components
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
@@ -18,6 +18,9 @@ import com.example.atonce_admin.core.extensions.convertNumbersToArabic
 import com.example.atonce_admin.presentation.common.theme.AtOnceAdminTheme
 import com.example.atonce_admin.presentation.common.theme.RegularFont
 import com.example.atonce_admin.presentation.common.theme.SemiBoldFont
+import com.google.accompanist.placeholder.PlaceholderHighlight
+import com.google.accompanist.placeholder.material3.placeholder
+import com.google.accompanist.placeholder.material3.shimmer
 
 @Composable
 fun PieChartCard(
@@ -96,7 +99,7 @@ fun PieChartCard(
                             )
                             Spacer(modifier = Modifier.width(8.dp))
                             Text(
-                                text = "${item.first} ${item.second}".convertNumbersToArabic(),
+                                text = "${item.first}  ${item.second}".convertNumbersToArabic(),
                                 fontFamily = RegularFont,
                                 style = MaterialTheme.typography.bodyMedium
                             )
@@ -119,5 +122,81 @@ fun PieChartCardPreview() {
             "Returned" to 10
         )
         PieChartCard(title = "Orders Summary", data = sampleData)
+    }
+}
+
+
+@Composable
+fun PieChartCardShimmer(
+    modifier: Modifier = Modifier
+) {
+    val isDark = isSystemInDarkTheme()
+    val shimmerColor = if (isDark) Color(0xFF444444) else Color(0xFFC0C0C0)
+
+    Column(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(16.dp)
+    ) {
+        Spacer(
+            modifier = Modifier
+                .width(120.dp)
+                .height(20.dp)
+                .placeholder(
+                    visible = true,
+                    color = shimmerColor,
+                    highlight = PlaceholderHighlight.shimmer()
+                )
+        )
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp)
+        ) {
+            Spacer(
+                modifier = Modifier
+                    .size(140.dp)
+                    .placeholder(
+                        visible = true,
+                        color = shimmerColor,
+                        highlight = PlaceholderHighlight.shimmer()
+                    )
+            )
+
+            Spacer(modifier = Modifier.width(16.dp))
+
+            Column(
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                repeat(4) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Spacer(
+                            modifier = Modifier
+                                .size(10.dp)
+                                .placeholder(
+                                    visible = true,
+                                    color = shimmerColor,
+                                    highlight = PlaceholderHighlight.shimmer()
+                                )
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Spacer(
+                            modifier = Modifier
+                                .width(100.dp)
+                                .height(14.dp)
+                                .placeholder(
+                                    visible = true,
+                                    color = shimmerColor,
+                                    highlight = PlaceholderHighlight.shimmer()
+                                )
+                        )
+                    }
+                }
+            }
+        }
     }
 }
