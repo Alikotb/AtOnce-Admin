@@ -43,4 +43,8 @@ class RepositoryImpl(
         return localDataSource.getUserData()
     }
 
+    override fun freeUserData() {
+        localDataSource.freeUserData()
+    }
+
 }

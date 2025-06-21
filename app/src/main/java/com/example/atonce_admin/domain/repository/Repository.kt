@@ -11,4 +11,5 @@ interface Repository {
     suspend fun login(loginRequest: LoginRequest): Flow<LoginResponse>
     fun saveUserData(obj: UserModel)
     fun getUserData(): UserModel
+    fun freeUserData()
 }

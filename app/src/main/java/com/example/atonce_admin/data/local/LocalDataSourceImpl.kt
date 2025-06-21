@@ -28,4 +28,15 @@ class LocalDataSourceImpl (private val myShared: AppSharedPreference): LocalData
             email =  myShared.fetchData("email","")
         )
     }
+
+    override fun freeUserData() {
+        myShared.saveData("address", "")
+        myShared.saveData("code", "")
+        myShared.saveData("email", "")
+        myShared.saveData("governorate", "")
+        myShared.saveData("id", -1)
+        myShared.saveData("name", "")
+        myShared.saveData("phone", "")
+        myShared.saveData("token", "")
+    }
 }

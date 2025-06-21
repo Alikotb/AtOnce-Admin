@@ -6,5 +6,7 @@ import com.example.atonce_admin.domain.entity.UserModel
 interface LocalDataSource {
     fun saveUserData(obj: UserModel)
     fun getUserData(): UserModel
+    fun freeUserData()
+
 
 }
