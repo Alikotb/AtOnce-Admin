@@ -21,7 +21,6 @@ interface Repository {
         pageSize: Int,
         status: Int
     ): Flow<ControlPanelEntity>
-    suspend fun getOrdersByStatus(representativeId: Int, pageNumber: Int, pageSize: Int, status: Int): Flow<OrderStateEntity>
     suspend fun login(loginRequest: LoginRequest): Flow<LoginResponse>
     fun saveUserData(obj: UserModel)
     fun getUserData(): UserModel

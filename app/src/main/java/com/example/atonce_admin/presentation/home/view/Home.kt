@@ -57,7 +57,6 @@ fun HomeScreen(
     val status = OrderStatesEnum.ORDERED
     val background = MaterialTheme.colorScheme.background
 
-
     LaunchedEffect(Unit) {
         viewModel.getControlPanelData(
             representativeId = id,
