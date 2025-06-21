@@ -16,23 +16,24 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.atonce_admin.R
 import com.example.atonce_admin.core.extensions.convertNumbersToArabic
+import com.example.atonce_admin.core.extensions.replaceEGPWithArabicCurrency
+import com.example.atonce_admin.domain.entity.OrderEntity
+import com.example.atonce_admin.domain.entity.WarehouseEntity
 import com.example.atonce_admin.presentation.common.theme.MediumFont
 import com.example.atonce_admin.presentation.common.theme.PrimaryColor
 import com.example.atonce_admin.presentation.common.theme.RegularFont
 
 @Composable
-fun OrderRowItem(
-    companyName: String,
-    newOrdersCount: Int,
-    price: String,
+fun WarehouseRowItem(
     modifier: Modifier = Modifier,
-    onItemClick: () -> Unit = {}
+    warehouse : WarehouseEntity,
+    onItemClick: (List<OrderEntity>) -> Unit = {}
 ) {
     Row(
         modifier = modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp, horizontal = 12.dp)
-            .clickable { onItemClick() },
+            .clickable { onItemClick(warehouse.orders) },
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.Bottom
     ) {
@@ -40,12 +41,12 @@ fun OrderRowItem(
             verticalArrangement = Arrangement.spacedBy(2.dp)
         ){
             Text(
-                text = companyName,
+                text = warehouse.warehouseName,
                 fontFamily = MediumFont,
                 fontSize = 14.sp
             )
             Text(
-                text = stringResource(R.string.orders_count, newOrdersCount),
+                text = stringResource(R.string.orders_count, warehouse.ordersCount),
                 color = PrimaryColor,
                 fontFamily = RegularFont,
                 fontSize = 12.sp
@@ -53,20 +54,9 @@ fun OrderRowItem(
         }
 
         Text(
-            text = price,
+            text = "${warehouse.totalPrice}".convertNumbersToArabic().replaceEGPWithArabicCurrency(),
             fontFamily = MediumFont,
             fontSize = 14.sp
         )
     }
 }
-
-@Preview(showBackground = true)
-@Composable
-fun OrderRowItemPreview() {
-    OrderRowItem(
-        companyName = "Company Name",
-        newOrdersCount = 10,
-        price = "$100.00"
-    )
-}
-

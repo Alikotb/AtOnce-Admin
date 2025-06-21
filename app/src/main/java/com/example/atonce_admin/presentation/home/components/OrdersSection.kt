@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.atonce_admin.R
 import com.example.atonce_admin.core.enums.OrderStatesEnum
-import com.example.atonce_admin.presentation.common.component.OrderRowItem
+import com.example.atonce_admin.presentation.common.component.WarehouseRowItem
 import com.example.atonce_admin.presentation.common.theme.MediumFont
 import com.example.atonce_admin.presentation.common.theme.RegularFont
 
@@ -64,7 +64,7 @@ fun OrdersSection(
                 if (index > 0) {
                     Divider(color = dividerColor)
                 }
-                OrderRowItem(
+                WarehouseRowItem(
                     companyName = order.first,
                     newOrdersCount = order.second,
                     price = order.third,

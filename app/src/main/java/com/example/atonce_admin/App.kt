@@ -4,6 +4,8 @@ import android.app.Application
 import com.example.atonce_admin.di.networkModule
 import com.example.atonce_admin.di.remoteDataSourceModule
 import com.example.atonce_admin.di.repositoryModule
+import com.example.atonce_admin.di.useCaseModule
+import com.example.atonce_admin.di.viewModelModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
@@ -17,7 +19,9 @@ class App : Application() {
                 listOf(
                     networkModule,
                     remoteDataSourceModule,
-                    repositoryModule
+                    repositoryModule,
+                    useCaseModule,
+                    viewModelModule
                 )
             )
         }
