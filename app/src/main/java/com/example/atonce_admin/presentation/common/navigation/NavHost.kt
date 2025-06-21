@@ -1,5 +1,6 @@
 package com.example.atonce_admin.presentation.common.navigation
 
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -19,13 +20,14 @@ import com.google.gson.Gson
 @Composable
 fun SetUpNavHost(
     navController: NavHostController,
+    snackbarHostState: SnackbarHostState,
 ) {
     NavHost(
         navController = navController,
         startDestination = ScreenRoute.LoginScreen
     ) {
         composable<ScreenRoute.LoginScreen> {
-            LoginScreen() {
+            LoginScreen(snackbarHostState=snackbarHostState){
                 navController.navigate(ScreenRoute.HomeScreen) {
                     popUpTo(0) { inclusive = true }
                     launchSingleTop = true
