@@ -5,6 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.atonce_admin.core.enums.OrderStatesEnum
+import com.example.atonce_admin.domain.entity.OrderEntity
 import com.example.atonce_admin.presentation.blogger.BloggerScreen
 import com.example.atonce_admin.presentation.orders.OrdersScreen
 import com.example.atonce_admin.presentation.home.HomeWithDrawerScreen
@@ -24,7 +25,7 @@ fun SetUpNavHost(
         startDestination = ScreenRoute.LoginScreen
     ) {
         composable<ScreenRoute.LoginScreen> {
-            LoginScreen(){
+            LoginScreen() {
                 navController.navigate(ScreenRoute.HomeScreen) {
                     popUpTo(0) { inclusive = true }
                     launchSingleTop = true
@@ -38,12 +39,21 @@ fun SetUpNavHost(
                     navController.navigate(ScreenRoute.ProfileScreen)
                 },
                 onOrdersClicked = {
-                    navController.navigate(ScreenRoute.OrdersScreen(
-                        Gson().toJson(OrderStatesEnum.ORDERED)
-                    ))
+
+                    navController.navigate(
+                        ScreenRoute.OrdersScreen(
+                            Gson().toJson(""),""
+                        )
+                    )
                 },
                 onSeeMoreClick = {
-                    navController.navigate(ScreenRoute.StateOrdersScreen(Gson().toJson(OrderStatesEnum.ORDERED)))
+                    navController.navigate(
+                        ScreenRoute.StateOrdersScreen(
+                            Gson().toJson(
+                                OrderStatesEnum.ORDERED
+                            )
+                        )
+                    )
                 },
                 onLogout = {
                     navController.navigate(ScreenRoute.LoginScreen) {
@@ -59,17 +69,17 @@ fun SetUpNavHost(
             )
         }
         composable<ScreenRoute.ProfileScreen> {
-            ProfileScreen(onLogout = {
-                navController.navigate(ScreenRoute.LoginScreen) {
-                    popUpTo(0) { inclusive = true }
-                    launchSingleTop = true
+            ProfileScreen(
+                onLogout = {
+                    navController.navigate(ScreenRoute.LoginScreen) {
+                        popUpTo(0) { inclusive = true }
+                        launchSingleTop = true
+                    }
+                },
+                onContactClicked = { title, url ->
+                    navController.navigate(ScreenRoute.BloggerScreen(title, url))
                 }
-            },
-                onContactClicked = {
-                    title , url ->
-                    navController.navigate(ScreenRoute.BloggerScreen(title , url))
-                }
-            ){
+            ) {
                 navController.navigateUp()
             }
         }
@@ -82,19 +92,25 @@ fun SetUpNavHost(
                 onBackClicked = {
                     navController.navigateUp()
                 },
-                onItemClick = {
-                    navController.navigate(ScreenRoute.OrdersScreen(
-                        Gson().toJson(it)
-                    ))
+                onItemClick = { orders, title ->
+                    navController.navigate(
+                        ScreenRoute.OrdersScreen(
+                            Gson().toJson(orders),
+                            title
+                        )
+
+                    )
                 }
             )
         }
 
         composable<ScreenRoute.OrdersScreen> {
-            val type = it.arguments?.getString("type")
-            val state = Gson().fromJson(type, OrderStatesEnum::class.java)
+            val orders = it.arguments?.getString("orders")
+            val ordersList = Gson().fromJson(orders, Array<OrderEntity>::class.java).toList()
+            val title = it.arguments?.getString("title")?: ""
             OrdersScreen(
-                type = state,
+                orders = ordersList,
+                title = title,
                 onBackClicked = {
                     navController.navigateUp()
                 }

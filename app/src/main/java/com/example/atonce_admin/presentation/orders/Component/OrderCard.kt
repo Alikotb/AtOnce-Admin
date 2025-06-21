@@ -17,9 +17,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.atonce_admin.R
+import com.example.atonce_admin.core.enums.OrderStatesEnum
+import com.example.atonce_admin.core.extensions.convertNumbersToArabic
+import com.example.atonce_admin.core.extensions.replaceEGPWithArabicCurrency
+import com.example.atonce_admin.core.extensions.toLocalizedDateTime
+import com.example.atonce_admin.domain.entity.OrderEntity
 import com.example.atonce_admin.presentation.common.theme.BoldFont
 import com.example.atonce_admin.presentation.common.theme.MediumFont
 import com.example.atonce_admin.presentation.common.theme.PrimaryColor
@@ -27,16 +34,7 @@ import com.example.atonce_admin.presentation.common.theme.RegularFont
 
 @Composable
 fun OrderCard(
-    state: String = "Cancelled",
-    stateColor: Color = Color.Red,
-    date: String = "June 12, 2025 - 15:36 PM",
-    orderNumber: String = "#ORD-12345",
-    user: String = "Luis Antonio Valencia",
-    pharmacy: String = "Manchester Pharmacy",
-    address: String = "123 Main Street, City, Country",
-    price: String = "630.00 EGP",
-
-
+    order : OrderEntity
 ) {
 
     val isDark = isSystemInDarkTheme()
@@ -46,6 +44,9 @@ fun OrderCard(
     } else {
         MaterialTheme.colorScheme.background
     }
+
+    val type = OrderStatesEnum.fromName(order.orderState)
+
     Card(
         shape = RoundedCornerShape(8.dp)
         ,colors = CardDefaults.cardColors(containerColor = containerColor)
@@ -65,38 +66,38 @@ fun OrderCard(
                 verticalAlignment = Alignment.CenterVertically
             ){
                 Text(
-                    text = state,
+                    text = type.getLocalizedValue(),
                     color = Color.White,
                     fontSize = 12.sp,
                     modifier = Modifier
                         .background(
-                            color = stateColor,
+                            color = type.color,
                             shape = RoundedCornerShape(4.dp)
                         )
                         .padding(4.dp),
                     fontFamily = BoldFont
                 )
-                Text(text = orderNumber ,
+                Text(text = stringResource(R.string.ord, order.orderId).convertNumbersToArabic() ,
                     fontSize = 14.sp ,
                     color = PrimaryColor,
                     fontFamily = BoldFont
                 )
             }
-            Text(text = date
+            Text(text = order.createdAt.toLocalizedDateTime().convertNumbersToArabic()
                 ,fontSize = 12.sp
             ,fontFamily = MediumFont
                 ,color = Color.Gray
             )
-            Text(text = user, fontSize = 12.sp , fontFamily = RegularFont)
-            Text(text = pharmacy, fontSize = 12.sp ,
+            Text(text = order.userName, fontSize = 12.sp , fontFamily = RegularFont)
+            Text(text = order.pharmacyName, fontSize = 12.sp ,
                 color = PrimaryColor,fontFamily = MediumFont)
             Row(
                 modifier = Modifier.fillMaxWidth()
                 ,horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ){
-                Text(text = address , fontSize = 12.sp , fontFamily = RegularFont)
-                Text(text = price ,
+                Text(text = order.warehouseName , fontSize = 12.sp , fontFamily = RegularFont)
+                Text(text = "${order.totalPrice} EGP".convertNumbersToArabic().replaceEGPWithArabicCurrency() ,
                     fontSize = 14.sp ,
                     color = PrimaryColor,
                     fontFamily = BoldFont
@@ -104,11 +105,4 @@ fun OrderCard(
             }
         }
     }
-}
-
-
-@Preview(showBackground = true)
-@Composable
-fun OrderCardPreview() {
-    OrderCard()
 }

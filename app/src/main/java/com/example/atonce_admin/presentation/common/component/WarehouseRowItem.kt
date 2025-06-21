@@ -27,13 +27,13 @@ import com.example.atonce_admin.presentation.common.theme.RegularFont
 fun WarehouseRowItem(
     modifier: Modifier = Modifier,
     warehouse : WarehouseEntity,
-    onItemClick: (List<OrderEntity>) -> Unit = {}
+    onItemClick: (List<OrderEntity> , String) -> Unit
 ) {
     Row(
         modifier = modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp, horizontal = 12.dp)
-            .clickable { onItemClick(warehouse.orders) },
+            .clickable { onItemClick(warehouse.orders , warehouse.warehouseName) },
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.Bottom
     ) {
@@ -54,7 +54,7 @@ fun WarehouseRowItem(
         }
 
         Text(
-            text = "${warehouse.totalPrice}".convertNumbersToArabic().replaceEGPWithArabicCurrency(),
+            text = "${warehouse.totalPrice} EGP".convertNumbersToArabic().replaceEGPWithArabicCurrency(),
             fontFamily = MediumFont,
             fontSize = 14.sp
         )
