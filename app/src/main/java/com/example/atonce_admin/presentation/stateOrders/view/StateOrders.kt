@@ -30,6 +30,7 @@ import com.example.atonce_admin.data.Response
 import com.example.atonce_admin.presentation.common.component.CustomSearchBar
 import com.example.atonce_admin.presentation.common.component.CustomTopBar
 import com.example.atonce_admin.presentation.common.component.WarehouseRowItem
+import com.example.atonce_admin.presentation.common.component.WarehouseRowShimmerItem
 import org.koin.androidx.compose.koinViewModel
 
 
@@ -91,7 +92,13 @@ fun StateOrders(
                     viewModel.loadNextPage(id, type.id)
                 }
             }
-            is Response.Loading -> LoadingView()
+            is Response.Loading -> {
+                LazyColumn {
+                    items(6) {
+                        WarehouseRowShimmerItem()
+                    }
+                }
+            }
             is Response.Success -> {
                 val warehouses = (state as Response.Success).data
                 LazyColumn(state = listState){
@@ -106,16 +113,6 @@ fun StateOrders(
                 }
             }
         }
-    }
-}
-
-@Composable
-fun LoadingView() {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = androidx.compose.ui.Alignment.Center
-    ) {
-        CircularProgressIndicator()
     }
 }
 

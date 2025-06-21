@@ -60,10 +60,10 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
 
     //icons
-    implementation ("androidx.compose.material:material-icons-extended:1.4.0")
+    implementation("androidx.compose.material:material-icons-extended:1.4.0")
 
     //Glide
-    implementation ("com.github.bumptech.glide:compose:1.0.0-beta01")
+    implementation("com.github.bumptech.glide:compose:1.0.0-beta01")
 
     //QrGenerator
     implementation("io.github.g0dkar:qrcode-kotlin-android:3.2.0")
@@ -85,14 +85,14 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose-android:2.8.7")
 
     // retrofit
-    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
 
     val compose_version = "1.0.0"
-    implementation ("androidx.compose.runtime:runtime-livedata:$compose_version")
+    implementation("androidx.compose.runtime:runtime-livedata:$compose_version")
 
     //coil
-    implementation ("io.coil-kt:coil-compose:2.6.0")
+    implementation("io.coil-kt:coil-compose:2.6.0")
 
     //koin
     val koin_android_version = "4.0.2"
@@ -100,6 +100,8 @@ dependencies {
     implementation("io.insert-koin:koin-androidx-compose:$koin_android_version")
     implementation("io.insert-koin:koin-androidx-compose-navigation:$koin_android_version")
 
+    //shimmer
+    implementation("com.google.accompanist:accompanist-placeholder-material3:0.34.0")
 
 
 }
