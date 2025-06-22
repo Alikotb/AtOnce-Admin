@@ -26,7 +26,7 @@ import com.example.atonce_admin.presentation.common.theme.BoldFont
 import com.example.atonce_admin.presentation.common.theme.PrimaryColor
 import com.example.atonce_admin.presentation.common.theme.RegularFont
 import com.example.atonce_admin.presentation.login.components.CustomTextField
-import com.example.atonce_admin.presentation.login.components.LogoIcon
+import com.example.atonce_admin.presentation.common.component.LogoIcon
 import com.example.atonce_admin.presentation.login.components.PrimaryButton
 import com.example.atonce_admin.presentation.login.viemodel.LoginViewModel
 import org.koin.androidx.compose.koinViewModel
