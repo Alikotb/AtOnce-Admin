@@ -3,6 +3,7 @@ package com.example.atonce_admin.di
 import StatusOrderViewModel
 import com.example.atonce_admin.presentation.home.viewModel.HomeViewModel
 import com.example.atonce_admin.presentation.login.viemodel.LoginViewModel
+import com.example.atonce_admin.presentation.splash.veiwModel.SplashViewModel
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 
@@ -11,10 +12,14 @@ val viewModelModule = module {
         StatusOrderViewModel(get())
     }
     viewModel {
-        HomeViewModel(get() , get())
+        HomeViewModel(get() , get() , get())
     }
 
     viewModel {
         LoginViewModel(get(),get())
+    }
+
+    viewModel {
+        SplashViewModel(get())
     }
 }

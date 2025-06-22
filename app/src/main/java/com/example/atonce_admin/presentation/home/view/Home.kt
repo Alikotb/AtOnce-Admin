@@ -188,16 +188,17 @@ fun HomeWithDrawerScreen(
 
                     },
                     onLogout = {
-                        onLogout()
                         scope.launch { drawerState.close() }
+                        viewModel.logout()
+                        onLogout()
                     },
                     onProfileClicked = {
-                        onProfileClicked()
                         scope.launch { drawerState.close() }
+                        onProfileClicked()
                     },
                     onCustomerClicked = {
-                        onCustomerClicked()
                         scope.launch { drawerState.close() }
+                        onCustomerClicked()
                     }
                 )
             }

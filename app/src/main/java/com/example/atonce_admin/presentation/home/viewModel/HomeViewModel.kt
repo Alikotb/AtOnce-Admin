@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.atonce_admin.data.Response
 import com.example.atonce_admin.domain.entity.ControlPanelEntity
 import com.example.atonce_admin.domain.entity.UserEntity
+import com.example.atonce_admin.domain.usecase.FreeUserDataUseCase
 import com.example.atonce_admin.domain.usecase.GetControlPanelDataUseCase
 import com.example.atonce_admin.domain.usecase.GetUserDataUseCase
 import kotlinx.coroutines.Dispatchers
@@ -15,7 +16,8 @@ import kotlinx.coroutines.launch
 
 class HomeViewModel(
     private val getControlPanelDataUseCase: GetControlPanelDataUseCase
-    ,private val getUserDataUseCase: GetUserDataUseCase
+    ,private val getUserDataUseCase: GetUserDataUseCase,
+    private val logoutUseCase: FreeUserDataUseCase
 ) : ViewModel() {
 
     private var _controlPanelDataState = MutableStateFlow<Response<ControlPanelEntity>>(Response.Loading)
@@ -37,7 +39,10 @@ class HomeViewModel(
                     _controlPanelDataState.value = Response.Success(it)
                 }
         }
+    }
 
+    fun logout(){
+        logoutUseCase()
     }
 
 

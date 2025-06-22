@@ -12,6 +12,7 @@ import com.example.atonce_admin.presentation.orders.OrdersScreen
 import com.example.atonce_admin.presentation.home.view.HomeWithDrawerScreen
 import com.example.atonce_admin.presentation.login.LoginScreen
 import com.example.atonce_admin.presentation.profile.ProfileScreen
+import com.example.atonce_admin.presentation.splash.view.SplashScreen
 import com.example.atonce_admin.presentation.stateOrders.view.StateOrders
 import com.example.atonce_admin.presentation.users.UsersScreen
 import com.google.gson.Gson
@@ -24,8 +25,25 @@ fun SetUpNavHost(
 ) {
     NavHost(
         navController = navController,
-        startDestination = ScreenRoute.LoginScreen
+        startDestination = ScreenRoute.SplashScreen
     ) {
+
+        composable<ScreenRoute.SplashScreen> {
+            SplashScreen{
+                if (it) {
+                    navController.navigate(ScreenRoute.HomeScreen) {
+                        popUpTo(0) { inclusive = true }
+                        launchSingleTop = true
+                    }
+                } else {
+                    navController.navigate(ScreenRoute.LoginScreen) {
+                        popUpTo(0) { inclusive = true }
+                        launchSingleTop = true
+                    }
+                }
+            }
+        }
+
         composable<ScreenRoute.LoginScreen> {
             LoginScreen(snackbarHostState=snackbarHostState){
                 navController.navigate(ScreenRoute.HomeScreen) {

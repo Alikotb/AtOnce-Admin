@@ -1,4 +1,5 @@
-package com.example.atonce_admin.presentation.login.components
+
+package com.example.atonce_admin.presentation.common.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
