@@ -13,7 +13,7 @@ import com.example.atonce_admin.presentation.home.view.HomeWithDrawerScreen
 import com.example.atonce_admin.presentation.login.LoginScreen
 import com.example.atonce_admin.presentation.profile.ProfileScreen
 import com.example.atonce_admin.presentation.stateOrders.view.StateOrders
-import com.example.atonce_admin.presentation.users.UsersScreen
+import com.example.atonce_admin.presentation.users.view.UsersScreen
 import com.google.gson.Gson
 
 

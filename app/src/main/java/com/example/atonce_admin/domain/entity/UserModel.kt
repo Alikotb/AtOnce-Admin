@@ -9,5 +9,4 @@ data class UserModel(
     val name: String,
     val phone: String,
     val token: String?,
-
-    )
+)
