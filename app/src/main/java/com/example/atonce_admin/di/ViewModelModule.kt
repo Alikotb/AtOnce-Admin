@@ -11,7 +11,7 @@ val viewModelModule = module {
         StatusOrderViewModel(get())
     }
     viewModel {
-        HomeViewModel(get())
+        HomeViewModel(get() , get())
     }
 
     viewModel {

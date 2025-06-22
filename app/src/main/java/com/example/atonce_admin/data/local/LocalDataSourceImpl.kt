@@ -1,10 +1,10 @@
 package com.example.atonce_admin.data.local
 
 import com.example.atonce_admin.data.local.shared_preference.AppSharedPreference
-import com.example.atonce_admin.domain.entity.UserModel
+import com.example.atonce_admin.domain.entity.UserEntity
 
 class LocalDataSourceImpl (private val myShared: AppSharedPreference): LocalDataSource {
-    override fun saveUserData(obj: UserModel){
+    override fun saveUserData(obj: UserEntity){
         myShared.saveData("address",obj.address)
         myShared.saveData("code",obj.code)
         myShared.saveData("email",obj.email)
@@ -16,8 +16,8 @@ class LocalDataSourceImpl (private val myShared: AppSharedPreference): LocalData
 
 
     }
-    override fun getUserData(): UserModel{
-        return UserModel(
+    override fun getUserData(): UserEntity{
+        return UserEntity(
             address = myShared.fetchData("address",""),
             name = myShared.fetchData("name",""),
             governorate = myShared.fetchData("governorate",""),

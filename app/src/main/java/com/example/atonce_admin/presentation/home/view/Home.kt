@@ -47,19 +47,17 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun HomeScreen(
-    viewModel: HomeViewModel = koinViewModel(),
+    viewModel: HomeViewModel,
     onDrawerClicked: () -> Unit,
     onProfileClicked: () -> Unit,
     onOrdersClicked: (List<OrderEntity> , String) -> Unit,
     onSeeMoreClick: () -> Unit
 ) {
-    val  id = 1
     val status = OrderStatesEnum.ORDERED
     val background = MaterialTheme.colorScheme.background
 
     LaunchedEffect(Unit) {
         viewModel.getControlPanelData(
-            representativeId = id,
             pageNumber = 1,
             pageSize = 10,
             status = status.id
@@ -97,7 +95,6 @@ fun HomeScreen(
             is Response.Error -> {
                 ErrorView(message = (state.value as Response.Error).message){
                     viewModel.getControlPanelData(
-                        representativeId = id,
                         pageNumber = 1,
                         pageSize = 10,
                         status = status.id)
@@ -163,6 +160,7 @@ fun HomeScreen(
 
 @Composable
 fun HomeWithDrawerScreen(
+    viewModel: HomeViewModel = koinViewModel(),
     onProfileClicked: () -> Unit,
     onCustomerClicked: () -> Unit,
     onOrdersClicked: (List<OrderEntity> , String) -> Unit,
@@ -183,6 +181,7 @@ fun HomeWithDrawerScreen(
                     .background(MaterialTheme.colorScheme.surface)
             ) {
                 DrawerContent(
+                    userData = viewModel.userData,
                     onItemClick = {
                         title -> onItemClicked(title)
                         scope.launch { drawerState.close() }
@@ -205,6 +204,7 @@ fun HomeWithDrawerScreen(
         }
     ) {
         HomeScreen(
+            viewModel = viewModel,
             onDrawerClicked = { scope.launch { drawerState.open() } },
             onProfileClicked = onProfileClicked,
             onOrdersClicked = {

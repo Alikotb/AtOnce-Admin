@@ -6,7 +6,7 @@ import com.example.atonce_admin.domain.entity.ControlPanelEntity
 import com.example.atonce_admin.data.remote.dto.LoginRequest
 import com.example.atonce_admin.data.remote.dto.LoginResponse
 import com.example.atonce_admin.domain.entity.OrderStateEntity
-import com.example.atonce_admin.domain.entity.UserModel
+import com.example.atonce_admin.domain.entity.UserEntity
 import com.example.atonce_admin.domain.mapper.toEntity
 import com.example.atonce_admin.domain.repository.Repository
 import kotlinx.coroutines.flow.Flow
@@ -37,11 +37,11 @@ class RepositoryImpl(
         return remoteDataSource.login(loginRequest = loginRequest)
     }
 
-    override fun saveUserData(obj: UserModel) {
+    override fun saveUserData(obj: UserEntity) {
         localDataSource.saveUserData(obj)
     }
 
-    override fun getUserData(): UserModel {
+    override fun getUserData(): UserEntity {
         return localDataSource.getUserData()
     }
 

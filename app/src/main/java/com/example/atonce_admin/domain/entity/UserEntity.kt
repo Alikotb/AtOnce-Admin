@@ -1,6 +1,6 @@
 package com.example.atonce_admin.domain.entity
 
-data class UserModel(
+data class UserEntity(
     val address: String,
     val code: String,
     val email: String,
@@ -9,5 +9,4 @@ data class UserModel(
     val name: String,
     val phone: String,
     val token: String?,
-
     )

@@ -37,12 +37,14 @@ import com.bumptech.glide.integration.compose.GlideImage
 import com.example.atonce_admin.R
 import com.example.atonce_admin.core.enums.OrderStatesEnum
 import com.example.atonce_admin.core.extensions.convertNumbersToArabic
+import com.example.atonce_admin.domain.entity.UserEntity
 import com.example.atonce_admin.presentation.common.theme.MediumFont
 import com.example.atonce_admin.presentation.common.theme.RegularFont
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun DrawerContent(
+    userData : UserEntity,
     onProfileClicked: () -> Unit,
     onCustomerClicked: () -> Unit,
     onItemClick: (OrderStatesEnum) -> Unit,
@@ -77,8 +79,8 @@ fun DrawerContent(
                         .clip(CircleShape)
                 )
                 Spacer(modifier = Modifier.height(8.dp))
-                Text("Hamada Hamada", color = Color.White , fontSize = 16.sp , fontFamily = MediumFont)
-                Text("01012369852".convertNumbersToArabic(), color = Color.White, fontSize = 14.sp , fontFamily = RegularFont)
+                Text(userData.name, color = Color.White , fontSize = 16.sp , fontFamily = MediumFont)
+                Text(userData.phone.convertNumbersToArabic(), color = Color.White, fontSize = 14.sp , fontFamily = RegularFont)
             }
         }
 

@@ -4,7 +4,7 @@ import com.example.atonce_admin.domain.entity.ControlPanelEntity
 import com.example.atonce_admin.data.remote.dto.LoginRequest
 import com.example.atonce_admin.data.remote.dto.LoginResponse
 import com.example.atonce_admin.domain.entity.OrderStateEntity
-import com.example.atonce_admin.domain.entity.UserModel
+import com.example.atonce_admin.domain.entity.UserEntity
 import kotlinx.coroutines.flow.Flow
 
 interface Repository {
@@ -22,7 +22,7 @@ interface Repository {
         status: Int
     ): Flow<ControlPanelEntity>
     suspend fun login(loginRequest: LoginRequest): Flow<LoginResponse>
-    fun saveUserData(obj: UserModel)
-    fun getUserData(): UserModel
+    fun saveUserData(obj: UserEntity)
+    fun getUserData(): UserEntity
     fun freeUserData()
 }

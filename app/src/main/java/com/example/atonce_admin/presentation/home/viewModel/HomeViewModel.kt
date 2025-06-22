@@ -4,7 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.atonce_admin.data.Response
 import com.example.atonce_admin.domain.entity.ControlPanelEntity
+import com.example.atonce_admin.domain.entity.UserEntity
 import com.example.atonce_admin.domain.usecase.GetControlPanelDataUseCase
+import com.example.atonce_admin.domain.usecase.GetUserDataUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -13,20 +15,21 @@ import kotlinx.coroutines.launch
 
 class HomeViewModel(
     private val getControlPanelDataUseCase: GetControlPanelDataUseCase
+    ,private val getUserDataUseCase: GetUserDataUseCase
 ) : ViewModel() {
 
     private var _controlPanelDataState = MutableStateFlow<Response<ControlPanelEntity>>(Response.Loading)
     val controlPanelDataState = _controlPanelDataState.asStateFlow()
 
+    val userData = getUserDataUseCase()
 
     fun getControlPanelData(
-        representativeId: Int,
         pageNumber: Int,
         pageSize: Int,
         status: Int
     ) {
         viewModelScope.launch(Dispatchers.IO) {
-            getControlPanelDataUseCase(representativeId, pageNumber, pageSize, status)
+            getControlPanelDataUseCase(userData.id, pageNumber, pageSize, status)
                 .catch {
                     _controlPanelDataState.value = Response.Error(it.message.toString())
                 }

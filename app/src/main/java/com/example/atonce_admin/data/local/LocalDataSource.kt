@@ -1,11 +1,10 @@
 package com.example.atonce_admin.data.local
 
-import android.service.autofill.UserData
-import com.example.atonce_admin.domain.entity.UserModel
+import com.example.atonce_admin.domain.entity.UserEntity
 
 interface LocalDataSource {
-    fun saveUserData(obj: UserModel)
-    fun getUserData(): UserModel
+    fun saveUserData(obj: UserEntity)
+    fun getUserData(): UserEntity
     fun freeUserData()
 
 
