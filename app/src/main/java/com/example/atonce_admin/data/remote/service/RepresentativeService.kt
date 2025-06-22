@@ -1,5 +1,6 @@
 package com.example.atonce_admin.data.remote.service
 
+import com.example.atonce_admin.data.remote.dto.CustomerResponse
 import com.example.atonce_admin.data.remote.dto.OrderStatusResponse
 import com.example.atonce_admin.data.remote.dto.StatsResponse
 import retrofit2.http.GET
@@ -17,5 +18,11 @@ interface RepresentativeService {
         @Query("pageSize") pageSize: Int,
         @Query("status") status: Int
     ): OrderStatusResponse
+
+    @GET("api/Representative/GetPharmaciesCountUsingId")
+    suspend fun getAllCustomers(
+        @Query("id") representativeId: Int
+    ): CustomerResponse
+
 
 }

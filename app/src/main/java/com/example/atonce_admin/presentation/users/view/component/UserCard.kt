@@ -1,4 +1,4 @@
-package com.example.atonce_admin.presentation.users.component
+package com.example.atonce_admin.presentation.users.view.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -23,26 +23,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.atonce_admin.core.enums.CustomerStateEnum
 import com.example.atonce_admin.core.extensions.convertNumbersToArabic
 import com.example.atonce_admin.presentation.common.theme.BoldFont
-import com.example.atonce_admin.presentation.common.theme.GreenColor
 import com.example.atonce_admin.presentation.common.theme.MediumFont
 import com.example.atonce_admin.presentation.common.theme.PrimaryColor
 import com.example.atonce_admin.presentation.common.theme.RegularFont
+import com.example.atonce_admin.presentation.users.model.CustomerModel
 
 @Composable
 fun UserCard(
-    state: CustomerStateEnum = CustomerStateEnum.ACTIVE,
-    user: String = "Luis Antonio Valencia",
-    pharmacy: String = "Manchester Pharmacy",
-    address: String = "123 Main Street, City, Country",
-    phone: String = "0123456789",
-
-
+    obj: CustomerModel,
+    state: CustomerStateEnum = CustomerStateEnum.ACTIVE
     ) {
 
     val isDark = isSystemInDarkTheme()
@@ -53,26 +47,27 @@ fun UserCard(
         MaterialTheme.colorScheme.background
     }
     Card(
-        shape = RoundedCornerShape(8.dp)
-        ,colors = CardDefaults.cardColors(containerColor = containerColor)
-        ,elevation = CardDefaults.cardElevation(defaultElevation = elevation),
+        shape = RoundedCornerShape(8.dp),
+        colors = CardDefaults.cardColors(containerColor = containerColor),
+        elevation = CardDefaults.cardElevation(defaultElevation = elevation),
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 8.dp, vertical = 8.dp)
 
-    ){
+    ) {
         Column(
             modifier = Modifier.padding(8.dp),
             verticalArrangement = Arrangement.spacedBy(2.dp)
-        ){
+        ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
-            ){
+            ) {
 
-                Text(text = user ,
-                    fontSize = 14.sp ,
+                Text(
+                    text = obj.userName,
+                    fontSize = 14.sp,
                     fontFamily = BoldFont
                 )
                 Text(
@@ -92,7 +87,7 @@ fun UserCard(
             Row(
                 horizontalArrangement = Arrangement.spacedBy(4.dp),
                 verticalAlignment = Alignment.CenterVertically
-            ){
+            ) {
                 Icon(
                     imageVector = Icons.Default.Phone,
                     contentDescription = null,
@@ -101,14 +96,14 @@ fun UserCard(
 
                 )
                 Text(
-                    text = phone.convertNumbersToArabic(), fontSize = 12.sp,
+                    text = obj.phoneNumber.convertNumbersToArabic(), fontSize = 12.sp,
                     fontFamily = MediumFont
                 )
             }
             Row(
                 horizontalArrangement = Arrangement.spacedBy(4.dp),
                 verticalAlignment = Alignment.CenterVertically
-            ){
+            ) {
                 Icon(
                     imageVector = Icons.Default.MedicalServices,
                     contentDescription = null,
@@ -116,13 +111,13 @@ fun UserCard(
                     tint = PrimaryColor
 
                 )
-                Text(text = pharmacy, fontSize = 12.sp ,fontFamily = RegularFont)
+                Text(text = obj.pharmacyName, fontSize = 12.sp, fontFamily = RegularFont)
 
             }
             Row(
                 horizontalArrangement = Arrangement.spacedBy(4.dp),
                 verticalAlignment = Alignment.CenterVertically
-            ){
+            ) {
                 Icon(
                     imageVector = Icons.Default.LocationOn,
                     contentDescription = null,
@@ -130,19 +125,14 @@ fun UserCard(
                     modifier = Modifier.size(16.dp)
 
                 )
-                Text(text = address
-                    ,fontSize = 12.sp
-                    ,fontFamily = RegularFont
+                Text(
+                    text = "${obj.governorateAndArea} ${obj.address} ",
+                    fontSize = 12.sp,
+                    fontFamily = RegularFont
                 )
 
             }
 
         }
     }
-}
-
-@Preview
-@Composable
-fun UserCardPreview() {
-    UserCard()
 }
