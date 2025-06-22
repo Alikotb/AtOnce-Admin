@@ -9,4 +9,5 @@ data class UserEntity(
     val name: String,
     val phone: String,
     val token: String?,
+)
     )

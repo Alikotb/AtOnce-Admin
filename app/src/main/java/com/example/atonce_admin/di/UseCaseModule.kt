@@ -2,6 +2,7 @@ package com.example.atonce_admin.di
 
 import com.example.atonce_admin.domain.usecase.GetControlPanelDataUseCase
 import com.example.atonce_admin.domain.usecase.FreeUserDataUseCase
+import com.example.atonce_admin.domain.usecase.GetAllCustomerUseCase
 import com.example.atonce_admin.domain.usecase.GetLoginResponseUseCase
 import com.example.atonce_admin.domain.usecase.GetOrdersByStatusUseCase
 import com.example.atonce_admin.domain.usecase.GetUserDataUseCase
@@ -31,6 +32,9 @@ val useCaseModule = module {
     }
     factory {
         IsLoggedInUseCase(get())
+    }
+    factory {
+        GetAllCustomerUseCase(get())
     }
 
 }

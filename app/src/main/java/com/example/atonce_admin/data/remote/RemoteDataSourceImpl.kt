@@ -1,5 +1,6 @@
 package com.example.atonce_admin.data.remote
 
+import com.example.atonce_admin.data.remote.dto.CustomerResponse
 import com.example.atonce_admin.data.remote.dto.LoginRequest
 import com.example.atonce_admin.data.remote.dto.LoginResponse
 import com.example.atonce_admin.data.remote.dto.OrderStatusResponse
@@ -37,6 +38,9 @@ class RemoteDataSourceImpl(
         )
     }
 
+    override suspend fun getAllCustomer(representativeId: Int): Flow<CustomerResponse> {
+        return flowOf(representativeService.getAllCustomers(representativeId))
+    }
 
 
 }

@@ -1,5 +1,6 @@
 package com.example.atonce_admin.domain.repository
 
+import com.example.atonce_admin.data.remote.dto.CustomerResponse
 import com.example.atonce_admin.domain.entity.ControlPanelEntity
 import com.example.atonce_admin.data.remote.dto.LoginRequest
 import com.example.atonce_admin.data.remote.dto.LoginResponse
@@ -25,4 +26,6 @@ interface Repository {
     fun saveUserData(obj: UserEntity)
     fun getUserData(): UserEntity
     fun freeUserData()
+    suspend fun getAllCustomer(representativeId: Int): Flow<CustomerResponse>
+
 }
