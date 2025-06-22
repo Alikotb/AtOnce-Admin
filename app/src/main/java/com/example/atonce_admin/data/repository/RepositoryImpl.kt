@@ -2,6 +2,7 @@ package com.example.atonce_admin.data.repository
 
 import com.example.atonce_admin.data.local.LocalDataSource
 import com.example.atonce_admin.data.remote.RemoteDataSource
+import com.example.atonce_admin.data.remote.dto.CustomerResponse
 import com.example.atonce_admin.domain.entity.ControlPanelEntity
 import com.example.atonce_admin.data.remote.dto.LoginRequest
 import com.example.atonce_admin.data.remote.dto.LoginResponse
@@ -47,6 +48,10 @@ class RepositoryImpl(
 
     override fun freeUserData() {
         localDataSource.freeUserData()
+    }
+
+    override suspend fun getAllCustomer(representativeId: Int): Flow<CustomerResponse> {
+        return remoteDataSource.getAllCustomer(representativeId)
     }
 
 
