@@ -9,9 +9,12 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Logout
 import androidx.compose.material.icons.filled.HeadsetMic
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -83,7 +86,6 @@ fun ProfileScreen(
         Column (
             modifier = modifier.padding(horizontal = 32.dp)
         ){
-
             val contactTitle = stringResource(R.string.contact_us)
 
             ProfileListItem(
@@ -96,7 +98,21 @@ fun ProfileScreen(
                 icon = Icons.Default.Info,
                 title = stringResource(R.string.about_us)
             ) {
+                showAboutDialog = true
+            }
 
+            if (showAboutDialog) {
+                AlertDialog(
+                    onDismissRequest = { showAboutDialog = false },
+                    containerColor = MaterialTheme.colorScheme.surface,
+                    title = { Text(text = stringResource(R.string.about_us)) },
+                    text = { Text("This is the About Us section for the app. You can put any info here.") },
+                    confirmButton = {
+                        TextButton(onClick = { showAboutDialog = false }) {
+                            Text("OK")
+                        }
+                    }
+                )
             }
 
             ProfileListItem(
