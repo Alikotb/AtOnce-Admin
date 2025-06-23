@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.atonce_admin.R
 import com.example.atonce_admin.presentation.common.theme.BoldFont
 import com.example.atonce_admin.presentation.common.theme.PrimaryColor
@@ -41,19 +41,20 @@ fun LoginScreen(
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
+    val isLoading by viewModel.isLoading.collectAsStateWithLifecycle()
+
     LaunchedEffect(Unit) {
-        viewModel.message.collect { msg ->
-            if (msg == "Login successful.") {
-                onLoginClick()
-            } else {
-                snackbarHostState.showSnackbar(
-                    message = msg,
-                    duration = SnackbarDuration.Long
-                )
-            }
+        viewModel.loginSuccess.collect {
+            onLoginClick()
         }
+
     }
 
+    LaunchedEffect(Unit) {
+        viewModel.message.collect { message ->
+            snackbarHostState.showSnackbar(message)
+        }
+    }
 
 
     Column(
@@ -95,9 +96,14 @@ fun LoginScreen(
         )
 
         Spacer(modifier = Modifier.height(32.dp))
-        PrimaryButton(text = stringResource(R.string.login)) {
-            viewModel.login(email, password)
-        }
+        PrimaryButton(
+            loading=isLoading,
+            text = stringResource(R.string.login), onClick = {
+                viewModel.login(email, password)
+            },
+            isLoginFlag = true,
+
+        )
     }
 }
 
