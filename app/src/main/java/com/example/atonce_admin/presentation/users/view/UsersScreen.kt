@@ -25,6 +25,7 @@ import com.example.atonce_admin.presentation.common.component.CustomSearchBar
 import com.example.atonce_admin.presentation.common.component.CustomTopBar
 import com.example.atonce_admin.presentation.users.model.CustomerModel
 import com.example.atonce_admin.presentation.users.view.component.UserCard
+import com.example.atonce_admin.presentation.users.view.component.UserCardShimmer
 import com.example.atonce_admin.presentation.users.viewmodel.UserViewModel
 import kotlinx.coroutines.FlowPreview
 import org.koin.androidx.compose.koinViewModel
@@ -68,8 +69,15 @@ fun UsersScreen(
         Spacer(modifier = Modifier.height(16.dp))
 
         when (pharmacyList) {
-            is Response.Loading -> {}
-            is Response.Error -> {}
+            is Response.Loading -> {
+                LazyColumn {
+                    items(5) {
+                        UserCardShimmer()
+                    }
+                }
+            }
+            is Response.Error -> {
+            }
             is Response.Success -> {
                 val list = (pharmacyList as Response.Success<List<CustomerModel>>).data
 

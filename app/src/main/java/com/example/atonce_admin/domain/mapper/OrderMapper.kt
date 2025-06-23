@@ -32,7 +32,8 @@ fun Order.toEntity(): OrderEntity {
         pharmacyName = pharmacyName,
         totalPrice = totalPrice,
         userName = userName,
-        warehouseName = warehouseName
+        warehouseName = warehouseName,
+        address = address
     )
 }
 

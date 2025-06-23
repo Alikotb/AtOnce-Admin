@@ -96,7 +96,7 @@ fun OrderCard(
                 ,horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ){
-                Text(text = order.warehouseName , fontSize = 12.sp , fontFamily = RegularFont)
+                Text(text = order.address , fontSize = 12.sp , fontFamily = RegularFont)
                 Text(text = "${order.totalPrice} EGP".convertNumbersToArabic().replaceEGPWithArabicCurrency() ,
                     fontSize = 14.sp ,
                     color = PrimaryColor,
