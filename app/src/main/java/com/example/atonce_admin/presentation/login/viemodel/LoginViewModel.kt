@@ -3,34 +3,49 @@ package com.example.atonce_admin.presentation.login.viemodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.atonce_admin.data.remote.dto.LoginRequest
+import com.example.atonce_admin.data.remote.dto.LoginResponse
 import com.example.atonce_admin.domain.mapper.toEntity
 import com.example.atonce_admin.domain.usecase.GetLoginResponseUseCase
 import com.example.atonce_admin.domain.usecase.SetUserDataUseCase
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 
-class LoginViewModel(private val getLoginResponseUseCase: GetLoginResponseUseCase,private val setUserDataUseCase: SetUserDataUseCase) : ViewModel() {
-    private val _uiState = MutableSharedFlow<String>()
-    val uiState:MutableSharedFlow<String> = _uiState
+class LoginViewModel(
+    private val getLoginResponseUseCase: GetLoginResponseUseCase,
+    private val setUserDataUseCase: SetUserDataUseCase
+) : ViewModel() {
+    private val _message = MutableSharedFlow<String>()
+    val message: MutableSharedFlow<String> = _message
+
+    private val _loginSuccess = MutableSharedFlow<Boolean>()
+    val loginSuccess = _loginSuccess.asSharedFlow()
+
+    private val _isLoading = MutableStateFlow(false)
+    val isLoading = _isLoading.asStateFlow()
+
+
     fun login(email: String, password: String) {
+        _isLoading.value = true
         viewModelScope.launch {
             if (email.isEmpty() || password.isEmpty()) {
-                _uiState.emit("Please fill all fields")
+                _isLoading.value = false
+                _message.emit("Please fill all fields")
                 return@launch
             }
             getLoginResponseUseCase(LoginRequest(email = email, password = password)).catch {
-                _uiState.emit( it.message?:"error")
-            }.collect { result->
-                if (!result.message.isNullOrEmpty()) {
-                    _uiState.emit(result.message)
+                _isLoading.value = false
+                _message.emit(it.message ?: "error")
+            }.collect { result: LoginResponse ->
+                _isLoading.value = false
+                if (result.success == true) {
                     setUserDataUseCase(result.toEntity())
+                    _loginSuccess.emit(true)
                 } else {
-                    if(result.errors?.Password.isNullOrEmpty()){
-                        _uiState.emit( result.errors?.Email?.first()!!)
-                    }else{
-                        _uiState.emit(result.errors.Password.first())
-                    }
+                    _message.emit(result.message)
                 }
 
             }

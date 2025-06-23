@@ -42,7 +42,7 @@ fun LoginScreen(
     var password by remember { mutableStateOf("") }
 
     LaunchedEffect(Unit) {
-        viewModel.uiState.collect { msg ->
+        viewModel.message.collect { msg ->
             if (msg == "Login successful.") {
                 onLoginClick()
             } else {
