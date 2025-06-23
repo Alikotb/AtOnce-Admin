@@ -55,6 +55,7 @@ fun ProfileScreen(
 
     var menuExpanded by remember { mutableStateOf(false) }
     var showAboutDialog by remember { mutableStateOf(false) }
+    var showLogoutDialog by remember { mutableStateOf(false) }
 
     Column(modifier = modifier.fillMaxSize()) {
         ProfileTopBar(
@@ -115,7 +116,20 @@ fun ProfileScreen(
                 title = stringResource(R.string.logout),
                 iconColor = Color.Red,
                 textColor = Color.Red
-            ) { onLogout() }
+            ) {
+                showLogoutDialog = true
+            }
+
+            if (showLogoutDialog) {
+                AppDialog(
+                    title = stringResource(R.string.logout),
+                    message = stringResource(R.string.are_you_sure_you_want_to_logout),
+                    confirmText = stringResource(R.string.logout)
+                ) {
+                    showLogoutDialog = false
+                    onLogout()
+                }
+            }
         }
     }
 }
