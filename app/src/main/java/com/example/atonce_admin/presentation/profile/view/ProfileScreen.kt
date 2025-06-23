@@ -117,8 +117,6 @@ fun ProfileScreen(
                 textColor = Color.Red
             ) { onLogout() }
         }
-
-
     }
 }
 
