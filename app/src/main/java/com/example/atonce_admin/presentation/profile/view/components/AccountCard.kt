@@ -1,4 +1,4 @@
-package com.example.atonce_admin.presentation.profile.components
+package com.example.atonce_admin.presentation.profile.view.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme

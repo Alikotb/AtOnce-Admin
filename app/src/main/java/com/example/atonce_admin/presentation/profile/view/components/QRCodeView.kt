@@ -1,4 +1,4 @@
-package com.example.atonce_admin.presentation.profile.components
+package com.example.atonce_admin.presentation.profile.view.components
 
 import android.graphics.Bitmap
 import androidx.compose.foundation.Image
@@ -39,7 +39,7 @@ fun QRCodeView(data: String, modifier: Modifier = Modifier) {
                 bitmap = bitmap.asImageBitmap(),
                 contentDescription = "QR Code",
                 contentScale = ContentScale.Fit,
-                modifier = Modifier.size(128.dp) // QR image size
+                modifier = Modifier.size(128.dp)
             )
         }
     }

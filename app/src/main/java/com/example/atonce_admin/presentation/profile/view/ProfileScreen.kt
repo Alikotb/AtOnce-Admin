@@ -1,4 +1,4 @@
-package com.example.atonce_admin.presentation.profile
+package com.example.atonce_admin.presentation.profile.view
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -17,27 +17,33 @@ import androidx.compose.ui.unit.dp
 import com.example.atonce_admin.R
 import com.example.atonce_admin.core.constants.AppConstants
 import com.example.atonce_admin.core.extensions.convertNumbersToArabic
-import com.example.atonce_admin.presentation.profile.components.AccountCard
-import com.example.atonce_admin.presentation.profile.components.ProfileListItem
-import com.example.atonce_admin.presentation.profile.components.ProfileTopBar
-import com.example.atonce_admin.presentation.profile.components.QRCodeView
+import com.example.atonce_admin.presentation.profile.view.components.AccountCard
+import com.example.atonce_admin.presentation.profile.view.components.ProfileListItem
+import com.example.atonce_admin.presentation.profile.view.components.ProfileTopBar
+import com.example.atonce_admin.presentation.profile.view.components.QRCodeView
 import com.example.atonce_admin.presentation.common.theme.PrimaryColor
+import com.example.atonce_admin.presentation.profile.viewmodel.ProfileViewModel
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun ProfileScreen(
     modifier: Modifier = Modifier,
+    viewModel: ProfileViewModel = koinViewModel(),
     onLogout: () -> Unit,
     onContactClicked: (String , String) -> Unit
-    ,onBackClicked: () -> Unit
+    , onBackClicked: () -> Unit
 ) {
+
+    val user = viewModel.userData
+
     Column(modifier = modifier.fillMaxSize()) {
         ProfileTopBar(title = stringResource(R.string.profile), onBackClick = onBackClicked)
 
         Spacer(modifier = modifier.height(8.dp))
 
         AccountCard(
-            name = "Abdelrahman Kamel",
-            subtitle = "01013652874".convertNumbersToArabic()
+            name = user.name,
+            subtitle = user.phone.convertNumbersToArabic()
         ){
 
         }
@@ -45,7 +51,7 @@ fun ProfileScreen(
         Spacer(modifier = modifier.height(16.dp))
 
         QRCodeView(
-            data = "Abdo8886",
+            data = user.code,
         )
         Spacer(modifier = modifier.height(32.dp))
 
@@ -66,7 +72,7 @@ fun ProfileScreen(
             ProfileListItem(
                 icon = Icons.Default.Info,
                 title = stringResource(R.string.about_us)
-            ) { /* about click */ }
+            ) {  }
 
             ProfileListItem(
                 icon = Icons.AutoMirrored.Default.Logout,
