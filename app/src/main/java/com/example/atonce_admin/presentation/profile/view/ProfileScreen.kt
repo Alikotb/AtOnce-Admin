@@ -33,6 +33,7 @@ import com.example.atonce_admin.core.enums.LanguageEnum
 import com.example.atonce_admin.core.extensions.convertNumbersToArabic
 import com.example.atonce_admin.core.extensions.restartActivity
 import com.example.atonce_admin.core.utils.restartActivity
+import com.example.atonce_admin.presentation.common.component.AppDialog
 import com.example.atonce_admin.presentation.profile.view.components.AccountCard
 import com.example.atonce_admin.presentation.profile.view.components.ProfileListItem
 import com.example.atonce_admin.presentation.profile.view.components.ProfileTopBar
@@ -102,16 +103,10 @@ fun ProfileScreen(
             }
 
             if (showAboutDialog) {
-                AlertDialog(
-                    onDismissRequest = { showAboutDialog = false },
-                    containerColor = MaterialTheme.colorScheme.surface,
-                    title = { Text(text = stringResource(R.string.about_us)) },
-                    text = { Text("This is the About Us section for the app. You can put any info here.") },
-                    confirmButton = {
-                        TextButton(onClick = { showAboutDialog = false }) {
-                            Text("OK")
-                        }
-                    }
+                AppDialog(
+                    title = stringResource(R.string.about_us),
+                    message = "This is the About Us section for the app. You can put any info here.",
+                    onDismiss = { showAboutDialog = false }
                 )
             }
 
