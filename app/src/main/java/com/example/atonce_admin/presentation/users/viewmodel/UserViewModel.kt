@@ -40,6 +40,7 @@ class UserViewModel(
     }
     fun getAllCustomer() {
         viewModelScope.launch(Dispatchers.IO) {
+            _uiState.emit(Response.Loading)
             try {
                 getAllCustomerUseCase(getUserDataUseCase().id).catch {
                     _uiState.emit(Response.Error(it.message ?: "error"))

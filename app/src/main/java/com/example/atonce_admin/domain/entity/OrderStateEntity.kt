@@ -24,7 +24,8 @@ data class OrderEntity(
     val pharmacyName: String,
     val totalPrice: Double,
     val userName: String,
-    val warehouseName: String
+    val warehouseName: String,
+    val address: String
 )
 
 data class OrderDetailEntity(
