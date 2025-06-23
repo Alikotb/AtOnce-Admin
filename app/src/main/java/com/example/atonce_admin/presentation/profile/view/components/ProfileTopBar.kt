@@ -62,36 +62,11 @@ fun ProfileTopBar(
                 Icon(Icons.Default.Language, contentDescription = "Language")
             }
 
-            DropdownMenu(
+            LanguageDropdownMenu(
                 expanded = menuExpanded,
                 onDismissRequest = { onDismissMenu() },
-                modifier = Modifier
-                    .background(MaterialTheme.colorScheme.surface, shape = RoundedCornerShape(12.dp))
-            ) {
-                LanguageEnum.entries.forEach { language ->
-                    DropdownMenuItem(
-                        text = {
-                            Text(
-                                language.getDisplayName(language),
-                                fontSize = 16.sp,
-                                color = MaterialTheme.colorScheme.onSurface
-                            )
-                        },
-                        onClick = {
-                            onLanguageSelected(language)
-                            onDismissMenu()
-                        },
-                        leadingIcon = {
-                            val icon = when (language) {
-                                LanguageEnum.ENGLISH -> painterResource(R.drawable.english)
-                                LanguageEnum.ARABIC -> painterResource(R.drawable.arabic)
-                                LanguageEnum.SYSTEM -> painterResource(R.drawable.system)
-                            }
-                            Icon(icon, contentDescription = null, modifier = Modifier.size(24.dp), tint = androidx.compose.ui.graphics.Color.Unspecified)
-                        }
-                    )
-                }
-            }
+                onLanguageSelected = onLanguageSelected
+            )
         }
     }
 }
