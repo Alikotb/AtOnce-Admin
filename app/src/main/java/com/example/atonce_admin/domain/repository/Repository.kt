@@ -26,6 +26,10 @@ interface Repository {
     fun saveUserData(obj: UserEntity)
     fun getUserData(): UserEntity
     fun freeUserData()
+
+    fun setLanguage(language: String)
+    fun getLanguage(): String
+
     suspend fun getAllCustomer(representativeId: Int): Flow<CustomerResponse>
 
 }

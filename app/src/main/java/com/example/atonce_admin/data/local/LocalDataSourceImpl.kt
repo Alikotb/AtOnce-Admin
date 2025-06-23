@@ -39,4 +39,12 @@ class LocalDataSourceImpl (private val myShared: AppSharedPreference): LocalData
         myShared.saveData("phone", "")
         myShared.saveData("token", "")
     }
+
+    override fun setLanguage(language: String) {
+        myShared.saveData("language",language)
+    }
+
+    override fun getLanguage(): String {
+        return myShared.fetchData("language","en")
+    }
 }

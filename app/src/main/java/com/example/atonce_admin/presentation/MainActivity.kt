@@ -1,5 +1,6 @@
 package com.example.atonce_admin.presentation
 
+import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -18,9 +19,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
+import com.example.atonce_admin.core.enums.LanguageEnum
+import com.example.atonce_admin.core.extensions.applyLanguage
+import com.example.atonce_admin.domain.usecase.GetLanguageUseCase
 import com.example.atonce_admin.presentation.common.navigation.SetUpNavHost
 import com.example.atonce_admin.presentation.common.theme.AtOnceAdminTheme
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import org.koin.android.ext.android.inject
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,6 +36,17 @@ class MainActivity : ComponentActivity() {
                 MainScreen()
             }
         }
+    }
+
+    override fun attachBaseContext(newBase: Context?) {
+        val lang : GetLanguageUseCase by inject()
+        val langCode = if (lang() == LanguageEnum.SYSTEM.apiCode) {
+            newBase?.resources?.configuration?.locales?.get(0)?.language
+        } else {
+            lang()
+        }
+        val context = langCode?.let { newBase?.applyLanguage(it) }
+        super.attachBaseContext(context)
     }
 }
 

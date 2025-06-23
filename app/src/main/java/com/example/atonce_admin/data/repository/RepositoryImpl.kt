@@ -50,6 +50,14 @@ class RepositoryImpl(
         localDataSource.freeUserData()
     }
 
+    override fun setLanguage(language: String) {
+        localDataSource.setLanguage(language)
+    }
+
+    override fun getLanguage(): String {
+        return localDataSource.getLanguage()
+    }
+
     override suspend fun getAllCustomer(representativeId: Int): Flow<CustomerResponse> {
         return remoteDataSource.getAllCustomer(representativeId)
     }

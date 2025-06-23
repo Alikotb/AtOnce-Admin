@@ -41,7 +41,7 @@ class UserViewModel(
     fun getAllCustomer() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                getAllCustomerUseCase(/*getUserDataUseCase().id*/1).catch {
+                getAllCustomerUseCase(getUserDataUseCase().id).catch {
                     _uiState.emit(Response.Error(it.message ?: "error"))
                 }.collect { result: CustomerResponse ->
                     val list = result.pharmacies.map { it.toEntity() }

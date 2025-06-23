@@ -6,6 +6,6 @@ interface LocalDataSource {
     fun saveUserData(obj: UserEntity)
     fun getUserData(): UserEntity
     fun freeUserData()
-
-
+    fun setLanguage(language: String)
+    fun getLanguage(): String
 }
