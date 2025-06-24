@@ -21,7 +21,8 @@ fun PrimaryButton(
     text: String,
     onClick: () -> Unit,
     isLoginFlag: Boolean = false,
-    loading: Boolean
+    loading: Boolean,
+    radius: Int = 8
 ) {
     Button(
         onClick = onClick,
@@ -32,7 +33,7 @@ fun PrimaryButton(
             containerColor = PrimaryColor,
             contentColor = Color.White
         ),
-        shape = RoundedCornerShape(8.dp),
+        shape = RoundedCornerShape(radius.dp),
         elevation = ButtonDefaults.buttonElevation(4.dp)
     ) {
         if(!isLoginFlag&&!loading) {

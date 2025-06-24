@@ -42,12 +42,11 @@ fun StateOrders(
     onBackClicked: () -> Unit = {},
     onItemClick: (List<OrderEntity> , String) -> Unit
 ){
-    val id = 1
 
     var searchText by remember { mutableStateOf("") }
 
     LaunchedEffect(Unit) {
-        viewModel.loadNextPage(id, type.id)
+        viewModel.loadNextPage(type.id)
     }
 
     val state by viewModel.ordersState.collectAsStateWithLifecycle()
@@ -63,7 +62,7 @@ fun StateOrders(
 
     LaunchedEffect(shouldLoadMore.value) {
         if (shouldLoadMore.value) {
-            viewModel.loadNextPage(id, type.id)
+            viewModel.loadNextPage(type.id)
         }
     }
 
@@ -90,7 +89,7 @@ fun StateOrders(
         when(state){
             is Response.Error -> {
                 ErrorView(message = (state as Response.Error).message){
-                    viewModel.loadNextPage(id, type.id)
+                    viewModel.loadNextPage(type.id , default = true)
                 }
             }
             is Response.Loading -> {
