@@ -3,6 +3,7 @@ package com.example.atonce_admin.presentation.profile.view.components
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Language
@@ -44,7 +45,7 @@ fun ProfileTopBar(
             Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
         }
 
-        Box(modifier = Modifier.align(Alignment.CenterEnd)) {
+        Box(modifier = Modifier.padding(end = 12.dp).align(Alignment.CenterEnd)) {
             IconButton(
                 onClick = { onDismissMenu() }
             ) {

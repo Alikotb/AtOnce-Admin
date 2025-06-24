@@ -24,5 +24,4 @@ interface RepresentativeService {
         @Query("id") representativeId: Int
     ): CustomerResponse
 
-
 }
