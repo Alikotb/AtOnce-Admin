@@ -103,5 +103,6 @@ dependencies {
     //shimmer
     implementation("com.google.accompanist:accompanist-placeholder-material3:0.34.0")
 
-
+    //lottie
+    implementation("com.airbnb.android:lottie-compose:6.6.3")
 }
