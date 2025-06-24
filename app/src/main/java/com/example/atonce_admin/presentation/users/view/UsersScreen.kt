@@ -76,30 +76,33 @@ fun UsersScreen(
                     }
                 }
             }
+
             is Response.Error -> {
                 val status = (pharmacyList as Response.Error).message
-                ErrorView(message = status){
+                ErrorView(message = status) {
                     vieModel.getAllCustomer()
                 }
             }
+
             is Response.Success -> {
                 val list = (pharmacyList as Response.Success<List<CustomerModel>>).data
 
                 LazyColumn {
-                    if(list.isNotEmpty()) {
-                        items(list) {
-                            UserCard(obj = it)
+                    if (list.isNotEmpty()) {
+                        items(items = list, key = { it.id }) { customer ->
+                            UserCard(obj = customer)
                         }
-                    }else{
-                        item{
+                    } else {
+                        item {
                             EmptySearchResultView()
                         }
                     }
                 }
             }
         }
-
     }
 
 }
+
+
 

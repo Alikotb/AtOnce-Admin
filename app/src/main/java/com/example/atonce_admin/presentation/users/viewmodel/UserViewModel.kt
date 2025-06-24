@@ -1,6 +1,5 @@
 package com.example.atonce_admin.presentation.users.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.atonce_admin.core.enums.ErrorEnum
@@ -27,12 +26,11 @@ class UserViewModel(
     private val getUserDataUseCase: GetUserDataUseCase
 ) : ViewModel() {
     private val _uiState = MutableStateFlow<Response<List<CustomerModel>>>(Response.Loading)
-    private var searchList = mutableListOf<CustomerModel>()
+    private val _allCustomers = MutableStateFlow<List<CustomerModel>>(emptyList())
     val uiState = _uiState.asStateFlow()
     private val _searchQuery = MutableStateFlow("")
 
     private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
-        Log.e("TAG", "Caught Exception: ${throwable.message}")
         _uiState.value = Response.Error(ErrorEnum.NETWORK_ERROR.getLocalizedMessage())
     }
 
@@ -42,11 +40,18 @@ class UserViewModel(
                 .debounce(500)
                 .distinctUntilChanged()
                 .collectLatest { query ->
-                    performSearch(query)
+                    filterCustomers(query)
                 }
         }
-    }
 
+        viewModelScope.launch(Dispatchers.IO) {
+            _allCustomers.collect { customers ->
+                if (customers.isNotEmpty()) {
+                    filterCustomers(_searchQuery.value)
+                }
+            }
+        }
+    }
 
     fun getAllCustomer() {
         viewModelScope.launch(Dispatchers.IO + exceptionHandler) {
@@ -56,10 +61,7 @@ class UserViewModel(
                     _uiState.emit(Response.Error(it.message ?: "error"))
                 }.collect { result: CustomerResponse ->
                     val list = result.pharmacies.map { it.toEntity() }
-                    searchList.clear()
-
-                    searchList.addAll(list)
-                    _uiState.emit(Response.Success(data = list))
+                    _allCustomers.emit(list)
                 }
             } catch (e: Error) {
                 _uiState.emit(Response.Error(ErrorEnum.NETWORK_ERROR.getLocalizedMessage()))
@@ -70,20 +72,17 @@ class UserViewModel(
     fun searchForPharmacy(query: String) {
         _searchQuery.value = query
     }
-    private  fun performSearch(searchTxt: String) {
-        viewModelScope.launch(Dispatchers.IO) {
-            try {
-                val result = if (searchTxt.isNotBlank()) {
-                    searchList.filter {
-                        it.userName.contains(searchTxt,ignoreCase = true) || it.pharmacyName.contains(searchTxt,ignoreCase = true)
-                    }
-                } else {
-                    searchList
-                }
-                _uiState.emit(Response.Success(data = result))
-            } catch (e: Error) {
-                _uiState.emit(Response.Error(e.message ?: ""))
+
+    private fun filterCustomers(query: String) {
+        val allCustomers = _allCustomers.value
+        val filtered = if (query.isBlank()) {
+            allCustomers
+        } else {
+            allCustomers.filter {
+                it.userName.contains(query, ignoreCase = true) ||
+                        it.pharmacyName.contains(query, ignoreCase = true)
             }
         }
+        _uiState.value = Response.Success(filtered)
     }
 }
