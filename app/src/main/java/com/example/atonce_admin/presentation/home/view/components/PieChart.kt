@@ -70,17 +70,27 @@ fun PieChartCard(
                 Canvas(
                     modifier = Modifier.size(140.dp)
                 ) {
-                    var startAngle = -90f
-                    sweepAngles.forEachIndexed { index, sweepAngle ->
+                    if (data.all { it.second == 0 }) {
                         drawArc(
-                            color = colors.getOrElse(index) { Color.Gray },
-                            startAngle = startAngle,
-                            sweepAngle = sweepAngle,
+                            color = Color.Gray,
+                            startAngle = -90f,
+                            sweepAngle = 360f,
                             useCenter = true
                         )
-                        startAngle += sweepAngle
+                    } else {
+                        var startAngle = -90f
+                        sweepAngles.forEachIndexed { index, sweepAngle ->
+                            drawArc(
+                                color = colors.getOrElse(index) { Color.Gray },
+                                startAngle = startAngle,
+                                sweepAngle = sweepAngle,
+                                useCenter = true
+                            )
+                            startAngle += sweepAngle
+                        }
                     }
                 }
+
 
                 Spacer(modifier = Modifier.width(16.dp))
 
@@ -116,10 +126,10 @@ fun PieChartCard(
 fun PieChartCardPreview() {
     AtOnceAdminTheme {
         val sampleData = listOf(
-            "New Orders" to 120,
-            "Delivered" to 30,
-            "Canceled" to 150,
-            "Returned" to 10
+            "New Orders" to 0,
+            "Delivered" to 0,
+            "Canceled" to 0,
+            "Returned" to 0
         )
         PieChartCard(title = "Orders Summary", data = sampleData)
     }
