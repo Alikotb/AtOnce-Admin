@@ -11,7 +11,7 @@ import org.koin.dsl.module
 
 val viewModelModule = module {
     viewModel {
-        StatusOrderViewModel(get())
+        StatusOrderViewModel(get() , get())
     }
     viewModel {
         HomeViewModel(get() , get() , get())

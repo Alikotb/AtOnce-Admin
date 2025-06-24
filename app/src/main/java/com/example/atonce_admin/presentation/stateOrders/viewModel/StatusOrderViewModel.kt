@@ -5,6 +5,7 @@ import com.example.atonce_admin.core.enums.ErrorEnum
 import com.example.atonce_admin.data.Response
 import com.example.atonce_admin.domain.entity.WarehouseEntity
 import com.example.atonce_admin.domain.usecase.GetOrdersByStatusUseCase
+import com.example.atonce_admin.domain.usecase.GetUserDataUseCase
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,7 +14,8 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 
 class StatusOrderViewModel(
-    private val getOrdersByStatusUseCase: GetOrdersByStatusUseCase
+    private val getOrdersByStatusUseCase: GetOrdersByStatusUseCase,
+    private val getUserDataUseCase: GetUserDataUseCase
 ) : ViewModel() {
 
     private val _ordersState = MutableStateFlow<Response<List<WarehouseEntity>>>(Response.Loading)
@@ -27,12 +29,14 @@ class StatusOrderViewModel(
         private set
     private var isLoading = false
 
+    val userData = getUserDataUseCase()
+
     private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
         Log.e("TAG", "Caught Exception: ${throwable.message}")
         _ordersState.value = Response.Error(ErrorEnum.NETWORK_ERROR.getLocalizedMessage())
     }
 
-    fun loadNextPage(representativeId : Int, status : Int , default: Boolean = false) {
+    fun loadNextPage( status : Int , default: Boolean = false) {
 
         if (default){
             currentItems.clear()
@@ -48,7 +52,7 @@ class StatusOrderViewModel(
 
         viewModelScope.launch(Dispatchers.IO + exceptionHandler){
             getOrdersByStatusUseCase(
-                representativeId = representativeId,
+                representativeId = userData.id,
                 status = status,
                 pageNumber = currentPage,
                 pageSize = pageSize
