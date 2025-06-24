@@ -3,6 +3,7 @@ package com.example.atonce_admin.presentation.home.viewModel
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.atonce_admin.core.enums.ErrorEnum
 import com.example.atonce_admin.data.Response
 import com.example.atonce_admin.domain.entity.ControlPanelEntity
 import com.example.atonce_admin.domain.entity.UserEntity
@@ -29,7 +30,7 @@ class HomeViewModel(
 
     private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
         Log.e("TAG", "Caught Exception: ${throwable.message}")
-        _controlPanelDataState.value = Response.Error("Please Check your Internet Connection" ?: "Unexpected Error")
+        _controlPanelDataState.value = Response.Error(ErrorEnum.NETWORK_ERROR.getLocalizedMessage())
     }
 
 

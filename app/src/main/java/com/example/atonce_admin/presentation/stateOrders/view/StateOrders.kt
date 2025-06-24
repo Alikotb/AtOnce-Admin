@@ -90,7 +90,7 @@ fun StateOrders(
         when(state){
             is Response.Error -> {
                 ErrorView(message = (state as Response.Error).message){
-                    viewModel.loadNextPage(id, type.id)
+                    viewModel.loadNextPage(id, type.id , default = true)
                 }
             }
             is Response.Loading -> {

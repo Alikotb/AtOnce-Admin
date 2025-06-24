@@ -1,13 +1,16 @@
 package com.example.atonce_admin.presentation.users.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.atonce_admin.core.enums.ErrorEnum
 import com.example.atonce_admin.data.Response
 import com.example.atonce_admin.data.remote.dto.CustomerResponse
 import com.example.atonce_admin.domain.mapper.toEntity
 import com.example.atonce_admin.domain.usecase.GetAllCustomerUseCase
 import com.example.atonce_admin.domain.usecase.GetUserDataUseCase
 import com.example.atonce_admin.presentation.users.model.CustomerModel
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -28,6 +31,11 @@ class UserViewModel(
     val uiState = _uiState.asStateFlow()
     private val _searchQuery = MutableStateFlow("")
 
+    private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
+        Log.e("TAG", "Caught Exception: ${throwable.message}")
+        _uiState.value = Response.Error(ErrorEnum.NETWORK_ERROR.getLocalizedMessage())
+    }
+
     init {
         viewModelScope.launch(Dispatchers.IO) {
             _searchQuery
@@ -38,8 +46,10 @@ class UserViewModel(
                 }
         }
     }
+
+
     fun getAllCustomer() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(Dispatchers.IO + exceptionHandler) {
             _uiState.emit(Response.Loading)
             try {
                 getAllCustomerUseCase(getUserDataUseCase().id).catch {
@@ -52,7 +62,7 @@ class UserViewModel(
                     _uiState.emit(Response.Success(data = list))
                 }
             } catch (e: Error) {
-                _uiState.emit(Response.Error(e.message ?: ""))
+                _uiState.emit(Response.Error(ErrorEnum.NETWORK_ERROR.getLocalizedMessage()))
             }
         }
     }

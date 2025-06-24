@@ -24,6 +24,7 @@ import com.example.atonce_admin.data.Response
 import com.example.atonce_admin.presentation.common.component.CustomSearchBar
 import com.example.atonce_admin.presentation.common.component.CustomTopBar
 import com.example.atonce_admin.presentation.common.component.EmptySearchResultView
+import com.example.atonce_admin.presentation.common.component.ErrorView
 import com.example.atonce_admin.presentation.users.model.CustomerModel
 import com.example.atonce_admin.presentation.users.view.component.UserCard
 import com.example.atonce_admin.presentation.users.view.component.UserCardShimmer
@@ -77,6 +78,10 @@ fun UsersScreen(
                 }
             }
             is Response.Error -> {
+                val status = (pharmacyList as Response.Error).message
+                ErrorView(message = status){
+                    vieModel.getAllCustomer()
+                }
             }
             is Response.Success -> {
                 val list = (pharmacyList as Response.Success<List<CustomerModel>>).data
