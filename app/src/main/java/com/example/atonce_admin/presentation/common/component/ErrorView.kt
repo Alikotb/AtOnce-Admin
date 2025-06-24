@@ -1,6 +1,7 @@
 package com.example.atonce_admin.presentation.common.component
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -17,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.airbnb.lottie.compose.LottieAnimation
@@ -35,9 +37,9 @@ fun ErrorView(message: String, onRetry: () -> Unit) {
     val screenWidth = LocalConfiguration.current.screenWidthDp
     val screenHeight = LocalConfiguration.current.screenHeightDp
 
-    val buttonSize = Pair(screenWidth * 0.4, screenHeight * 0.05)
-
+    val buttonSize = Pair(screenWidth * 0.45, screenHeight * 0.05)
     val lottieSize = Pair(screenWidth * 0.8, screenHeight * 0.4)
+    val textWidth = screenWidth * 0.8
 
 
     val composition = rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.no_internet))
@@ -51,7 +53,10 @@ fun ErrorView(message: String, onRetry: () -> Unit) {
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
-        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
 
             LottieAnimation(
                 composition = composition.value,
@@ -60,8 +65,13 @@ fun ErrorView(message: String, onRetry: () -> Unit) {
                     .width(lottieSize.first.dp)
                     .height(lottieSize.second.dp)
             )
-            Text(text = message , fontSize = 16.sp , fontFamily = MediumFont)
-            Spacer(modifier = Modifier.height(8.dp))
+            Text(text = message ,
+                fontSize = 16.sp ,
+                fontFamily = MediumFont,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.width(textWidth.dp)
+                    .padding(vertical = 8.dp)
+            )
             PrimaryButton(text = stringResource(R.string.retry),
                 loading = false ,
                 onClick = onRetry,
