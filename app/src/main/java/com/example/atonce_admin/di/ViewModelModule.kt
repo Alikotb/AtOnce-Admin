@@ -1,7 +1,6 @@
 package com.example.atonce_admin.di
 
 import StatusOrderViewModel
-import com.example.atonce_admin.presentation.MainViewModel
 import com.example.atonce_admin.presentation.home.viewModel.HomeViewModel
 import com.example.atonce_admin.presentation.login.viemodel.LoginViewModel
 import com.example.atonce_admin.presentation.profile.viewmodel.ProfileViewModel
@@ -31,5 +30,4 @@ val viewModelModule = module {
 
     viewModel { ProfileViewModel(get(), get()) }
 
-    viewModel { MainViewModel(get())}
 }
