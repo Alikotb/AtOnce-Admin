@@ -72,7 +72,7 @@ fun PieChartCard(
                 ) {
                     if (data.all { it.second == 0 }) {
                         drawArc(
-                            color = Color.Gray,
+                            color = Color.LightGray,
                             startAngle = -90f,
                             sweepAngle = 360f,
                             useCenter = true

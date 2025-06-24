@@ -63,7 +63,6 @@ fun UsersScreen(
             onQueryChange = {
                 searchText = it
                 vieModel.searchForPharmacy(it)
-
             }
         )
 

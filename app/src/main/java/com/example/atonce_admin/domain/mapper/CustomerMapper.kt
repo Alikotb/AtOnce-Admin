@@ -12,7 +12,7 @@ fun CustomerResponse.Pharmacy.toEntity(): CustomerModel {
         areaName = "",
         governorateAndArea = "$governate, $areaName",
         id =id,
-        userName = name,
+        userName = userName ?: "",
         pharmacyName = name,
         phoneNumber = phoneNumber
     )
