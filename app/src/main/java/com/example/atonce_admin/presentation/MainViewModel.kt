@@ -1,11 +1,9 @@
 package com.example.atonce_admin.presentation
 
-import android.Manifest
 import android.app.Application
 import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkCapabilities
-import androidx.annotation.RequiresPermission
 import androidx.lifecycle.AndroidViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
