@@ -1,4 +1,4 @@
-package com.example.atonce_admin.presentation.pharmacyorders
+package com.example.atonce_admin.presentation.pharmacyorders.view
 
 import android.util.Log
 import androidx.compose.foundation.layout.Column
@@ -17,6 +17,7 @@ import com.example.atonce_admin.presentation.common.component.CustomTopBar
 import com.example.atonce_admin.presentation.common.component.EmptySearchResultView
 import com.example.atonce_admin.presentation.common.component.ErrorView
 import com.example.atonce_admin.presentation.common.component.OrderCard
+import com.example.atonce_admin.presentation.pharmacyorders.viewmodel.PharmacyOrdersViewModel
 import com.example.atonce_admin.presentation.users.model.CustomerModel
 import com.example.atonce_admin.presentation.users.view.component.UserCardShimmer
 import org.koin.androidx.compose.koinViewModel
