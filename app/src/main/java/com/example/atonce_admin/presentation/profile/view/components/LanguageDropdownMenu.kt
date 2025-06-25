@@ -47,8 +47,8 @@ fun LanguageDropdownMenu(
                 },
                 leadingIcon = {
                     val icon = when (language) {
-                        LanguageEnum.ENGLISH -> painterResource(R.drawable.english)
-                        LanguageEnum.ARABIC -> painterResource(R.drawable.arabic)
+                        LanguageEnum.ENGLISH -> painterResource(R.drawable.uk)
+                        LanguageEnum.ARABIC -> painterResource(R.drawable.egypt)
                         LanguageEnum.SYSTEM -> painterResource(R.drawable.system)
                     }
                     Icon(
