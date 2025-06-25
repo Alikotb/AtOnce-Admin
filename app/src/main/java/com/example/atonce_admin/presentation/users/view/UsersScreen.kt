@@ -37,6 +37,7 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun UsersScreen(
     vieModel: UserViewModel = koinViewModel(),
+    onItemClicked: (CustomerModel) -> Unit = {},
     onBackClicked: () -> Unit = {}
 ) {
     var searchText by remember { mutableStateOf("") }
@@ -90,7 +91,9 @@ fun UsersScreen(
                 LazyColumn {
                     if (list.isNotEmpty()) {
                         items(items = list, key = { it.id }) { customer ->
-                            UserCard(obj = customer)
+                            UserCard(obj = customer){
+                                onItemClicked(it)
+                            }
                         }
                     } else {
                         item {
