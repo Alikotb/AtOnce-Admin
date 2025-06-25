@@ -10,6 +10,7 @@ import com.example.atonce_admin.domain.entity.OrderEntity
 import com.example.atonce_admin.domain.entity.OrderStateEntity
 import com.example.atonce_admin.domain.entity.UserEntity
 import com.example.atonce_admin.data.mapper.toEntity
+import com.example.atonce_admin.domain.entity.OrderDetails
 import com.example.atonce_admin.domain.entity.PharmacyOrderResponseEntity
 import com.example.atonce_admin.domain.repository.Repository
 import kotlinx.coroutines.flow.Flow
@@ -68,6 +69,10 @@ class RepositoryImpl(
         return remoteDataSource.getPharmacyOrders(pharmacyId).map {
             it.toEntity()
         }
+    }
+
+    override suspend fun getOrderDetails(orderId: Int): Flow<OrderDetails> {
+        return remoteDataSource.getOrderDetails(orderId).map { it.toEntity() }
     }
 
     override suspend fun getControlPanelData(

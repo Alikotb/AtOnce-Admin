@@ -3,6 +3,7 @@ package com.example.atonce_admin.data.remote
 import com.example.atonce_admin.data.remote.dto.CustomerResponse
 import com.example.atonce_admin.data.remote.dto.LoginRequest
 import com.example.atonce_admin.data.remote.dto.LoginResponse
+import com.example.atonce_admin.data.remote.dto.OrderDetailsResponseDto
 import com.example.atonce_admin.data.remote.dto.OrderStatusResponse
 import com.example.atonce_admin.data.remote.dto.PharmacyOrdersResponse
 import com.example.atonce_admin.data.remote.dto.StatsResponse
@@ -14,4 +15,6 @@ interface RemoteDataSource {
     suspend fun login(loginRequest: LoginRequest): Flow<LoginResponse>
     suspend fun getAllCustomer(representativeId: Int): Flow<CustomerResponse>
     suspend fun getPharmacyOrders(pharmacyId: Int): Flow<PharmacyOrdersResponse>
+    suspend fun getOrderDetails(orderId: Int): Flow<OrderDetailsResponseDto>
+
 }

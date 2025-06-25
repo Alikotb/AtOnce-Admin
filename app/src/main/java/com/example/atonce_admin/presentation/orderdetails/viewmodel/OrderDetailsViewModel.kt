@@ -1,4 +1,7 @@
 package com.example.atonce_admin.presentation.orderdetails.viewmodel
 
-class OrderDetailsViewModel {
+import androidx.lifecycle.ViewModel
+
+class OrderDetailsViewModel : ViewModel() {
+
 }

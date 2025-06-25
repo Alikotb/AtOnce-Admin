@@ -3,6 +3,7 @@ package com.example.atonce_admin.data.remote
 import com.example.atonce_admin.data.remote.dto.CustomerResponse
 import com.example.atonce_admin.data.remote.dto.LoginRequest
 import com.example.atonce_admin.data.remote.dto.LoginResponse
+import com.example.atonce_admin.data.remote.dto.OrderDetailsResponseDto
 import com.example.atonce_admin.data.remote.dto.OrderStatusResponse
 import com.example.atonce_admin.data.remote.dto.PharmacyOrdersResponse
 import com.example.atonce_admin.data.remote.dto.StatsResponse
@@ -49,6 +50,9 @@ class RemoteDataSourceImpl(
         return flowOf(pharmacyService.getPharmacyOrders(pharmacyId))
     }
 
+    override suspend fun getOrderDetails(orderId: Int): Flow<OrderDetailsResponseDto> {
+        return flowOf(pharmacyService.getOrderDetails(orderId))
+    }
 
 
 }
