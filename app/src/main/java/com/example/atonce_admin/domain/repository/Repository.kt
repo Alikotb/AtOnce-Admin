@@ -7,6 +7,7 @@ import com.example.atonce_admin.data.remote.dto.LoginResponse
 import com.example.atonce_admin.data.remote.dto.PharmacyOrdersResponse
 import com.example.atonce_admin.domain.entity.OrderEntity
 import com.example.atonce_admin.domain.entity.OrderStateEntity
+import com.example.atonce_admin.domain.entity.PharmacyOrderResponseEntity
 import com.example.atonce_admin.domain.entity.UserEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -34,6 +35,6 @@ interface Repository {
 
     suspend fun getAllCustomer(representativeId: Int): Flow<CustomerResponse>
 
-    suspend fun getPharmacyOrders(pharmacyId: Int): Flow<List<OrderEntity>>
+    suspend fun getPharmacyOrders(pharmacyId: Int): Flow<PharmacyOrderResponseEntity>
 
 }

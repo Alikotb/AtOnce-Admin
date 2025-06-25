@@ -1,6 +1,11 @@
 package com.example.atonce_admin.core.extensions
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import java.text.SimpleDateFormat
+import java.time.Instant
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 import java.util.Locale
 import java.util.TimeZone
 
@@ -29,25 +34,27 @@ fun String.replaceEGPWithArabicCurrency(): String {
 }
 
 
+@RequiresApi(Build.VERSION_CODES.O)
 fun String.toLocalizedDateTime(): String {
     return try {
-        val isoFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSSSX", Locale.US)
-        isoFormat.timeZone = TimeZone.getTimeZone("UTC")
-        val date = isoFormat.parse(this)
+        val isoString = if (this.endsWith("Z").not()) "${this}Z" else this
+
+        val instant = Instant.parse(isoString)
+        val dateTime = instant.atZone(ZoneId.systemDefault())
 
         val currentLocale = Locale.getDefault().language
-
         val pattern = if (currentLocale == "ar") {
             "dd MMM yyyy - hh:mm a"
         } else {
             "MMM dd, yyyy - hh:mm a"
         }
 
-        val formatter = SimpleDateFormat(pattern, Locale(currentLocale))
-        formatter.format(date!!)
+        val formatter = DateTimeFormatter.ofPattern(pattern, Locale(currentLocale))
+        dateTime.format(formatter)
     } catch (e: Exception) {
-        this
+        this // fallback to original string
     }
 }
+
 
 

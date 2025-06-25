@@ -10,6 +10,7 @@ import com.example.atonce_admin.domain.entity.OrderEntity
 import com.example.atonce_admin.domain.entity.OrderStateEntity
 import com.example.atonce_admin.domain.entity.UserEntity
 import com.example.atonce_admin.data.mapper.toEntity
+import com.example.atonce_admin.domain.entity.PharmacyOrderResponseEntity
 import com.example.atonce_admin.domain.repository.Repository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
@@ -63,9 +64,9 @@ class RepositoryImpl(
         return remoteDataSource.getAllCustomer(representativeId)
     }
 
-    override suspend fun getPharmacyOrders(pharmacyId: Int): Flow<List<OrderEntity>> {
+    override suspend fun getPharmacyOrders(pharmacyId: Int): Flow<PharmacyOrderResponseEntity> {
         return remoteDataSource.getPharmacyOrders(pharmacyId).map {
-            it.pharmacyOrderDto.map { it.toEntity() }
+            it.toEntity()
         }
     }
 

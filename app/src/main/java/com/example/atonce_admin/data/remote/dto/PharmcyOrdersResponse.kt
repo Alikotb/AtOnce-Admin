@@ -2,7 +2,7 @@ package com.example.atonce_admin.data.remote.dto
 
 data class PharmacyOrdersResponse(
     val message: String,
-    val pharmacyOrderDto: List<PharmacyOrderDto>
+    val result: List<PharmacyOrderDto?>
 )
 
 data class PharmacyOrderDto(

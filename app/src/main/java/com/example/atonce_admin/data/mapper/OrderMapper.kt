@@ -47,6 +47,13 @@ fun OrderDetail.toEntity(): OrderDetailEntity {
     )
 }
 
+fun PharmacyOrdersResponse.toEntity(): PharmacyOrderResponseEntity {
+    return PharmacyOrderResponseEntity(
+        message = message,
+        result = if (result.isNotEmpty()) result.map { it!!.toEntity() } else emptyList()
+    )
+}
+
 fun PharmacyOrderDto.toEntity(): OrderEntity {
     return OrderEntity(
         createdAt = createdAt,
