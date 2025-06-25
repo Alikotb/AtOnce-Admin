@@ -1,5 +1,6 @@
 package com.example.atonce_admin.presentation.common.navigation
 
+import com.example.atonce_admin.presentation.users.model.CustomerModel
 import kotlinx.serialization.Serializable
 
 
@@ -27,6 +28,10 @@ sealed class ScreenRoute {
 
     @Serializable
     data class BloggerScreen(val title : String , val url : String) : ScreenRoute()
+
+    @Serializable
+    data class  PharmacyOrdersScreen(val pharmacy : String) : ScreenRoute()
+
 
 
 }

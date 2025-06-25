@@ -8,12 +8,14 @@ import androidx.navigation.compose.composable
 import com.example.atonce_admin.core.enums.OrderStatesEnum
 import com.example.atonce_admin.domain.entity.OrderEntity
 import com.example.atonce_admin.presentation.blogger.BloggerScreen
-import com.example.atonce_admin.presentation.orders.OrdersScreen
 import com.example.atonce_admin.presentation.home.view.HomeWithDrawerScreen
 import com.example.atonce_admin.presentation.login.LoginScreen
+import com.example.atonce_admin.presentation.orders.OrdersScreen
+import com.example.atonce_admin.presentation.pharmacyOrders.PharmacyOrdersScreen
 import com.example.atonce_admin.presentation.profile.view.ProfileScreen
 import com.example.atonce_admin.presentation.splash.view.SplashScreen
 import com.example.atonce_admin.presentation.stateOrders.view.StateOrders
+import com.example.atonce_admin.presentation.users.model.CustomerModel
 import com.example.atonce_admin.presentation.users.view.UsersScreen
 import com.google.gson.Gson
 
@@ -29,7 +31,7 @@ fun SetUpNavHost(
     ) {
 
         composable<ScreenRoute.SplashScreen> {
-            SplashScreen{
+            SplashScreen {
                 if (it) {
                     navController.navigate(ScreenRoute.HomeScreen) {
                         popUpTo(0) { inclusive = true }
@@ -45,7 +47,7 @@ fun SetUpNavHost(
         }
 
         composable<ScreenRoute.LoginScreen> {
-            LoginScreen(snackbarHostState=snackbarHostState){
+            LoginScreen(snackbarHostState = snackbarHostState) {
                 navController.navigate(ScreenRoute.HomeScreen) {
                     popUpTo(0) { inclusive = true }
                     launchSingleTop = true
@@ -138,6 +140,9 @@ fun SetUpNavHost(
         }
         composable<ScreenRoute.UsersScreen> {
             UsersScreen(
+                onItemClicked = {
+                    navController.navigate(ScreenRoute.PharmacyOrdersScreen(Gson().toJson(it)))
+                },
                 onBackClicked = {
                     navController.navigateUp()
                 }
@@ -149,6 +154,17 @@ fun SetUpNavHost(
             BloggerScreen(
                 title = title ?: "",
                 url = url ?: "",
+                onBackClicked = {
+                    navController.navigateUp()
+                }
+            )
+        }
+
+        composable<ScreenRoute.PharmacyOrdersScreen> {
+            val pharmacy = it.arguments?.getString("pharmacy")
+            val pharmacyModel = Gson().fromJson(pharmacy, CustomerModel::class.java)
+            PharmacyOrdersScreen(
+                pharmacy = pharmacyModel,
                 onBackClicked = {
                     navController.navigateUp()
                 }

@@ -1,4 +1,4 @@
-package com.example.atonce_admin.domain.mapper
+package com.example.atonce_admin.data.mapper
 
 import com.example.atonce_admin.data.remote.dto.CustomerResponse
 import com.example.atonce_admin.presentation.users.model.CustomerModel

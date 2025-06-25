@@ -1,6 +1,7 @@
 package com.example.atonce_admin.presentation.users.view.component
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -36,7 +37,8 @@ import com.example.atonce_admin.presentation.users.model.CustomerModel
 @Composable
 fun UserCard(
     obj: CustomerModel,
-    state: CustomerStateEnum = CustomerStateEnum.ACTIVE
+    state: CustomerStateEnum = CustomerStateEnum.ACTIVE,
+    onItemClick: (CustomerModel) -> Unit = {}
     ) {
 
     val isDark = isSystemInDarkTheme()
@@ -53,6 +55,9 @@ fun UserCard(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 8.dp, vertical = 8.dp)
+            .clickable {
+                onItemClick(obj)
+            }
 
     ) {
         Column(

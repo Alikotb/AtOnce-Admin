@@ -8,11 +8,9 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.atonce_admin.presentation.orders.Component.OrderCard
+import com.example.atonce_admin.presentation.common.component.OrderCard
 import com.example.atonce_admin.presentation.common.component.CustomTopBar
-import com.example.atonce_admin.core.enums.OrderStatesEnum
 import com.example.atonce_admin.domain.entity.OrderEntity
 
 @Composable

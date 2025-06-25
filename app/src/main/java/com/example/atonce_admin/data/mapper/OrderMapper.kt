@@ -1,4 +1,4 @@
-package com.example.atonce_admin.domain.mapper
+package com.example.atonce_admin.data.mapper
 
 import com.example.atonce_admin.data.remote.dto.*
 import com.example.atonce_admin.domain.entity.*
@@ -44,5 +44,26 @@ fun OrderDetail.toEntity(): OrderDetailEntity {
         medicineName = if(Locale.getDefault().language=="ar") arabicMedicineName else englishMedicineName,
         price = price,
         quantity = quantity
+    )
+}
+
+fun PharmacyOrdersResponse.toEntity(): PharmacyOrderResponseEntity {
+    return PharmacyOrderResponseEntity(
+        message = message,
+        result = if (result.isNotEmpty()) result.map { it!!.toEntity() } else emptyList()
+    )
+}
+
+fun PharmacyOrderDto.toEntity(): OrderEntity {
+    return OrderEntity(
+        createdAt = createdAt,
+        orderDetails = emptyList(),
+        orderId = orderId,
+        orderState = status,
+        pharmacyName = "",
+        totalPrice = totalPrice,
+        userName = "",
+        warehouseName = wareHouseName,
+        address = ""
     )
 }

@@ -4,7 +4,10 @@ import com.example.atonce_admin.data.remote.dto.CustomerResponse
 import com.example.atonce_admin.domain.entity.ControlPanelEntity
 import com.example.atonce_admin.data.remote.dto.LoginRequest
 import com.example.atonce_admin.data.remote.dto.LoginResponse
+import com.example.atonce_admin.data.remote.dto.PharmacyOrdersResponse
+import com.example.atonce_admin.domain.entity.OrderEntity
 import com.example.atonce_admin.domain.entity.OrderStateEntity
+import com.example.atonce_admin.domain.entity.PharmacyOrderResponseEntity
 import com.example.atonce_admin.domain.entity.UserEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -31,5 +34,7 @@ interface Repository {
     fun getLanguage(): String
 
     suspend fun getAllCustomer(representativeId: Int): Flow<CustomerResponse>
+
+    suspend fun getPharmacyOrders(pharmacyId: Int): Flow<PharmacyOrderResponseEntity>
 
 }

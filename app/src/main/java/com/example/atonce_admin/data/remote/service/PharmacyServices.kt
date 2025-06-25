@@ -6,7 +6,7 @@ import retrofit2.http.Path
 
 interface PharmacyServices {
 
-    @GET("api/order/getAllorder/{representativeId}")
-    suspend fun getPharmacyOrders(@Path("representativeId") representativeId: Int): PharmacyOrdersResponse
+    @GET("api/order/getAllorder/{pharmacyId}")
+    suspend fun getPharmacyOrders(@Path("pharmacyId") pharmacyId: Int): PharmacyOrdersResponse
 
 }

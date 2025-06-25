@@ -21,11 +21,11 @@ data class OrderEntity(
     val orderDetails: List<OrderDetailEntity>,
     val orderId: Int,
     val orderState: String,
-    val pharmacyName: String,
+    var pharmacyName: String,
     val totalPrice: Double,
-    val userName: String,
+    var userName: String,
     val warehouseName: String,
-    val address: String
+    var address: String
 )
 
 data class OrderDetailEntity(
@@ -33,5 +33,10 @@ data class OrderDetailEntity(
     val medicineName: String,
     val price: Double,
     val quantity: Int
+)
+
+data class PharmacyOrderResponseEntity(
+    val message: String,
+    val result: List<OrderEntity>
 )
 

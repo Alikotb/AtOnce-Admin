@@ -2,6 +2,7 @@ package com.example.atonce_admin.di
 
 import com.example.atonce_admin.core.constants.AppConstants
 import com.example.atonce_admin.data.remote.service.AuthService
+import com.example.atonce_admin.data.remote.service.PharmacyServices
 import com.example.atonce_admin.data.remote.service.RepresentativeService
 import org.koin.dsl.module
 import retrofit2.Retrofit
@@ -23,6 +24,10 @@ val networkModule = module {
     single {
         get<Retrofit>().create(RepresentativeService::class.java)
     }
+    single {
+        get<Retrofit>().create(PharmacyServices::class.java)
+    }
+
 
 
 }
