@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.atonce_admin.core.enums.ErrorEnum
 import com.example.atonce_admin.data.Response
 import com.example.atonce_admin.data.remote.dto.CustomerResponse
-import com.example.atonce_admin.domain.mapper.toEntity
+import com.example.atonce_admin.data.mapper.toEntity
 import com.example.atonce_admin.domain.usecase.GetAllCustomerUseCase
 import com.example.atonce_admin.domain.usecase.GetUserDataUseCase
 import com.example.atonce_admin.presentation.users.model.CustomerModel

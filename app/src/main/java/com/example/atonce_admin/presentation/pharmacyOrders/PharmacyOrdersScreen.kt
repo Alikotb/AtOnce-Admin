@@ -1,4 +1,4 @@
-package com.example.atonce_admin.presentation.orders
+package com.example.atonce_admin.presentation.pharmacyOrders
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -9,13 +9,14 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.atonce_admin.presentation.common.component.OrderCard
-import com.example.atonce_admin.presentation.common.component.CustomTopBar
 import com.example.atonce_admin.domain.entity.OrderEntity
+import com.example.atonce_admin.presentation.common.component.CustomTopBar
+import com.example.atonce_admin.presentation.common.component.OrderCard
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun OrdersScreen(
-    orders : List<OrderEntity>,
+fun PharmacyOrdersScreen(
+    PharmacyOrdersViewModel: PharmacyOrdersViewModel = koinViewModel(),
     title: String ,
     onBackClicked: () -> Unit = {}
 ){
@@ -28,12 +29,12 @@ fun OrdersScreen(
             leadingIcon = Icons.AutoMirrored.Default.ArrowBack,
             onLeadingClick = onBackClicked
         )
-        LazyColumn {
+        /*LazyColumn {
             items(orders){
                 OrderCard(
                     order = it
                 )
             }
-        }
+        }*/
     }
 }

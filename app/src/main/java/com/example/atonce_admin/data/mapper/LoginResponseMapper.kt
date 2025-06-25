@@ -1,4 +1,4 @@
-package com.example.atonce_admin.domain.mapper
+package com.example.atonce_admin.data.mapper
 
 import com.example.atonce_admin.data.remote.dto.LoginResponse
 import com.example.atonce_admin.domain.entity.UserEntity
