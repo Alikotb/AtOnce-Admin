@@ -122,7 +122,7 @@ fun HomeScreen(
 
                     CustomSection(
                         header = stringResource(R.string.customers_count),
-                        value = totalCustomers,
+                        value = totalCustomers.convertNumbersToArabic(),
                         textAlign = TextAlign.Center,
                         bgColor = background
                     )
