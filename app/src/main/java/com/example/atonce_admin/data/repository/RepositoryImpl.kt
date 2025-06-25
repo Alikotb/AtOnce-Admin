@@ -7,6 +7,7 @@ import com.example.atonce_admin.domain.entity.ControlPanelEntity
 import com.example.atonce_admin.data.remote.dto.LoginRequest
 import com.example.atonce_admin.data.remote.dto.LoginResponse
 import com.example.atonce_admin.data.remote.dto.PharmacyOrdersResponse
+import com.example.atonce_admin.domain.entity.OrderEntity
 import com.example.atonce_admin.domain.entity.OrderStateEntity
 import com.example.atonce_admin.domain.entity.UserEntity
 import com.example.atonce_admin.domain.mapper.toEntity
@@ -63,8 +64,10 @@ class RepositoryImpl(
         return remoteDataSource.getAllCustomer(representativeId)
     }
 
-    override suspend fun getPharmacyOrders(pharmacyId: Int): Flow<PharmacyOrdersResponse> {
-        return remoteDataSource.getPharmacyOrders(pharmacyId)
+    override suspend fun getPharmacyOrders(pharmacyId: Int): Flow<List<OrderEntity>> {
+        return remoteDataSource.getPharmacyOrders(pharmacyId).map {
+            it.pharmacyOrderDto.map { it.toEntity() }
+        }
     }
 
     override suspend fun getControlPanelData(

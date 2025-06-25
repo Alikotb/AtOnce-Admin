@@ -46,3 +46,17 @@ fun OrderDetail.toEntity(): OrderDetailEntity {
         quantity = quantity
     )
 }
+
+fun PharmacyOrderDto.toEntity(): OrderEntity {
+    return OrderEntity(
+        createdAt = createdAt,
+        orderDetails = emptyList(),
+        orderId = orderId,
+        orderState = status,
+        pharmacyName = "",
+        totalPrice = totalPrice,
+        userName = "",
+        warehouseName = wareHouseName,
+        address = ""
+    )
+}
