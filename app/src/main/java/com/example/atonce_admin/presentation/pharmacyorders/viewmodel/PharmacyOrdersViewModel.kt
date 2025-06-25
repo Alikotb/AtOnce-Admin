@@ -26,8 +26,6 @@ class PharmacyOrdersViewModel(
     private val _orderDetailsState = MutableStateFlow<Response<List<OrderItem>>>(Response.Loading)
     val orderDetailsState = _orderDetailsState.asStateFlow()
 
-
-
     private val errorExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         _uiState.value = Response.Error(throwable.message ?: "Something went wrong")
     }
