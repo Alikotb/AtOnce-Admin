@@ -1,4 +1,4 @@
-package com.example.atonce_admin.presentation.pharmacyOrders
+package com.example.atonce_admin.presentation.pharmacyorders
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

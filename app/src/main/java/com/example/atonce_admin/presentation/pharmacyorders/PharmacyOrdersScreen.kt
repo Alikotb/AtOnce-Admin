@@ -1,4 +1,4 @@
-package com.example.atonce_admin.presentation.pharmacyOrders
+package com.example.atonce_admin.presentation.pharmacyorders
 
 import android.util.Log
 import androidx.compose.foundation.layout.Column
