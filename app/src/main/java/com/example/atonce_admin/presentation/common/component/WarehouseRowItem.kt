@@ -11,7 +11,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.atonce_admin.R
@@ -46,7 +45,7 @@ fun WarehouseRowItem(
                 fontSize = 14.sp
             )
             Text(
-                text = stringResource(R.string.orders_count, warehouse.ordersCount),
+                text = stringResource(R.string.orders_count, warehouse.ordersCount).convertNumbersToArabic(),
                 color = PrimaryColor,
                 fontFamily = RegularFont,
                 fontSize = 12.sp

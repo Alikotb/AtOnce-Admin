@@ -2,6 +2,7 @@ package com.example.atonce_admin.domain.mapper
 
 import com.example.atonce_admin.data.remote.dto.*
 import com.example.atonce_admin.domain.entity.*
+import java.util.Locale
 
 fun OrderStatusResponse.toEntity(): OrderStateEntity {
     return OrderStateEntity(
@@ -40,7 +41,7 @@ fun Order.toEntity(): OrderEntity {
 fun OrderDetail.toEntity(): OrderDetailEntity {
     return OrderDetailEntity(
         medicineId = medicineId,
-        medicineName = medicineName,
+        medicineName = if(Locale.getDefault().language=="ar") arabicMedicineName else englishMedicineName,
         price = price,
         quantity = quantity
     )

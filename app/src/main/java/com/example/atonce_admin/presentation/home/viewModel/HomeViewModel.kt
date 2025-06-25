@@ -6,7 +6,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.atonce_admin.core.enums.ErrorEnum
 import com.example.atonce_admin.data.Response
 import com.example.atonce_admin.domain.entity.ControlPanelEntity
-import com.example.atonce_admin.domain.entity.UserEntity
 import com.example.atonce_admin.domain.usecase.FreeUserDataUseCase
 import com.example.atonce_admin.domain.usecase.GetControlPanelDataUseCase
 import com.example.atonce_admin.domain.usecase.GetUserDataUseCase
@@ -14,12 +13,11 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
     private val getControlPanelDataUseCase: GetControlPanelDataUseCase
-    ,private val getUserDataUseCase: GetUserDataUseCase,
+    , getUserDataUseCase: GetUserDataUseCase,
     private val logoutUseCase: FreeUserDataUseCase
 ) : ViewModel() {
 

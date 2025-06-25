@@ -30,7 +30,8 @@ data class Order(
 
 data class OrderDetail(
     val medicineId: Int,
-    val medicineName: String,
+    val arabicMedicineName: String,
+    val englishMedicineName: String,
     val price: Double,
     val quantity: Int
 )
