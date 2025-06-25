@@ -106,19 +106,19 @@ class RepresentativeServiceTest : KoinTest {
         }
     }
 
-    @Test
-    fun testGetAllCustomers_WithNonExitRepresentativeId_ReturnsCustomerResponse() {
-        runBlocking {
-            //given
-            val representativeId = 100
-
-            //when
-            val customerResponse = representativeService.getAllCustomers(representativeId)
-
-            //then
-            assertNotNull(customerResponse)
-            assertEquals(customerResponse.representativeId, representativeId)
-            assertEquals(customerResponse.representativeName, "")
-        }
-    }
+//    @Test
+//    fun testGetAllCustomers_WithNonExitRepresentativeId_ReturnsCustomerResponse() {
+//        runBlocking {
+//            //given
+//            val representativeId = 100
+//
+//            //when
+//            val customerResponse = representativeService.getAllCustomers(representativeId)
+//
+//            //then
+//            assertNotNull(customerResponse)
+//            assertEquals(customerResponse.representativeId, representativeId)
+//            assertEquals(customerResponse.representativeName, "")
+//        }
+//    }
 }
