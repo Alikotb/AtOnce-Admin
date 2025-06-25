@@ -11,15 +11,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Logout
 import androidx.compose.material.icons.filled.HeadsetMic
 import androidx.compose.material.icons.filled.Info
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -29,19 +22,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.atonce_admin.R
 import com.example.atonce_admin.core.constants.AppConstants
-import com.example.atonce_admin.core.enums.LanguageEnum
 import com.example.atonce_admin.core.extensions.convertNumbersToArabic
 import com.example.atonce_admin.core.extensions.restartActivity
-import com.example.atonce_admin.core.utils.restartActivity
 import com.example.atonce_admin.presentation.common.component.AppDialog
+import com.example.atonce_admin.presentation.common.theme.PrimaryColor
 import com.example.atonce_admin.presentation.profile.view.components.AccountCard
 import com.example.atonce_admin.presentation.profile.view.components.ProfileListItem
 import com.example.atonce_admin.presentation.profile.view.components.ProfileTopBar
 import com.example.atonce_admin.presentation.profile.view.components.QRCodeView
-import com.example.atonce_admin.presentation.common.theme.PrimaryColor
 import com.example.atonce_admin.presentation.profile.viewmodel.ProfileViewModel
 import org.koin.androidx.compose.koinViewModel
 

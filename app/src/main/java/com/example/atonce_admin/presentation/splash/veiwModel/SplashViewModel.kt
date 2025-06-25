@@ -2,7 +2,6 @@ package com.example.atonce_admin.presentation.splash.veiwModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.atonce_admin.data.Response
 import com.example.atonce_admin.domain.usecase.IsLoggedInUseCase
 import kotlinx.coroutines.Dispatchers
