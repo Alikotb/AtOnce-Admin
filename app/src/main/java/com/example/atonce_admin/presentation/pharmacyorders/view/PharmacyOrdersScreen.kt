@@ -25,6 +25,7 @@ import com.example.atonce_admin.presentation.common.component.EmptySearchResultV
 import com.example.atonce_admin.presentation.common.component.ErrorView
 import com.example.atonce_admin.presentation.common.component.OrderCard
 import com.example.atonce_admin.presentation.pharmacyorders.view.component.OrderItemCard
+import com.example.atonce_admin.presentation.pharmacyorders.view.component.OrderItemShimmerCard
 import com.example.atonce_admin.presentation.pharmacyorders.viewmodel.PharmacyOrdersViewModel
 import com.example.atonce_admin.presentation.users.model.CustomerModel
 import com.example.atonce_admin.presentation.users.view.component.UserCardShimmer
@@ -102,7 +103,11 @@ fun PharmacyOrdersScreen(
         ) {
             when (orderDetailsState.value) {
                 is Response.Loading -> {
-
+                    LazyColumn{
+                        items(2){
+                            OrderItemShimmerCard()
+                        }
+                    }
                 }
                 is Response.Success -> {
                     val items = (orderDetailsState.value as Response.Success).data
