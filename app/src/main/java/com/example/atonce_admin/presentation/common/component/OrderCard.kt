@@ -1,5 +1,7 @@
 package com.example.atonce_admin.presentation.common.component
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -32,10 +34,12 @@ import com.example.atonce_admin.presentation.common.theme.MediumFont
 import com.example.atonce_admin.presentation.common.theme.PrimaryColor
 import com.example.atonce_admin.presentation.common.theme.RegularFont
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun OrderCard(
     order : OrderEntity,
-    onItemClick : () -> Unit = {}
+    onItemClick : () -> Unit = {},
+    isCustomer : Boolean = false
 ) {
 
     val isDark = isSystemInDarkTheme()
@@ -47,6 +51,9 @@ fun OrderCard(
     }
 
     val type = OrderStatesEnum.fromName(order.orderState)
+
+    val userName = if (!isCustomer) order.userName else "${order.userName} - ${order.pharmacyName}"
+    val name = if (isCustomer) order.warehouseName else order.pharmacyName
 
     Card(
         shape = RoundedCornerShape(8.dp)
@@ -90,8 +97,8 @@ fun OrderCard(
             ,fontFamily = MediumFont
                 ,color = Color.Gray
             )
-            Text(text = order.userName, fontSize = 12.sp , fontFamily = RegularFont)
-            Text(text = order.pharmacyName, fontSize = 12.sp ,
+            Text(text = userName, fontSize = 12.sp , fontFamily = RegularFont)
+            Text(text = name, fontSize = 12.sp ,
                 color = PrimaryColor,fontFamily = MediumFont)
             Row(
                 modifier = Modifier.fillMaxWidth()

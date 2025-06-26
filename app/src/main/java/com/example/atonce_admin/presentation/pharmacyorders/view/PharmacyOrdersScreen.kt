@@ -1,6 +1,8 @@
 package com.example.atonce_admin.presentation.pharmacyorders.view
 
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -30,6 +32,7 @@ import com.example.atonce_admin.presentation.users.model.CustomerModel
 import com.example.atonce_admin.presentation.users.view.component.UserCardShimmer
 import org.koin.androidx.compose.koinViewModel
 
+@RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PharmacyOrdersScreen(
@@ -80,6 +83,7 @@ fun PharmacyOrdersScreen(
                     LazyColumn {
                         items(orders){
                             OrderCard(
+                                isCustomer = true,
                                 order = it,
                                 onItemClick = {
                                     showBottomSheet.value = true
