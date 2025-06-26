@@ -28,7 +28,9 @@ import com.example.atonce_admin.core.enums.OrderStatesEnum
 import com.example.atonce_admin.core.extensions.convertNumbersToArabic
 import com.example.atonce_admin.core.extensions.replaceEGPWithArabicCurrency
 import com.example.atonce_admin.core.extensions.toLocalizedDateTime
+import com.example.atonce_admin.data.mapper.toEntity
 import com.example.atonce_admin.domain.entity.OrderEntity
+import com.example.atonce_admin.domain.entity.OrderItem
 import com.example.atonce_admin.presentation.common.theme.BoldFont
 import com.example.atonce_admin.presentation.common.theme.MediumFont
 import com.example.atonce_admin.presentation.common.theme.PrimaryColor
@@ -37,9 +39,10 @@ import com.example.atonce_admin.presentation.common.theme.RegularFont
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun OrderCard(
-    order : OrderEntity,
-    onItemClick : () -> Unit = {},
-    isCustomer : Boolean = false
+    order: OrderEntity,
+    onItemClick: () -> Unit = {},
+    isCustomer: Boolean = false,
+    onStoredItemClicked: (List<OrderItem>) -> Unit = {}
 ) {
 
     val isDark = isSystemInDarkTheme()
@@ -56,24 +59,34 @@ fun OrderCard(
     val name = if (isCustomer) order.warehouseName else order.pharmacyName
 
     Card(
-        shape = RoundedCornerShape(8.dp)
-        ,colors = CardDefaults.cardColors(containerColor = containerColor)
-        ,elevation = CardDefaults.cardElevation(defaultElevation = elevation),
+        shape = RoundedCornerShape(8.dp),
+        colors = CardDefaults.cardColors(containerColor = containerColor),
+        elevation = CardDefaults.cardElevation(defaultElevation = elevation),
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 8.dp)
-            .clickable { onItemClick() }
+            .clickable {
+                if (order.orderDetails.isEmpty()) {
+                    onItemClick()
+                } else {
+                    onStoredItemClicked(
+                        order.orderDetails.map {
+                            it.toEntity()
+                        }
+                    )
+                }
+            }
 
-    ){
+    ) {
         Column(
             modifier = Modifier.padding(8.dp),
             verticalArrangement = Arrangement.spacedBy(2.dp)
-        ){
+        ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
                 verticalAlignment = Alignment.CenterVertically
-            ){
+            ) {
                 Text(
                     text = type.getLocalizedValue(),
                     color = Color.White,
@@ -86,28 +99,34 @@ fun OrderCard(
                         .padding(4.dp),
                     fontFamily = BoldFont
                 )
-                Text(text = stringResource(R.string.ord, order.orderId).convertNumbersToArabic() ,
-                    fontSize = 14.sp ,
+                Text(
+                    text = stringResource(R.string.ord, order.orderId).convertNumbersToArabic(),
+                    fontSize = 14.sp,
                     color = PrimaryColor,
                     fontFamily = BoldFont
                 )
             }
-            Text(text = order.createdAt.toLocalizedDateTime().convertNumbersToArabic()
-                ,fontSize = 12.sp
-            ,fontFamily = MediumFont
-                ,color = Color.Gray
+            Text(
+                text = order.createdAt.toLocalizedDateTime().convertNumbersToArabic(),
+                fontSize = 12.sp,
+                fontFamily = MediumFont,
+                color = Color.Gray
             )
-            Text(text = userName, fontSize = 12.sp , fontFamily = RegularFont)
-            Text(text = name, fontSize = 12.sp ,
-                color = PrimaryColor,fontFamily = MediumFont)
+            Text(text = userName, fontSize = 12.sp, fontFamily = RegularFont)
+            Text(
+                text = name, fontSize = 12.sp,
+                color = PrimaryColor, fontFamily = MediumFont
+            )
             Row(
-                modifier = Modifier.fillMaxWidth()
-                ,horizontalArrangement = Arrangement.SpaceBetween,
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
-            ){
-                Text(text = order.address , fontSize = 12.sp , fontFamily = RegularFont)
-                Text(text = "${order.totalPrice} EGP".convertNumbersToArabic().replaceEGPWithArabicCurrency() ,
-                    fontSize = 14.sp ,
+            ) {
+                Text(text = order.address, fontSize = 12.sp, fontFamily = RegularFont)
+                Text(
+                    text = "${order.totalPrice} EGP".convertNumbersToArabic()
+                        .replaceEGPWithArabicCurrency(),
+                    fontSize = 14.sp,
                     color = PrimaryColor,
                     fontFamily = BoldFont
                 )

@@ -109,10 +109,11 @@ fun OrderItemCard(item: OrderItem) {
                     Spacer(modifier = Modifier.width(10.dp))
 
                     Text(
-                        text = stringResource(
-                            R.string.egp,
-                            String.format("%.2f", item.totalPriceBeforeDisccount).convertNumbersToArabic()
-                        ),
+                        text = if (item.discountAmount > 0) {
+                            stringResource(
+                                R.string.egp,
+                                String.format("%.2f", item.totalPriceBeforeDisccount).convertNumbersToArabic())
+                        } else "",
                         color = Color.Red.copy(alpha = 0.7f),
                         fontSize = 13.sp,
                         textDecoration = TextDecoration.LineThrough

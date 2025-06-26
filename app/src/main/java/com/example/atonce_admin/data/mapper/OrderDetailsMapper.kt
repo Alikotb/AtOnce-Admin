@@ -32,7 +32,7 @@ fun OrderDetailEntity.toEntity(): OrderItem {
         arabicMedicineName = medicineName,
         medicineName = medicineName,
         quantity = quantity,
-        totalPriceAfterDisccount = price,
+        totalPriceAfterDisccount = price * quantity,
         totalPriceBeforeDisccount = 0.0,
         medicinePrice = 0.0,
         medicineImage = "",
