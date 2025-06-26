@@ -7,6 +7,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,11 +22,13 @@ import com.example.atonce_admin.presentation.common.component.CustomTopBar
 import com.example.atonce_admin.presentation.common.component.EmptySearchResultView
 import com.example.atonce_admin.presentation.common.component.ErrorView
 import com.example.atonce_admin.presentation.common.component.OrderCard
+import com.example.atonce_admin.presentation.pharmacyorders.view.component.OrderItemCard
 import com.example.atonce_admin.presentation.pharmacyorders.viewmodel.PharmacyOrdersViewModel
 import com.example.atonce_admin.presentation.users.model.CustomerModel
 import com.example.atonce_admin.presentation.users.view.component.UserCardShimmer
 import org.koin.androidx.compose.koinViewModel
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PharmacyOrdersScreen(
     viewModel: PharmacyOrdersViewModel = koinViewModel(),
@@ -95,18 +98,18 @@ fun PharmacyOrdersScreen(
         ) {
             when (orderDetailsState.value) {
                 is Response.Loading -> {
-                    Text("Loading details...")
-                }
-                is Response.Error -> {
-                    Text("Failed to load details.")
+
                 }
                 is Response.Success -> {
                     val items = (orderDetailsState.value as Response.Success).data
                     LazyColumn {
                         items(items) { item ->
-                            Text(text = item.medicineName)
+                            OrderItemCard(item)
                         }
                     }
+                }
+                is Response.Error -> {
+
                 }
             }
         }

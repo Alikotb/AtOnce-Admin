@@ -6,6 +6,7 @@ import com.example.atonce_admin.domain.usecase.GetAllCustomerUseCase
 import com.example.atonce_admin.domain.usecase.GetLanguageUseCase
 import com.example.atonce_admin.domain.usecase.GetLoginResponseUseCase
 import com.example.atonce_admin.domain.usecase.GetOrdersByStatusUseCase
+import com.example.atonce_admin.domain.usecase.GetPharmacyOrderDetails
 import com.example.atonce_admin.domain.usecase.GetPharmacyOrdersUseCase
 import com.example.atonce_admin.domain.usecase.GetUserDataUseCase
 import com.example.atonce_admin.domain.usecase.IsLoggedInUseCase
@@ -42,5 +43,7 @@ val useCaseModule = module {
     factory { GetLanguageUseCase(get()) }
     factory { SetLanguageUseCase(get()) }
     factory { GetPharmacyOrdersUseCase(get()) }
+    factory { GetPharmacyOrderDetails(get()) }
+
 
 }
