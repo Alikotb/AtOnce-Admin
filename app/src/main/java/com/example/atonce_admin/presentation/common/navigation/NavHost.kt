@@ -87,7 +87,7 @@ fun SetUpNavHost(
                     navController.navigate(ScreenRoute.UsersScreen)
                 }, onItemClicked = {
                     navController.navigate(ScreenRoute.StateOrdersScreen(Gson().toJson(it)))
-                }
+                },
             )
         }
         composable<ScreenRoute.ProfileScreen> {
@@ -141,7 +141,7 @@ fun SetUpNavHost(
         composable<ScreenRoute.UsersScreen> {
             UsersScreen(
                 onItemClicked = {
-                    navController.navigate(ScreenRoute.PharmacyOrdersScreen(Gson().toJson(it)))
+                   // navController.navigate(ScreenRoute.PharmacyOrdersScreen(Gson().toJson(it)))
                 },
                 onBackClicked = {
                     navController.navigateUp()

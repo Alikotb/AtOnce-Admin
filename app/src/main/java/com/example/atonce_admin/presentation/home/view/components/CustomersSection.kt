@@ -7,6 +7,7 @@ import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
@@ -32,7 +33,8 @@ fun CustomSection(
     header: String = "Customers Count",
     value: String = "12",
     textAlign: TextAlign = TextAlign.Center,
-    bgColor: Color = backgroundColor
+    bgColor: Color = backgroundColor,
+    onItemClick: () -> Unit = {}
 ) {
     val isDark = isSystemInDarkTheme()
     val elevation = 4.dp
@@ -49,6 +51,7 @@ fun CustomSection(
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp)
+            .clickable { onItemClick() }
     ) {
         Column(
             modifier = Modifier

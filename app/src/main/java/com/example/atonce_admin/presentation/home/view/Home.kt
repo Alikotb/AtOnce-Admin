@@ -51,6 +51,7 @@ fun HomeScreen(
     onDrawerClicked: () -> Unit,
     onProfileClicked: () -> Unit,
     onOrdersClicked: (List<OrderEntity> , String) -> Unit,
+    onCustomerClicked: () -> Unit,
     onSeeMoreClick: () -> Unit
 ) {
     val status = OrderStatesEnum.ORDERED
@@ -124,8 +125,10 @@ fun HomeScreen(
                         header = stringResource(R.string.customers_count),
                         value = totalCustomers.convertNumbersToArabic(),
                         textAlign = TextAlign.Center,
-                        bgColor = background
-                    )
+                        bgColor = background,
+                    ){
+                        onCustomerClicked()
+                    }
 
 
                     WareHousesSection(warehouses = warehouses,
@@ -212,7 +215,8 @@ fun HomeWithDrawerScreen(
                 orders , warehouseName ->
                 onOrdersClicked(orders , warehouseName)
             },
-            onSeeMoreClick = onSeeMoreClick
+            onSeeMoreClick = onSeeMoreClick,
+            onCustomerClicked = onCustomerClicked
         )
     }
 }
