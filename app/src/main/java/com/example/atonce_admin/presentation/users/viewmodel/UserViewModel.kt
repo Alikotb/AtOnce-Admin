@@ -13,9 +13,11 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
@@ -29,29 +31,32 @@ class UserViewModel(
     private val _allCustomers = MutableStateFlow<List<CustomerModel>>(emptyList())
     val uiState = _uiState.asStateFlow()
     private val _searchQuery = MutableStateFlow("")
-
+    private val _isCustomerDataLoaded = MutableStateFlow(false)
+    private val _isSearching = MutableStateFlow(false)
+    val isSearching: StateFlow<Boolean> = _isSearching
     private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
         _uiState.value = Response.Error(ErrorEnum.NETWORK_ERROR.getLocalizedMessage())
     }
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
-            _searchQuery
-                .debounce(500)
-                .distinctUntilChanged()
-                .collectLatest { query ->
-                    filterCustomers(query)
-                }
-        }
-
-        viewModelScope.launch(Dispatchers.IO) {
-            _allCustomers.collect { customers ->
-                if (customers.isNotEmpty()) {
-                    filterCustomers(_searchQuery.value)
-                }
+            combine(
+                _searchQuery.debounce(500),
+                _isCustomerDataLoaded
+            ) { query, isLoaded ->
+                Pair(query, isLoaded)
             }
+                .distinctUntilChanged()
+                .collectLatest { (query, isLoaded) ->
+                    if (isLoaded) {
+                        _isSearching.value = true
+                        filterCustomers(query)
+                        _isSearching.value = false
+                    }
+                }
         }
     }
+
 
     fun getAllCustomer() {
         viewModelScope.launch(Dispatchers.IO + exceptionHandler) {
@@ -62,11 +67,15 @@ class UserViewModel(
                 }.collect { result: CustomerResponse ->
                     val list = result.pharmacies.map { it.toEntity() }
                     _allCustomers.emit(list)
+                    _allCustomers.emit(list)
+                    _isCustomerDataLoaded.value = true
                 }
             } catch (e: Error) {
                 _uiState.emit(Response.Error(ErrorEnum.NETWORK_ERROR.getLocalizedMessage()))
             }
+
         }
+
     }
 
     fun searchForPharmacy(query: String) {

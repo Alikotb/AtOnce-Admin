@@ -86,18 +86,17 @@ fun UsersScreen(
             }
 
             is Response.Success -> {
+                val isSearching by vieModel.isSearching.collectAsStateWithLifecycle()
                 val list = (pharmacyList as Response.Success<List<CustomerModel>>).data
 
-                LazyColumn {
-                    if (list.isNotEmpty()) {
+                if (list.isEmpty() && searchText.isNotEmpty() && !isSearching) {
+                    EmptySearchResultView()
+                } else {
+                    LazyColumn {
                         items(items = list, key = { it.id }) { customer ->
-                            UserCard(obj = customer){
+                            UserCard(obj = customer) {
                                 onItemClicked(it)
                             }
-                        }
-                    } else {
-                        item {
-                            EmptySearchResultView()
                         }
                     }
                 }
