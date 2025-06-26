@@ -1,7 +1,9 @@
 package com.example.atonce_admin.data.mapper
 
+import com.example.atonce_admin.data.remote.dto.OrderDetail
 import com.example.atonce_admin.data.remote.dto.OrderDetailsResponseDto
 import com.example.atonce_admin.data.remote.dto.OrderItemDto
+import com.example.atonce_admin.domain.entity.OrderDetailEntity
 import com.example.atonce_admin.domain.entity.OrderDetails
 import com.example.atonce_admin.domain.entity.OrderItem
 
@@ -17,7 +19,7 @@ fun OrderItemDto.toEntity(): OrderItem {
         arabicMedicineName = arabicMedicineName,
         medicineName = medicineName,
         quantity = quantity,
-        totalPriceAfterDisccount = totalPriceAfterDisccount,
+        totalPriceAfterDisccount = totalPriceAfterDisccount * quantity,
         totalPriceBeforeDisccount = totalPriceBeforeDisccount,
         medicinePrice = medicinePrice,
         medicineImage = medicineImage,
@@ -25,10 +27,15 @@ fun OrderItemDto.toEntity(): OrderItem {
     )
 }
 
-data class OrderDetail(
-    val medicineId: Int,
-    val arabicMedicineName: String,
-    val englishMedicineName: String,
-    val price: Double,
-    val quantity: Int
-)
+fun OrderDetailEntity.toEntity(): OrderItem {
+    return OrderItem(
+        arabicMedicineName = medicineName,
+        medicineName = medicineName,
+        quantity = quantity,
+        totalPriceAfterDisccount = price,
+        totalPriceBeforeDisccount = 0.0,
+        medicinePrice = 0.0,
+        medicineImage = "",
+        discountAmount = 0.0
+    )
+}

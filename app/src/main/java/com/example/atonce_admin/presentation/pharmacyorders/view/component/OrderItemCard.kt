@@ -39,7 +39,6 @@ fun OrderItemCard(item: OrderItem) {
     val colors = MaterialTheme.colorScheme
     val name = if (Locale.getDefault().language == "ar") item.arabicMedicineName else item.medicineName
 
-    val finalPrice = item.totalPriceAfterDisccount * item.quantity
 
     val isDark = isSystemInDarkTheme()
     val elevation = 4.dp
@@ -125,7 +124,7 @@ fun OrderItemCard(item: OrderItem) {
 
             Text(
                 text = stringResource(R.string.egp,
-                    String.format("%.2f", finalPrice)).convertNumbersToArabic(),
+                    String.format("%.2f", item.totalPriceAfterDisccount)).convertNumbersToArabic(),
                 style = MaterialTheme.typography.titleMedium,
                 color = colors.primary
             )
