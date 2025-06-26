@@ -25,3 +25,10 @@ fun OrderItemDto.toEntity(): OrderItem {
     )
 }
 
+data class OrderDetail(
+    val medicineId: Int,
+    val arabicMedicineName: String,
+    val englishMedicineName: String,
+    val price: Double,
+    val quantity: Int
+)
