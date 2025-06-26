@@ -8,7 +8,7 @@ import com.example.atonce_admin.data.remote.dto.OrderStatusResponse
 import com.example.atonce_admin.data.remote.dto.PharmacyOrdersResponse
 import com.example.atonce_admin.data.remote.dto.StatsResponse
 import com.example.atonce_admin.data.remote.service.AuthService
-import com.example.atonce_admin.data.remote.service.PharmacyServices
+import com.example.atonce_admin.data.remote.service.PharmacyService
 import com.example.atonce_admin.data.remote.service.RepresentativeService
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.flowOf
 class RemoteDataSourceImpl(
     private val authService: AuthService,
     private val representativeService: RepresentativeService,
-    private val pharmacyService: PharmacyServices
+    private val pharmacyService: PharmacyService
 ) : RemoteDataSource {
 
 
