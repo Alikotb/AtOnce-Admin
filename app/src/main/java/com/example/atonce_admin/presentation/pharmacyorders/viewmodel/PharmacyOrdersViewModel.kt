@@ -3,7 +3,6 @@ package com.example.atonce_admin.presentation.pharmacyorders.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.atonce_admin.data.Response
-import com.example.atonce_admin.domain.entity.OrderDetails
 import com.example.atonce_admin.domain.entity.OrderEntity
 import com.example.atonce_admin.domain.entity.OrderItem
 import com.example.atonce_admin.domain.usecase.GetPharmacyOrderDetails
