@@ -44,6 +44,4 @@ val useCaseModule = module {
     factory { SetLanguageUseCase(get()) }
     factory { GetPharmacyOrdersUseCase(get()) }
     factory { GetPharmacyOrderDetails(get()) }
-
-
 }
