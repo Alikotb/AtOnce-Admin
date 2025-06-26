@@ -1,6 +1,7 @@
 package com.example.atonce_admin.presentation.common.component
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -33,7 +34,8 @@ import com.example.atonce_admin.presentation.common.theme.RegularFont
 
 @Composable
 fun OrderCard(
-    order : OrderEntity
+    order : OrderEntity,
+    onItemClick : () -> Unit = {}
 ) {
 
     val isDark = isSystemInDarkTheme()
@@ -53,6 +55,7 @@ fun OrderCard(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 8.dp)
+            .clickable { onItemClick() }
 
     ){
         Column(

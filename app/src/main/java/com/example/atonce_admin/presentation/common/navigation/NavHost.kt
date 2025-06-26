@@ -11,7 +11,7 @@ import com.example.atonce_admin.presentation.blogger.BloggerScreen
 import com.example.atonce_admin.presentation.home.view.HomeWithDrawerScreen
 import com.example.atonce_admin.presentation.login.LoginScreen
 import com.example.atonce_admin.presentation.orders.OrdersScreen
-import com.example.atonce_admin.presentation.pharmacyorders.PharmacyOrdersScreen
+import com.example.atonce_admin.presentation.pharmacyorders.view.PharmacyOrdersScreen
 import com.example.atonce_admin.presentation.profile.view.ProfileScreen
 import com.example.atonce_admin.presentation.splash.view.SplashScreen
 import com.example.atonce_admin.presentation.stateOrders.view.StateOrders

@@ -1,4 +1,4 @@
-package com.example.atonce_admin.presentation.pharmacyorders
+package com.example.atonce_admin.presentation.pharmacyorders.view
 
 import android.util.Log
 import androidx.compose.foundation.layout.Column
@@ -7,8 +7,12 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -17,6 +21,7 @@ import com.example.atonce_admin.presentation.common.component.CustomTopBar
 import com.example.atonce_admin.presentation.common.component.EmptySearchResultView
 import com.example.atonce_admin.presentation.common.component.ErrorView
 import com.example.atonce_admin.presentation.common.component.OrderCard
+import com.example.atonce_admin.presentation.pharmacyorders.viewmodel.PharmacyOrdersViewModel
 import com.example.atonce_admin.presentation.users.model.CustomerModel
 import com.example.atonce_admin.presentation.users.view.component.UserCardShimmer
 import org.koin.androidx.compose.koinViewModel
@@ -29,6 +34,10 @@ fun PharmacyOrdersScreen(
 ){
 
     val uiState = viewModel.uiState.collectAsStateWithLifecycle()
+
+    val showBottomSheet = remember { mutableStateOf(false) }
+    val selectedOrderId = remember { mutableStateOf<Int?>(null) }
+    val orderDetailsState = viewModel.orderDetailsState.collectAsStateWithLifecycle()
 
     LaunchedEffect(Unit){
         viewModel.getPharmacyOrders(pharmacy)
@@ -65,11 +74,42 @@ fun PharmacyOrdersScreen(
                 else {
                     LazyColumn {
                         items(orders){
-                            OrderCard(order = it)
+                            OrderCard(
+                                order = it,
+                                onItemClick = {
+                                    showBottomSheet.value = true
+                                    selectedOrderId.value = it.orderId
+                                    viewModel.getOrderDetails(it.orderId)
+                                }
+                            )
                         }
                     }
                 }
             }
         }
     }
+
+    if (showBottomSheet.value) {
+        ModalBottomSheet(
+            onDismissRequest = { showBottomSheet.value = false }
+        ) {
+            when (orderDetailsState.value) {
+                is Response.Loading -> {
+                    Text("Loading details...")
+                }
+                is Response.Error -> {
+                    Text("Failed to load details.")
+                }
+                is Response.Success -> {
+                    val items = (orderDetailsState.value as Response.Success).data
+                    LazyColumn {
+                        items(items) { item ->
+                            Text(text = item.medicineName)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
 }
