@@ -46,16 +46,16 @@ fun WarehouseRowItem(
             )
             Text(
                 text = stringResource(R.string.orders_count, warehouse.ordersCount).convertNumbersToArabic(),
-                color = PrimaryColor,
                 fontFamily = RegularFont,
-                fontSize = 12.sp
+                fontSize = 14.sp
             )
         }
 
         Text(
             text = "${warehouse.totalPrice} EGP".convertNumbersToArabic().replaceEGPWithArabicCurrency(),
             fontFamily = MediumFont,
-            fontSize = 14.sp
+            color = PrimaryColor,
+            fontSize = 16.sp
         )
     }
 }
