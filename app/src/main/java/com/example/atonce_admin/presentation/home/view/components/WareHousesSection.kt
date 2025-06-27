@@ -74,7 +74,8 @@ fun WareHousesSection(
 
             if (warehouses.isEmpty()){
                 EmptySearchResultView(
-                    text = stringResource(R.string.currently_there_are_no_orders)
+                    text = stringResource(R.string.currently_there_are_no_orders),
+                    isLottie = false
                 )
             }
             else{
