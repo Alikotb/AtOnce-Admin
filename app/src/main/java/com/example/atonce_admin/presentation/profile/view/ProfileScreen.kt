@@ -111,7 +111,7 @@ fun ProfileScreen(
             if (showAboutDialog) {
                 AppDialog(
                     title = stringResource(R.string.about_us),
-                    message = "This is the About Us section for the app. You can put any info here.",
+                    message = stringResource(R.string.about_us_details),
                     onDismiss = { showAboutDialog = false }
                 )
             }
