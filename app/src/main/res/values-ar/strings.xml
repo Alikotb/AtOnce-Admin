@@ -26,4 +26,5 @@
     <string name="egp">%1$s جنيه</string>
     <string name="qty">الكمية: %1$s</string>
     <string name="about_us_details">هذا هو قسم "من نحن" في التطبيق، حيث يمكنك إضافة أي معلومات تريد عرضها.</string>
+    <string name="ok">حسنا</string>
 </resources>
