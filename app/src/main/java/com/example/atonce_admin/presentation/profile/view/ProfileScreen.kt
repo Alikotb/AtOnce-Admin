@@ -112,7 +112,9 @@ fun ProfileScreen(
                 AppDialog(
                     title = stringResource(R.string.about_us),
                     message = stringResource(R.string.about_us_details),
-                    onDismiss = { showAboutDialog = false }
+                    confirmText = stringResource(R.string.ok),
+                    onDismiss = { showAboutDialog = false },
+                    onConfirm = { showAboutDialog = false }
                 )
             }
 
@@ -129,12 +131,14 @@ fun ProfileScreen(
                 AppDialog(
                     title = stringResource(R.string.logout),
                     message = stringResource(R.string.are_you_sure_you_want_to_logout),
-                    confirmText = stringResource(R.string.logout)
-                ) {
-                    showLogoutDialog = false
-                    viewModel.logout()
-                    onLogout()
-                }
+                    confirmText = stringResource(R.string.logout),
+                    onDismiss = { showLogoutDialog = false },
+                    onConfirm = {
+                        showLogoutDialog = false
+                        viewModel.logout()
+                        onLogout()
+                    }
+                )
             }
         }
     }

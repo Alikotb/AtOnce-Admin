@@ -10,8 +10,9 @@ import androidx.compose.runtime.Composable
 fun AppDialog(
     title: String,
     message: String,
-    confirmText: String = "OK",
-    onDismiss: () -> Unit
+    confirmText: String,
+    onDismiss: () -> Unit,
+    onConfirm: () -> Unit
 ) {
     AlertDialog(
         onDismissRequest = onDismiss,
@@ -19,9 +20,10 @@ fun AppDialog(
         title = { Text(text = title) },
         text = { Text(message) },
         confirmButton = {
-            TextButton(onClick = onDismiss) {
+            TextButton(onClick = onConfirm) {
                 Text(confirmText)
             }
         }
     )
 }
+
