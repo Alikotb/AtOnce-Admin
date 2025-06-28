@@ -132,6 +132,7 @@ fun ProfileScreen(
                     confirmText = stringResource(R.string.logout)
                 ) {
                     showLogoutDialog = false
+                    viewModel.logout()
                     onLogout()
                 }
             }

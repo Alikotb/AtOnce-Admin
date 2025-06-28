@@ -29,7 +29,7 @@ val viewModelModule = module {
         SplashViewModel(get())
     }
 
-    viewModel { ProfileViewModel(get(), get()) }
+    viewModel { ProfileViewModel(get(), get(), get()) }
 
     viewModel {
         PharmacyOrdersViewModel(get(), get())
