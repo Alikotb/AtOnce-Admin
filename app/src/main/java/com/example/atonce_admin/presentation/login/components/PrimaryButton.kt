@@ -41,12 +41,14 @@ fun PrimaryButton(
         }else{
             if (loading) {
                 DotLoadingIndicator()
+            }else {
+                Text(
+                    text = stringResource(R.string.login),
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 18.sp
+                )
             }
-            Text(
-                text = stringResource(R.string.login),
-                fontWeight = FontWeight.Bold,
-                fontSize = 18.sp
-            )
+
         }
     }
 }

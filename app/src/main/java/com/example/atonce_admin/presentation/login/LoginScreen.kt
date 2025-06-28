@@ -98,11 +98,11 @@ fun LoginScreen(
         Spacer(modifier = Modifier.height(32.dp))
         PrimaryButton(
             loading=isLoading,
-            text = stringResource(R.string.login), onClick = {
+            text = stringResource(R.string.login),
+            onClick = {
                 viewModel.login(email, password)
             },
             isLoginFlag = true,
-
         )
     }
 }
