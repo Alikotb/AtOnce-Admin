@@ -1,5 +1,6 @@
 package com.example.atonce_admin.presentation.common.component
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -12,6 +13,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.placeholder.PlaceholderHighlight
 import com.google.accompanist.placeholder.material3.placeholder
@@ -21,6 +23,10 @@ import com.google.accompanist.placeholder.material3.shimmer
 fun WarehouseRowShimmerItem(
     modifier: Modifier = Modifier
 ) {
+
+    val isDark = isSystemInDarkTheme()
+    val shimmerColor = if (isDark) Color(0xFF444444) else Color(0xFFC0C0C0)
+
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -37,7 +43,7 @@ fun WarehouseRowShimmerItem(
                     .height(16.dp)
                     .placeholder(
                         visible = true,
-                        color =  MaterialTheme.colorScheme.outline.copy(alpha = 0.4f),
+                        color =  shimmerColor,
                         highlight = PlaceholderHighlight.shimmer()
                     )
             )
@@ -47,7 +53,7 @@ fun WarehouseRowShimmerItem(
                     .height(14.dp)
                     .placeholder(
                         visible = true,
-                        color =  MaterialTheme.colorScheme.outline.copy(alpha = 0.4f),
+                        color =  shimmerColor,
                         highlight = PlaceholderHighlight.shimmer()
                     )
             )

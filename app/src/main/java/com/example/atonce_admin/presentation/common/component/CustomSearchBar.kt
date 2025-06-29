@@ -39,12 +39,10 @@ fun CustomSearchBar(
             color = Color.Black,
             fontFamily = RegularFont
         ),
+        modifier = modifier.padding(horizontal = 8.dp),
         decorationBox = { innerTextField ->
             Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier
-                    .padding(horizontal = 8.dp)
-                    .fillMaxSize()
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 Icon(
                     imageVector = Icons.Default.Search,
@@ -53,20 +51,24 @@ fun CustomSearchBar(
                     modifier = Modifier.size(18.dp)
                 )
                 Spacer(modifier = Modifier.width(8.dp))
-                if (query.isEmpty()) {
-                    Text(
-                        text = placeholder,
-                        fontSize = 14.sp,
-                        color = Color.Gray,
-                        fontFamily = RegularFont
-                    )
-                }
-                innerTextField()
-            }
-        },
-        modifier = modifier
 
+                Box(
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    if (query.isEmpty()) {
+                        Text(
+                            text = placeholder,
+                            fontSize = 14.sp,
+                            color = Color.Gray,
+                            fontFamily = RegularFont
+                        )
+                    }
+                    innerTextField()
+                }
+            }
+        }
     )
 }
+
 
 

@@ -18,4 +18,13 @@
     <string name="contact_us">تواصل معنا</string>
     <string name="about_us">من نحن</string>
     <string name="search">قم بالبحث ...</string>
+    <string name="no_results_found">لا توجد نتائج</string>
+    <string name="ord">رقم الطلب : %1$s</string>
+    <string name="currently_there_are_no_orders">لايوجد طلبات حاليا</string>
+    <string name="are_you_sure_you_want_to_logout">هل أنت متأكد أنك تريد تسجيل الخروج؟</string>
+    <string name="retry">حاول مجددا</string>
+    <string name="egp">%1$s جنيه</string>
+    <string name="qty">الكمية: %1$s</string>
+    <string name="about_us_details">هذا هو قسم "من نحن" في التطبيق، حيث يمكنك إضافة أي معلومات تريد عرضها.</string>
+    <string name="ok">حسنا</string>
 </resources>

@@ -1,9 +1,11 @@
 package com.example.atonce_admin
 
 import android.app.Application
+import com.example.atonce_admin.di.localDataSourceModule
 import com.example.atonce_admin.di.networkModule
 import com.example.atonce_admin.di.remoteDataSourceModule
 import com.example.atonce_admin.di.repositoryModule
+import com.example.atonce_admin.di.sharedPreference
 import com.example.atonce_admin.di.useCaseModule
 import com.example.atonce_admin.di.viewModelModule
 import org.koin.android.ext.koin.androidContext
@@ -20,9 +22,11 @@ class App : Application() {
                 listOf(
                     networkModule,
                     remoteDataSourceModule,
+                    localDataSourceModule,
                     repositoryModule,
                     useCaseModule,
-                    viewModelModule
+                    viewModelModule,
+                    sharedPreference
                 )
             )
         }

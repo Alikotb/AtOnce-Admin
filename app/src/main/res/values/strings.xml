@@ -17,4 +17,13 @@
     <string name="contact_us">Contact US</string>
     <string name="about_us">About Us</string>
     <string name="search">Search...</string>
+    <string name="no_results_found">No results found</string>
+    <string name="ord">ORD#%1$s</string>
+    <string name="currently_there_are_no_orders">Currently there are no orders</string>
+    <string name="are_you_sure_you_want_to_logout">Are you sure you want to logout?</string>
+    <string name="retry">Retry</string>
+    <string name="egp">%1$s EGP</string>
+    <string name="qty">Qty: %1$s</string>
+    <string name="about_us_details">This is the About Us section for the app. You can put any info here.</string>
+    <string name="ok">ok</string>
 </resources>
