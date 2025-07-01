@@ -36,7 +36,7 @@ interface Repository {
 
     suspend fun getAllCustomer(representativeId: Int): Flow<CustomerResponse>
 
-    suspend fun getPharmacyOrders(pharmacyId: Int): Flow<PharmacyOrderResponseEntity>
+    suspend fun getPharmacyOrders(pharmacyId: Int , page: Int, pageSize: Int): Flow<PharmacyOrderResponseEntity>
     suspend fun getOrderDetails(orderId: Int): Flow<OrderDetails>
 
 }

@@ -46,8 +46,8 @@ class RemoteDataSourceImpl(
         return flowOf(representativeService.getAllCustomers(representativeId))
     }
 
-    override suspend fun getPharmacyOrders(pharmacyId: Int): Flow<PharmacyOrdersResponse> {
-        return flowOf(pharmacyService.getPharmacyOrders(pharmacyId))
+    override suspend fun getPharmacyOrders(pharmacyId: Int , page: Int, pageSize: Int): Flow<PharmacyOrdersResponse> {
+        return flowOf(pharmacyService.getPharmacyOrders(pharmacyId , page, pageSize))
     }
 
     override suspend fun getOrderDetails(orderId: Int): Flow<OrderDetailsResponseDto> {

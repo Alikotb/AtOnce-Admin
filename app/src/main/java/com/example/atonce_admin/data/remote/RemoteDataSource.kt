@@ -14,7 +14,7 @@ interface RemoteDataSource {
     suspend fun getOrdersByStatus(representativeId: Int, pageNumber: Int, pageSize: Int, status: Int): Flow<OrderStatusResponse>
     suspend fun login(loginRequest: LoginRequest): Flow<LoginResponse>
     suspend fun getAllCustomer(representativeId: Int): Flow<CustomerResponse>
-    suspend fun getPharmacyOrders(pharmacyId: Int): Flow<PharmacyOrdersResponse>
+    suspend fun getPharmacyOrders(pharmacyId: Int , page: Int, pageSize: Int): Flow<PharmacyOrdersResponse>
     suspend fun getOrderDetails(orderId: Int): Flow<OrderDetailsResponseDto>
 
 }

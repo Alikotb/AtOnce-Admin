@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 class PharmacyOrdersViewModel(
     private val getPharmacyOrdersUseCase: GetPharmacyOrdersUseCase,
     private val getOrderDetailsUseCase: GetPharmacyOrderDetails
-) : ViewModel(){
+) : ViewModel() {
 
     private val _uiState = MutableStateFlow<Response<List<OrderEntity>>>(Response.Loading)
     val uiState = _uiState.asStateFlow()
@@ -29,19 +29,54 @@ class PharmacyOrdersViewModel(
         _uiState.value = Response.Error(throwable.message ?: "Something went wrong")
     }
 
-    fun getPharmacyOrders(pharmacy : CustomerModel){
-        viewModelScope.launch(Dispatchers.IO + errorExceptionHandler){
-            getPharmacyOrdersUseCase(pharmacy.id).collect{
-                if (it.result.isNotEmpty()){
-                    it.result.forEach {
+    private var currentPage = 1
+    private val pageSize = 20
+    private var isLastPage = false
+    private var isLoading = false
+    private val orders = mutableListOf<OrderEntity>()
+    private var pharmacyModel: CustomerModel? = null
+
+    fun getPharmacyOrders(pharmacy: CustomerModel, reset: Boolean = false) {
+        if (isLoading || isLastPage) return
+
+        if (reset) {
+            currentPage = 1
+            isLastPage = false
+            orders.clear()
+            _uiState.value = Response.Loading
+        }
+
+        isLoading = true
+        pharmacyModel = pharmacy
+
+        viewModelScope.launch(Dispatchers.IO + errorExceptionHandler) {
+            getPharmacyOrdersUseCase(pharmacy.id, currentPage, pageSize).collect { result ->
+                if (result.result.isNotEmpty()) {
+                    result.result.forEach {
                         it.pharmacyName = pharmacy.pharmacyName
                         it.userName = pharmacy.userName
                         it.address = pharmacy.address
                     }
+                    orders.addAll(result.result)
+                    _uiState.value = Response.Success(orders.toList())
+                    currentPage++
+                    if (result.result.size < pageSize) isLastPage = true
+                } else {
+                    isLastPage = true
                 }
-                _uiState.value = Response.Success(it.result)
+                isLoading = false
             }
         }
+    }
+
+    fun loadNextPage() {
+        pharmacyModel?.let {
+            getPharmacyOrders(it)
+        }
+    }
+
+    fun refreshOrders(pharmacy: CustomerModel) {
+        getPharmacyOrders(pharmacy, reset = true)
     }
 
     fun getOrderDetails(orderId: Int) {
@@ -52,5 +87,4 @@ class PharmacyOrdersViewModel(
             }
         }
     }
-
 }
