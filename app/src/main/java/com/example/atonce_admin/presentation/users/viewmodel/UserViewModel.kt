@@ -38,7 +38,9 @@ class UserViewModel(
         _uiState.value = Response.Error(ErrorEnum.NETWORK_ERROR.getLocalizedMessage())
     }
 
-    init {
+
+
+     fun getInitialValue() {
         viewModelScope.launch(Dispatchers.IO) {
             combine(
                 _searchQuery.debounce(500),
