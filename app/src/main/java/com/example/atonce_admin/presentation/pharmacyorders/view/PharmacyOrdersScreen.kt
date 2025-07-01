@@ -39,27 +39,27 @@ fun PharmacyOrdersScreen(
     viewModel: PharmacyOrdersViewModel = koinViewModel(),
     pharmacy: CustomerModel,
     onBackClicked: () -> Unit = {}
-){
+) {
 
     val uiState = viewModel.uiState.collectAsStateWithLifecycle()
-
     val showBottomSheet = remember { mutableStateOf(false) }
     val selectedOrderId = remember { mutableStateOf<Int?>(null) }
     val orderDetailsState = viewModel.orderDetailsState.collectAsStateWithLifecycle()
 
-    LaunchedEffect(Unit){
-        viewModel.getPharmacyOrders(pharmacy)
+    LaunchedEffect(Unit) {
+        viewModel.refreshOrders(pharmacy)
     }
 
     Column(
         modifier = Modifier.padding(8.dp)
-    ){
+    ) {
         CustomTopBar(
             title = pharmacy.pharmacyName,
             leadingIcon = Icons.AutoMirrored.Default.ArrowBack,
             onLeadingClick = onBackClicked
         )
-        when(uiState.value){
+
+        when (uiState.value) {
             is Response.Loading -> {
                 LazyColumn {
                     items(5) {
@@ -67,30 +67,37 @@ fun PharmacyOrdersScreen(
                     }
                 }
             }
+
             is Response.Error -> {
                 val status = (uiState.value as Response.Error).message
-                Log.e("TAG", "PharmacyOrdersScreen: ", )
                 ErrorView(message = status) {
-                    viewModel.getPharmacyOrders(pharmacy)
+                    viewModel.refreshOrders(pharmacy)
                 }
             }
+
             is Response.Success -> {
                 val orders = (uiState.value as Response.Success).data
                 if (orders.isEmpty()) {
                     EmptySearchResultView()
-                }
-                else {
+                } else {
                     LazyColumn {
-                        items(orders){
+                        items(orders) { order ->
                             OrderCard(
                                 isCustomer = true,
-                                order = it,
+                                order = order,
                                 onItemClick = {
                                     showBottomSheet.value = true
-                                    selectedOrderId.value = it.orderId
-                                    viewModel.getOrderDetails(it.orderId)
+                                    selectedOrderId.value = order.orderId
+                                    viewModel.getOrderDetails(order.orderId)
                                 }
                             )
+                        }
+
+                        // Trigger pagination when reach the end
+                        item {
+                            LaunchedEffect(orders.size) {
+                                viewModel.loadNextPage()
+                            }
                         }
                     }
                 }
@@ -106,12 +113,13 @@ fun PharmacyOrdersScreen(
         ) {
             when (orderDetailsState.value) {
                 is Response.Loading -> {
-                    LazyColumn{
-                        items(2){
+                    LazyColumn {
+                        items(2) {
                             OrderItemShimmerCard()
                         }
                     }
                 }
+
                 is Response.Success -> {
                     val items = (orderDetailsState.value as Response.Success).data
                     LazyColumn {
@@ -120,11 +128,15 @@ fun PharmacyOrdersScreen(
                         }
                     }
                 }
-                is Response.Error -> {
 
+                is Response.Error -> {
+                    ErrorView(
+                        message = (orderDetailsState.value as Response.Error).message ?: "Error loading order details"
+                    ) {
+                        selectedOrderId.value?.let { viewModel.getOrderDetails(it) }
+                    }
                 }
             }
         }
     }
-
 }

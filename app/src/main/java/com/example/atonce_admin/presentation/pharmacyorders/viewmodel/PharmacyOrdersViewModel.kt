@@ -30,7 +30,7 @@ class PharmacyOrdersViewModel(
     }
 
     private var currentPage = 1
-    private val pageSize = 20
+    private val pageSize = 15
     private var isLastPage = false
     private var isLoading = false
     private val orders = mutableListOf<OrderEntity>()

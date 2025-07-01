@@ -66,7 +66,7 @@ class RepositoryImpl(
     }
 
     override suspend fun getPharmacyOrders(pharmacyId: Int , page: Int, pageSize: Int): Flow<PharmacyOrderResponseEntity> {
-        return remoteDataSource.getPharmacyOrders(pharmacyId).map {
+        return remoteDataSource.getPharmacyOrders(pharmacyId , page, pageSize).map {
             it.toEntity()
         }
     }

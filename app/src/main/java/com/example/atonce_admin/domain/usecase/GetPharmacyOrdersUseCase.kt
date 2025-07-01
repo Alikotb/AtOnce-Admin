@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 class GetPharmacyOrdersUseCase(
     private val repository: Repository
 ) {
-    suspend operator fun invoke(pharmacyId: Int): Flow<PharmacyOrderResponseEntity> {
-        return repository.getPharmacyOrders(pharmacyId)
+    suspend operator fun invoke(pharmacyId: Int , page: Int, pageSize: Int): Flow<PharmacyOrderResponseEntity> {
+        return repository.getPharmacyOrders(pharmacyId , page, pageSize)
     }
 }
