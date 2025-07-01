@@ -9,7 +9,7 @@ data class OrderStateEntity(
 )
 
 data class WarehouseEntity(
-    val deliveredRevenue: Int,
+    val deliveredRevenue: Double,
     val orders: List<OrderEntity>,
     val ordersCount: Int,
     val totalPrice: Double,

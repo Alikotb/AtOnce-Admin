@@ -9,7 +9,7 @@ data class OrderStatusResponse(
 )
 
 data class Item(
-    val deliveredRevenue: Int,
+    val deliveredRevenue: Double,
     val orders: List<Order>,
     val ordersCount: Int,
     val totalPrice: Double,
