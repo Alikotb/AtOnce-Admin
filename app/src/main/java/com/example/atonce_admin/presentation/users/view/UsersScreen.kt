@@ -43,6 +43,7 @@ fun UsersScreen(
     var searchText by remember { mutableStateOf("") }
     val pharmacyList by vieModel.uiState.collectAsStateWithLifecycle()
     LaunchedEffect(Unit) {
+        vieModel.getInitialValue()
         vieModel.getAllCustomer()
     }
 
