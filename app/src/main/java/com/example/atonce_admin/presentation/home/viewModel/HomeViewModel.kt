@@ -31,8 +31,20 @@ class HomeViewModel(
         _controlPanelDataState.value = Response.Error(ErrorEnum.NETWORK_ERROR.getLocalizedMessage())
     }
 
+    fun getControlPanelDataIfNeeded(pageNumber: Int, pageSize: Int, status: Int) {
+        if (controlPanelDataState.value is Response.Success) return
 
-    fun getControlPanelData(
+        getControlPanelData(pageNumber, pageSize, status)
+    }
+
+    fun forceRefreshControlPanelData(pageNumber: Int, pageSize: Int, status: Int) {
+        getControlPanelData(pageNumber, pageSize, status)
+    }
+
+
+
+
+    private fun getControlPanelData(
         pageNumber: Int,
         pageSize: Int,
         status: Int

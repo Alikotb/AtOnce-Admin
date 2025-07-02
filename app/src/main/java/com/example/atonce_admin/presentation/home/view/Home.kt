@@ -15,13 +15,19 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.outlined.AccountCircle
 import androidx.compose.material3.DrawerValue
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalNavigationDrawer
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
+import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -34,6 +40,7 @@ import com.example.atonce_admin.data.Response
 import com.example.atonce_admin.domain.entity.OrderEntity
 import com.example.atonce_admin.presentation.common.component.CustomTopBar
 import com.example.atonce_admin.presentation.common.component.ErrorView
+import com.example.atonce_admin.presentation.common.theme.PrimaryColor
 import com.example.atonce_admin.presentation.home.view.components.CustomSection
 import com.example.atonce_admin.presentation.home.view.components.CustomSectionShimmer
 import com.example.atonce_admin.presentation.home.view.components.DrawerContent
@@ -45,12 +52,13 @@ import com.example.atonce_admin.presentation.home.viewModel.HomeViewModel
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
     viewModel: HomeViewModel,
     onDrawerClicked: () -> Unit,
     onProfileClicked: () -> Unit,
-    onOrdersClicked: (List<OrderEntity> , String) -> Unit,
+    onOrdersClicked: (List<OrderEntity>, String) -> Unit,
     onCustomerClicked: () -> Unit,
     onSeeMoreClick: () -> Unit
 ) {
@@ -58,14 +66,20 @@ fun HomeScreen(
     val background = MaterialTheme.colorScheme.background
 
     LaunchedEffect(Unit) {
-        viewModel.getControlPanelData(
+        viewModel.getControlPanelDataIfNeeded(
             pageNumber = 1,
             pageSize = 10,
             status = status.id
         )
     }
 
+
     val state = viewModel.controlPanelDataState.collectAsStateWithLifecycle()
+    val refreshState = rememberPullToRefreshState()
+
+    val isRefreshing = state.value is Response.Loading
+
+    val scope = rememberCoroutineScope()
 
     Column(
         modifier = Modifier
@@ -81,80 +95,111 @@ fun HomeScreen(
             onTrailingClick = onProfileClicked
         )
 
-        when (state.value){
-            is Response.Loading ->{
-                Column(
-                    modifier = Modifier
-                        .verticalScroll(rememberScrollState())
-                ) {
-                    CustomSectionShimmer()
-                    WareHousesSectionShimmer()
-                    CustomSectionShimmer()
-                    PieChartCardShimmer()
-                }
-            }
-            is Response.Error -> {
-                ErrorView(message = (state.value as Response.Error).message){
-                    viewModel.getControlPanelData(
+        PullToRefreshBox(
+            modifier = Modifier.fillMaxSize(),
+            state = refreshState,
+            isRefreshing = isRefreshing,
+            onRefresh = {
+                scope.launch {
+                    viewModel.forceRefreshControlPanelData(
                         pageNumber = 1,
                         pageSize = 10,
-                        status = status.id)
+                        status = status.id
+                    )
                 }
-            }
-            is Response.Success ->{
-                val data = (state.value as Response.Success).data
-
-                val totalRevenue = "${data.stats.revenue} EGP".convertNumbersToArabic().replaceEGPWithArabicCurrency()
-                val totalCustomers = "${data.stats.pharmacyCount}"
-                val pieChartData = listOf(
-                    OrderStatesEnum.ORDERED.getLocalizedValue() to data.stats.stats.ordered,
-                    OrderStatesEnum.DELIVERED.getLocalizedValue() to data.stats.stats.delivered,
-                    OrderStatesEnum.CANCELED.getLocalizedValue() to data.stats.stats.cancelled,
-                    OrderStatesEnum.RETURNED.getLocalizedValue() to data.stats.stats.returned
+            },
+            indicator = {
+                PullToRefreshDefaults.Indicator(
+                    state = refreshState,
+                    isRefreshing = isRefreshing,
+                    containerColor = MaterialTheme.colorScheme.surface,
+                    color = PrimaryColor,
+                    modifier = Modifier.align(Alignment.TopCenter)
                 )
+            }
+        ) {
 
-                val warehouses = data.orderState.items.take(3)
 
-
-                Column(
-                    modifier = Modifier
-                        .verticalScroll(rememberScrollState())
-                ) {
-
-                    CustomSection(
-                        header = stringResource(R.string.customers_count),
-                        value = totalCustomers.convertNumbersToArabic(),
-                        textAlign = TextAlign.Center,
-                        bgColor = background,
-                    ){
-                        onCustomerClicked()
+            when (state.value) {
+                is Response.Loading -> {
+                    Column(
+                        modifier = Modifier
+                            .verticalScroll(rememberScrollState())
+                    ) {
+                        CustomSectionShimmer()
+                        WareHousesSectionShimmer()
+                        CustomSectionShimmer()
+                        PieChartCardShimmer()
                     }
+                }
 
+                is Response.Error -> {
+                    ErrorView(message = (state.value as Response.Error).message) {
+                        viewModel.forceRefreshControlPanelData(
+                            pageNumber = 1,
+                            pageSize = 10,
+                            status = status.id
+                        )
+                    }
+                }
 
-                    WareHousesSection(warehouses = warehouses,
-                        onSeeMoreClick = onSeeMoreClick ,
-                        onItemClick = {
-                            orders , warehouseName ->
-                            onOrdersClicked(orders , warehouseName)
-                        } )
+                is Response.Success -> {
+                    val data = (state.value as Response.Success).data
 
-                    CustomSection(
-                        header = stringResource(R.string.revenue),
-                        value = totalRevenue.convertNumbersToArabic(),
-                        textAlign = TextAlign.Center,
-                        bgColor = background
+                    val totalRevenue = "${data.stats.revenue} EGP".convertNumbersToArabic()
+                        .replaceEGPWithArabicCurrency()
+                    val totalCustomers = "${data.stats.pharmacyCount}"
+                    val pieChartData = listOf(
+                        OrderStatesEnum.ORDERED.getLocalizedValue() to data.stats.stats.ordered,
+                        OrderStatesEnum.DELIVERED.getLocalizedValue() to data.stats.stats.delivered,
+                        OrderStatesEnum.CANCELED.getLocalizedValue() to data.stats.stats.cancelled,
+                        OrderStatesEnum.RETURNED.getLocalizedValue() to data.stats.stats.returned
                     )
 
+                    val warehouses = data.orderState.items.take(3)
 
-                    PieChartCard(
-                        title = stringResource(R.string.order_status_overview),
-                        data = pieChartData
-                    )
 
-                    Spacer(Modifier.height(160.dp))
+                    Column(
+                        modifier = Modifier
+                            .verticalScroll(rememberScrollState())
+                    ) {
 
+                        CustomSection(
+                            header = stringResource(R.string.customers_count),
+                            value = totalCustomers.convertNumbersToArabic(),
+                            textAlign = TextAlign.Center,
+                            bgColor = background,
+                        ) {
+                            onCustomerClicked()
+                        }
+
+
+                        WareHousesSection(
+                            warehouses = warehouses,
+                            onSeeMoreClick = onSeeMoreClick,
+                            onItemClick = { orders, warehouseName ->
+                                onOrdersClicked(orders, warehouseName)
+                            })
+
+                        CustomSection(
+                            header = stringResource(R.string.revenue),
+                            value = totalRevenue.convertNumbersToArabic(),
+                            textAlign = TextAlign.Center,
+                            bgColor = background
+                        )
+
+
+                        PieChartCard(
+                            title = stringResource(R.string.order_status_overview),
+                            data = pieChartData
+                        )
+
+                        Spacer(Modifier.height(160.dp))
+
+                    }
                 }
             }
+
         }
 
 
@@ -166,7 +211,7 @@ fun HomeWithDrawerScreen(
     viewModel: HomeViewModel = koinViewModel(),
     onProfileClicked: () -> Unit,
     onCustomerClicked: () -> Unit,
-    onOrdersClicked: (List<OrderEntity> , String) -> Unit,
+    onOrdersClicked: (List<OrderEntity>, String) -> Unit,
     onSeeMoreClick: () -> Unit,
     onLogout: () -> Unit,
     onItemClicked: (OrderStatesEnum) -> Unit
@@ -185,8 +230,8 @@ fun HomeWithDrawerScreen(
             ) {
                 DrawerContent(
                     userData = viewModel.userData,
-                    onItemClick = {
-                        title -> onItemClicked(title)
+                    onItemClick = { title ->
+                        onItemClicked(title)
                         scope.launch { drawerState.close() }
 
                     },
@@ -211,9 +256,8 @@ fun HomeWithDrawerScreen(
             viewModel = viewModel,
             onDrawerClicked = { scope.launch { drawerState.open() } },
             onProfileClicked = onProfileClicked,
-            onOrdersClicked = {
-                orders , warehouseName ->
-                onOrdersClicked(orders , warehouseName)
+            onOrdersClicked = { orders, warehouseName ->
+                onOrdersClicked(orders, warehouseName)
             },
             onSeeMoreClick = onSeeMoreClick,
             onCustomerClicked = onCustomerClicked
