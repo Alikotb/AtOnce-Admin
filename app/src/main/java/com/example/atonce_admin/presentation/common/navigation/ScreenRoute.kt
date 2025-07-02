@@ -20,13 +20,17 @@ sealed class ScreenRoute {
     data class StateOrdersScreen(val type : String) : ScreenRoute()
 
     @Serializable
-    data class OrdersScreen(val type : String) : ScreenRoute()
+    data class OrdersScreen(val orders : String , val title : String) : ScreenRoute()
 
     @Serializable
     object UsersScreen : ScreenRoute()
 
     @Serializable
     data class BloggerScreen(val title : String , val url : String) : ScreenRoute()
+
+    @Serializable
+    data class  PharmacyOrdersScreen(val pharmacy : String) : ScreenRoute()
+
 
 
 }

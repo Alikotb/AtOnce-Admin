@@ -24,12 +24,14 @@ data class Order(
     val pharmacyName: String,
     val totalPrice: Double,
     val userName: String,
-    val warehouseName: String
+    val warehouseName: String,
+    val address: String
 )
 
 data class OrderDetail(
     val medicineId: Int,
-    val medicineName: String,
+    val arabicMedicineName: String,
+    val englishMedicineName: String,
     val price: Double,
     val quantity: Int
 )

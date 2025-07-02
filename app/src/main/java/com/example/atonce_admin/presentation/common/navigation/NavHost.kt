@@ -1,30 +1,53 @@
 package com.example.atonce_admin.presentation.common.navigation
 
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.atonce_admin.core.enums.OrderStatesEnum
+import com.example.atonce_admin.domain.entity.OrderEntity
 import com.example.atonce_admin.presentation.blogger.BloggerScreen
-import com.example.atonce_admin.presentation.orders.OrdersScreen
-import com.example.atonce_admin.presentation.home.HomeWithDrawerScreen
+import com.example.atonce_admin.presentation.home.view.HomeWithDrawerScreen
 import com.example.atonce_admin.presentation.login.LoginScreen
-import com.example.atonce_admin.presentation.profile.ProfileScreen
+import com.example.atonce_admin.presentation.orders.OrdersScreen
+import com.example.atonce_admin.presentation.pharmacyorders.view.PharmacyOrdersScreen
+import com.example.atonce_admin.presentation.profile.view.ProfileScreen
+import com.example.atonce_admin.presentation.splash.view.SplashScreen
 import com.example.atonce_admin.presentation.stateOrders.view.StateOrders
-import com.example.atonce_admin.presentation.users.UsersScreen
+import com.example.atonce_admin.presentation.users.model.CustomerModel
+import com.example.atonce_admin.presentation.users.view.UsersScreen
 import com.google.gson.Gson
 
 
 @Composable
 fun SetUpNavHost(
     navController: NavHostController,
+    snackbarHostState: SnackbarHostState,
 ) {
     NavHost(
         navController = navController,
-        startDestination = ScreenRoute.LoginScreen
+        startDestination = ScreenRoute.SplashScreen
     ) {
+
+        composable<ScreenRoute.SplashScreen> {
+            SplashScreen {
+                if (it) {
+                    navController.navigate(ScreenRoute.HomeScreen) {
+                        popUpTo(0) { inclusive = true }
+                        launchSingleTop = true
+                    }
+                } else {
+                    navController.navigate(ScreenRoute.LoginScreen) {
+                        popUpTo(0) { inclusive = true }
+                        launchSingleTop = true
+                    }
+                }
+            }
+        }
+
         composable<ScreenRoute.LoginScreen> {
-            LoginScreen(){
+            LoginScreen(snackbarHostState = snackbarHostState) {
                 navController.navigate(ScreenRoute.HomeScreen) {
                     popUpTo(0) { inclusive = true }
                     launchSingleTop = true
@@ -37,13 +60,22 @@ fun SetUpNavHost(
                 onProfileClicked = {
                     navController.navigate(ScreenRoute.ProfileScreen)
                 },
-                onOrdersClicked = {
-                    navController.navigate(ScreenRoute.OrdersScreen(
-                        Gson().toJson(OrderStatesEnum.ORDERED)
-                    ))
+                onOrdersClicked = { orders, title ->
+                    navController.navigate(
+                        ScreenRoute.OrdersScreen(
+                            Gson().toJson(orders),
+                            title
+                        )
+                    )
                 },
                 onSeeMoreClick = {
-                    navController.navigate(ScreenRoute.StateOrdersScreen(Gson().toJson(OrderStatesEnum.ORDERED)))
+                    navController.navigate(
+                        ScreenRoute.StateOrdersScreen(
+                            Gson().toJson(
+                                OrderStatesEnum.ORDERED
+                            )
+                        )
+                    )
                 },
                 onLogout = {
                     navController.navigate(ScreenRoute.LoginScreen) {
@@ -55,21 +87,21 @@ fun SetUpNavHost(
                     navController.navigate(ScreenRoute.UsersScreen)
                 }, onItemClicked = {
                     navController.navigate(ScreenRoute.StateOrdersScreen(Gson().toJson(it)))
-                }
+                },
             )
         }
         composable<ScreenRoute.ProfileScreen> {
-            ProfileScreen(onLogout = {
-                navController.navigate(ScreenRoute.LoginScreen) {
-                    popUpTo(0) { inclusive = true }
-                    launchSingleTop = true
+            ProfileScreen(
+                onLogout = {
+                    navController.navigate(ScreenRoute.LoginScreen) {
+                        popUpTo(0) { inclusive = true }
+                        launchSingleTop = true
+                    }
+                },
+                onContactClicked = { title, url ->
+                    navController.navigate(ScreenRoute.BloggerScreen(title, url))
                 }
-            },
-                onContactClicked = {
-                    title , url ->
-                    navController.navigate(ScreenRoute.BloggerScreen(title , url))
-                }
-            ){
+            ) {
                 navController.navigateUp()
             }
         }
@@ -82,19 +114,25 @@ fun SetUpNavHost(
                 onBackClicked = {
                     navController.navigateUp()
                 },
-                onItemClick = {
-                    navController.navigate(ScreenRoute.OrdersScreen(
-                        Gson().toJson(it)
-                    ))
+                onItemClick = { orders, title ->
+                    navController.navigate(
+                        ScreenRoute.OrdersScreen(
+                            Gson().toJson(orders),
+                            title
+                        )
+
+                    )
                 }
             )
         }
 
         composable<ScreenRoute.OrdersScreen> {
-            val type = it.arguments?.getString("type")
-            val state = Gson().fromJson(type, OrderStatesEnum::class.java)
+            val orders = it.arguments?.getString("orders")
+            val ordersList = Gson().fromJson(orders, Array<OrderEntity>::class.java).toList()
+            val title = it.arguments?.getString("title") ?: ""
             OrdersScreen(
-                type = state,
+                orders = ordersList,
+                title = title,
                 onBackClicked = {
                     navController.navigateUp()
                 }
@@ -102,6 +140,9 @@ fun SetUpNavHost(
         }
         composable<ScreenRoute.UsersScreen> {
             UsersScreen(
+                onItemClicked = {
+                    navController.navigate(ScreenRoute.PharmacyOrdersScreen(Gson().toJson(it)))
+                },
                 onBackClicked = {
                     navController.navigateUp()
                 }
@@ -113,6 +154,17 @@ fun SetUpNavHost(
             BloggerScreen(
                 title = title ?: "",
                 url = url ?: "",
+                onBackClicked = {
+                    navController.navigateUp()
+                }
+            )
+        }
+
+        composable<ScreenRoute.PharmacyOrdersScreen> {
+            val pharmacy = it.arguments?.getString("pharmacy")
+            val pharmacyModel = Gson().fromJson(pharmacy, CustomerModel::class.java)
+            PharmacyOrdersScreen(
+                pharmacy = pharmacyModel,
                 onBackClicked = {
                     navController.navigateUp()
                 }

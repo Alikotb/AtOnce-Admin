@@ -7,15 +7,23 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.atonce_admin.presentation.common.theme.MediumFont
 import com.example.atonce_admin.presentation.common.theme.PrimaryColor
+import com.example.atonce_admin.R
 
 @Composable
-fun PrimaryButton(modifier: Modifier = Modifier,
-                  text: String, onClick: () -> Unit) {
+fun PrimaryButton(
+    modifier: Modifier = Modifier,
+    text: String,
+    onClick: () -> Unit,
+    isLoginFlag: Boolean = false,
+    loading: Boolean,
+    radius: Int = 8
+) {
     Button(
         onClick = onClick,
         modifier = modifier
@@ -25,17 +33,24 @@ fun PrimaryButton(modifier: Modifier = Modifier,
             containerColor = PrimaryColor,
             contentColor = Color.White
         ),
-        shape = RoundedCornerShape(8.dp),
+        shape = RoundedCornerShape(radius.dp),
         elevation = ButtonDefaults.buttonElevation(4.dp)
     ) {
-        Text(text = text , color = Color.White , fontFamily = MediumFont, fontSize = 14.sp)
+        if(!isLoginFlag&&!loading) {
+            Text(text = text, color = Color.White, fontFamily = MediumFont, fontSize = 14.sp)
+        }else{
+            if (loading) {
+                DotLoadingIndicator()
+            }else {
+                Text(
+                    text = stringResource(R.string.login),
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 18.sp
+                )
+            }
+
+        }
     }
 }
 
-@Preview
-@Composable
-fun PrimaryButtonPreview() {
-    PrimaryButton(text = "Login" ) {
-        // Handle button click
-    }
-}
+

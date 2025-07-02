@@ -1,7 +1,6 @@
 package com.example.atonce_admin.presentation.stateOrders.view
 
 import StatusOrderViewModel
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -12,9 +11,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material3.Button
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Text
+import androidx.compose.material3.Divider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
@@ -23,12 +20,16 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.atonce_admin.core.enums.OrderStatesEnum
 import com.example.atonce_admin.data.Response
+import com.example.atonce_admin.domain.entity.OrderEntity
 import com.example.atonce_admin.presentation.common.component.CustomSearchBar
 import com.example.atonce_admin.presentation.common.component.CustomTopBar
+import com.example.atonce_admin.presentation.common.component.EmptySearchResultView
+import com.example.atonce_admin.presentation.common.component.ErrorView
 import com.example.atonce_admin.presentation.common.component.WarehouseRowItem
 import com.example.atonce_admin.presentation.common.component.WarehouseRowShimmerItem
 import org.koin.androidx.compose.koinViewModel
@@ -39,14 +40,13 @@ fun StateOrders(
     viewModel: StatusOrderViewModel = koinViewModel(),
     type : OrderStatesEnum = OrderStatesEnum.ORDERED,
     onBackClicked: () -> Unit = {},
-    onItemClick: (OrderStatesEnum) -> Unit = {}
+    onItemClick: (List<OrderEntity> , String) -> Unit
 ){
-    val id = 1
 
     var searchText by remember { mutableStateOf("") }
 
     LaunchedEffect(Unit) {
-        viewModel.loadNextPage(id, type.id)
+        viewModel.loadNextPage(type.id)
     }
 
     val state by viewModel.ordersState.collectAsStateWithLifecycle()
@@ -62,7 +62,7 @@ fun StateOrders(
 
     LaunchedEffect(shouldLoadMore.value) {
         if (shouldLoadMore.value) {
-            viewModel.loadNextPage(id, type.id)
+            viewModel.loadNextPage(type.id)
         }
     }
 
@@ -89,45 +89,48 @@ fun StateOrders(
         when(state){
             is Response.Error -> {
                 ErrorView(message = (state as Response.Error).message){
-                    viewModel.loadNextPage(id, type.id)
+                    viewModel.loadNextPage(type.id , default = true)
                 }
             }
             is Response.Loading -> {
                 LazyColumn {
-                    items(6) {
+                    items(3) {
                         WarehouseRowShimmerItem()
                     }
                 }
             }
             is Response.Success -> {
-                val warehouses = (state as Response.Success).data
-                LazyColumn(state = listState){
-                    items(warehouses){
-                        WarehouseRowItem(
-                            warehouse = it,
-                            onItemClick = {
-                                onItemClick(type)
-                            }
-                        )
+                val allWarehouses = (state as Response.Success).data
+                val filteredWarehouses = if (searchText.isBlank()) {
+                    allWarehouses
+                } else {
+                    allWarehouses.filter {
+                        it.warehouseName.contains(searchText, ignoreCase = true)
+                    }
+                }
+
+                if (filteredWarehouses.isEmpty()) {
+                    EmptySearchResultView()
+                } else {
+                    LazyColumn(state = listState) {
+                        items(filteredWarehouses) {
+                            WarehouseRowItem(
+                                warehouse = it,
+                                onItemClick = { orders, title ->
+                                    onItemClick(orders, title)
+                                }
+                            )
+                            Spacer(modifier = Modifier.height(8.dp))
+                            Divider(
+                                color = Color.LightGray.copy(alpha = 0.6f),
+                                modifier = Modifier.padding(horizontal = 8.dp)
+                            )
+                        }
                     }
                 }
             }
+
         }
     }
 }
 
-@Composable
-fun ErrorView(message: String, onRetry: () -> Unit) {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = androidx.compose.ui.Alignment.Center
-    ) {
-        Column(horizontalAlignment = androidx.compose.ui.Alignment.CenterHorizontally) {
-            Text(text = message)
-            Spacer(modifier = Modifier.height(8.dp))
-            Button(onClick = onRetry) {
-                Text("Retry")
-            }
-        }
-    }
-}

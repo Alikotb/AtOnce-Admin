@@ -11,7 +11,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.atonce_admin.R
@@ -27,13 +26,13 @@ import com.example.atonce_admin.presentation.common.theme.RegularFont
 fun WarehouseRowItem(
     modifier: Modifier = Modifier,
     warehouse : WarehouseEntity,
-    onItemClick: (List<OrderEntity>) -> Unit = {}
+    onItemClick: (List<OrderEntity> , String) -> Unit
 ) {
     Row(
         modifier = modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp, horizontal = 12.dp)
-            .clickable { onItemClick(warehouse.orders) },
+            .clickable { onItemClick(warehouse.orders , warehouse.warehouseName) },
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.Bottom
     ) {
@@ -46,17 +45,17 @@ fun WarehouseRowItem(
                 fontSize = 14.sp
             )
             Text(
-                text = stringResource(R.string.orders_count, warehouse.ordersCount),
-                color = PrimaryColor,
+                text = stringResource(R.string.orders_count, warehouse.ordersCount).convertNumbersToArabic(),
                 fontFamily = RegularFont,
-                fontSize = 12.sp
+                fontSize = 14.sp
             )
         }
 
         Text(
-            text = "${warehouse.totalPrice}".convertNumbersToArabic().replaceEGPWithArabicCurrency(),
+            text = "${warehouse.totalPrice} EGP".convertNumbersToArabic().replaceEGPWithArabicCurrency(),
             fontFamily = MediumFont,
-            fontSize = 14.sp
+            color = PrimaryColor,
+            fontSize = 16.sp
         )
     }
 }

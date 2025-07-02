@@ -103,5 +103,8 @@ dependencies {
     //shimmer
     implementation("com.google.accompanist:accompanist-placeholder-material3:0.34.0")
 
-
+    //lottie
+    implementation("com.airbnb.android:lottie-compose:6.6.3")
+    testImplementation ("io.insert-koin:koin-test:$koin_android_version")
+    androidTestImplementation ("io.insert-koin:koin-android-test:$koin_android_version")
 }
