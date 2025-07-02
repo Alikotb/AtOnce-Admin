@@ -23,8 +23,6 @@ import com.example.atonce_admin.presentation.common.theme.PrimaryColor
 @Composable
 fun LogoIcon(
     modifier: Modifier = Modifier,
-    iconColor: Color = Color.White,
-    backgroundColor: Color = PrimaryColor
 ) {
     Box(
         contentAlignment = Alignment.Center,

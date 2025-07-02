@@ -2,6 +2,7 @@ package com.example.atonce_admin.presentation.pharmacyorders.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.atonce_admin.core.enums.ErrorEnum
 import com.example.atonce_admin.data.Response
 import com.example.atonce_admin.domain.entity.OrderEntity
 import com.example.atonce_admin.domain.entity.OrderItem
@@ -26,7 +27,7 @@ class PharmacyOrdersViewModel(
     val orderDetailsState = _orderDetailsState.asStateFlow()
 
     private val errorExceptionHandler = CoroutineExceptionHandler { _, throwable ->
-        _uiState.value = Response.Error(throwable.message ?: "Something went wrong")
+        _uiState.value = Response.Error(ErrorEnum.NETWORK_ERROR.getLocalizedMessage())
     }
 
     private var currentPage = 1
